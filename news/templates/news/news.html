@@ -1,0 +1,419 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Новости</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Сайт туристической компании 'Мир'" />
+		<meta name="keywords" content="турагенство, мир, туры, европа, туристическая компания, автобусные туры" />
+		<meta name="author" content="Peter Smolenko" />
+
+		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+		<link rel="shortcut icon" href="images/favicon.ico">
+		<!-- Animate.css -->
+		<link rel="stylesheet" href="css/animate.css">
+		<!-- Icomoon Icon Fonts-->
+		<link rel="stylesheet" href="css/icomoon.css">
+		<!-- Bootstrap  -->
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<!-- Superfish -->
+		<link rel="stylesheet" href="css/superfish.css">
+		<!-- Magnific Popup -->
+		<link rel="stylesheet" href="css/magnific-popup.css">
+		<!-- Date Picker -->
+		<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+		<!-- CS Select -->
+		<link rel="stylesheet" href="css/cs-select.css">
+		<link rel="stylesheet" href="css/cs-skin-border.css">
+
+		<link rel="stylesheet" href="css/style.css">
+			<!-- Modernizr JS -->
+		<script src="js/modernizr-2.6.2.min.js"></script>
+	</head>
+	<body>
+		<div id="wrapper">
+		<div id="page">
+
+		<header id="header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-nav-toggle nav-toggle dark"><i></i></a>
+					<h1 id="logo"><a href="index.html"><i class="icon-globe2"></i>Мир</a></h1>
+					<!-- START #menu-wrap -->
+					<nav id="menu-wrap" role="navigation">
+						<ul class="sf-menu" id="primary-menu">
+							<li><a href="index.html">Главная</a></li>
+							<li>
+								<a href="tours.html" class="sub-ddown">Туры</a>
+								<ul class="sub-menu">
+									<li><a href="excursion-tours.html">Экскурсионные туры</a></li>
+									<li><a href="beach-tours.html">Пляжный отдых</a></li>
+									<li><a href="active-tours.html">Активный туризм</a></li>
+									<li><a href="weekend-tours.html">Туры выходного дня</a></li>
+								</ul>
+							</li>
+							<li class="active"><a href="news.html">Новости</a></li>
+							<li><a href="contact.html">Контакты</a></li>
+							<li><a href="about_us.html">О нас</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+
+		<!-- end:header-top -->
+	
+		<div class="hero">
+			<div class="overlay"></div>
+			<div class="cover" data-stellar-background-ratio="0.5" style="background-image: url(images/bg-cz.jpg);">
+				<div class="desc">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-6 col-lg-5">
+								<div class="get-tour animate-box">
+									<div class="col-12 text-center bg-orange py-2">
+										<h4 class="text-white m-0"><i class="icon-map mr-3"></i>Поиск тура</h4>
+										</div>
+									<div class="row m-4">
+											<div class="col-sm-6 mb-2">
+												<div class="input-field">
+													<label for="from">Город:</label>
+													<input type="text" class="form-control" id="from-place" placeholder="Осло"/>
+												</div>
+											</div>
+											<div class="col-sm-6 mb-2">
+												<div class="input-field">
+													<label for="from">Страна:</label>
+													<input type="text" class="form-control" id="to-place" placeholder="Норвегия"/>
+												</div>
+											</div>
+											<div class="col-md-12 col-xl-4"><label for="">Дата выезда</label></div>
+											<div class="col-md-6 col-xl-4 mb-2 alternate">
+												<div class="input-field">
+													<label for="date-start">С:</label>
+													<input type="text" class="form-control" id="date-start" placeholder="мм/дд/гггг"/>
+												</div>
+											</div>
+											
+											<div class="col-md-6 col-xl-4 mb-2 alternate">
+												<div class="input-field">
+													<label for="date-end">По:</label>
+													<input type="text" class="form-control" id="date-end" placeholder="мм/дд/гггг"/>
+												</div>
+											</div>
+											<div class="col-sm-4"><label for="">Количество дней</label></div>
+											<div class="col-6 col-sm-4 mb-2 alternate">
+												<div class="input-field">
+													<label for="date-start">От:</label>
+													<input type="text" class="form-control" id="inday" placeholder="1"/>
+												</div>
+											</div>
+											
+											<div class="col-6 col-sm-4 mb-2 alternate">
+												<div class="input-field">
+													<label for="date-end">До:</label>
+													<input type="text" class="form-control" id="outday" placeholder="14"/>
+												</div>
+											</div>
+											<div class="col-sm-4"><label for="">Стоимость тура</label></div>
+											<div class="col-sm-4 mb-2 alternate">
+												<div class="input-field">
+													<label for="date-start">От:</label>
+													<input type="text" class="form-control" id="costmin" placeholder="1000"/>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 mb-2 alternate">
+												<div class="input-field">
+													<label for="date-end">До:</label>
+													<input type="text" class="form-control" id="costmax" placeholder="10000"/>
+												</div>
+											</div>
+											
+											<div class="col-md-6 mb-2">
+												<section>
+													<label for="class">Класс тура:</label>
+													<select class="cs-select cs-skin-border">
+														<option value="" disabled selected>Все</option>
+														<option value="Бюджет">Бюждет</option>
+														<option value="Комфорт">Комфорт</option>
+														<option value="Премиум">Премиум</option>
+													</select>
+												</section>
+											</div>
+											<div class="col-md-6 mb-2">
+												<section>
+													<label for="class">Тип тура:</label>
+													<select class="cs-select cs-skin-border">
+														<option value="" disabled selected>Все</option>
+														<option value="Авиатур">Авиатур</option>
+														<option value="Автобусный тур">Автобусный</option>
+														<option value="Экскурссионный тур">Экскурссионный</option>
+														<option value="Пляжный тур">Пляжный</option>
+													</select>
+												</section>
+											</div>
+											<div class="col-sm-12">
+												<button type="submit" class="btn btn-primary btn-block"><i class="icon-search3 mr-2"></i>Поиск</button>
+											</div>
+										</div>
+								</div>
+							</div>
+							<div class="col-sm-6 col-lg-7">
+								<div class="desc2 animate-box">
+									<p>Автобусный тур</p>
+									<h2>R21.7  ПРАГА (3 дня) + ЗАМКИ ЧЕХИИ</h2>
+									<h3>Узнаем Чехию поближе, друг!</h3>
+									<span class="price">18157&#8381;</span>
+									 <p><a class="btn btn-primary btn-lg" href="#">Поехали!</a></p> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+		<div id="blog-section" class="section-gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 offset-md-2 text-center heading-section animate-box">
+						<h3>Новости</h3>
+						<p>Все самые свежие новости из жизни нашей компании, туризма вцелом, и многое другое!</p>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row row-bottom-padded-md">
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="blog animate-box">
+							<a href="#"><img class="img-fluid" src="images/news-6.jpg" alt=""></a>
+							<div class="blog-text">
+								<div class="prod-title">
+									<h3><a href="#">В Таиланде — штормовая погода</a></h3>
+									<span class="posted_by">17 апреля</span>
+									<span class="author-name mr-4"><i class="icon-user mr-1"></i>Pitt Smolenko</span>
+									<p>Министерство иностранных дел РФ предупреждает российских туристов о штормах, которые пришли на большую часть территории Таиланда со вчерашнего дня.</p>
+									<p><a href="#">Подробнее...</a></p>
+								</div>
+							</div> 
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="blog animate-box">
+							<a href="#"><img class="img-fluid" src="images/news-5.jpg" alt=""></a>
+							<div class="blog-text">
+								<div class="prod-title">
+									<h3><a href="#">Экскурсионный тур "Три великих классика"</a></h3>
+									<span class="posted_by">16 апреля</span>
+									<span class="author-name mr-4"><i class="icon-user mr-1"></i>Pitt Smolenko</span>
+									<p>Чтобы поближе познакомиться с творчеством великих русских писателей и отлично провести выходные, приобретайте автобусный тур «Три великих классика» от компании «Мир».</p>
+									<p><a href="#">Подробнее...</a></p>
+								</div>
+							</div> 
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="blog animate-box">
+							<a href="news_1.html"><img class="img-fluid" src="images/news-4.jpg" alt=""></a>
+							<div class="blog-text">
+								<div class="prod-title">
+									<h3><a href="news_1.html">Экскурсионный тур "Классика Санкт-Петербурга"</a></h3>
+									<span class="posted_by">5 апреля</span>
+									<span class="author-name mr-4"><i class="icon-user mr-1"></i>Pitt Smolenko</span>
+									<p>Санкт-Петербург, наряду с известными европейскими столицами, занесен в Список ЮНЕСКО как город, в котором под охраной находится весь исторический центр.</p>
+									<p><a href="news_1.html">Подробнее...</a></p>
+								</div>
+							</div> 
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="blog animate-box">
+							<a href="#"><img class="img-fluid" src="images/news-3.jpg" alt=""></a>
+							<div class="blog-text">
+								<div class="prod-title">
+									<h3><a href="#">Экскурсионный тур "Сибирский колорит"</a></h3>
+									<span class="posted_by">29 марта</span>
+									<span class="author-name mr-4"><i class="icon-user mr-1"></i>Pitt Smolenko</span>
+									<p>Хакасия вобрала в себя неповторимый сибирский колорит: здесь воедино сплелись культура и традиции многочисленных народов, исторические и архитектурные памятники, великие природные и археологические богатства.</p>
+									<p><a href="#">Подробнее...</a></p>
+								</div>
+							</div> 
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="blog animate-box">
+							<a href="#"><img class="img-fluid" src="images/news-2.jpg" alt=""></a>
+							<div class="blog-text">
+								<div class="prod-title">
+									<h3><a href="#">Аэропорты Египта снова будут проверять</a></h3>
+									<span class="posted_by">23 марта</span>
+									<span class="author-name mr-4"><i class="icon-user mr-1"></i>Pitt Smolenko</span>
+									<p>Июнь ознаменуется дополнительными проверками египетских аэропортов российскими специалистами, заявил министр транспорта РФ Максим Соколов. </p>
+									<p><a href="#">Подробнее...</a></p>
+								</div>
+							</div> 
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="blog animate-box">
+							<a href="#"><img class="img-fluid" src="images/news-1.jpg" alt=""></a>
+							<div class="blog-text">
+								<div class="prod-title">
+									<h3><a href="#">Экскурсионный тур "Сапожное царство России"</a></h3>
+									<span class="posted_by">25 февраля</span>
+									<span class="author-name mr-4"><i class="icon-user mr-1"></i>Pitt Smolenko</span>
+									<p>Дмитров, Талдом и Кимры гостеприимно распахнут свои двери, расскажут о древних ремеслах и крестьянских обычаях, удивят старинными фресками и рельефными иконами.</p>
+									<p><a href="#">Подробнее...</a></p>
+								</div>
+							</div> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- blog-section -->
+		<div id="testimonial" style="background-image:url(images/img_bg_1.jpg);">
+		<div class="container">
+			<div class="row animate-box">
+				<div class="col-md-8 offset-md-2 text-center heading">
+					<h2>Отзывы клиентов</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="box-testimony animate-box">
+						<blockquote>
+							<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
+							<p>&ldquo;Большое спасибо за наш отдых в Испании в Салоу на побережье Коста Дорада. В Барселону ездили в зоопарк и аквариум, были в Монако и Монте Карло, в Ницце, в Портавентуре.  Отель Belvedere 3* на самом деле очень классный, расположение просто супер!&rdquo;</p>
+						</blockquote>
+						<p class="author">Галина Павлова<span class="subtext">24.03.2018</span></p>
+					</div>
+					
+				</div>
+				<div class="col-md-4">
+					<div class="box-testimony animate-box">
+						<blockquote>
+							<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
+							<p>&ldquo;Спасибо большое за прекрасный сервис, летали в Сочи, быстро все оформили, консультанты работают качественно, советую всем))...&rdquo;</p>
+						</blockquote>
+						<p class="author">Марк Петров <span class="subtext">20.03.2018</span></p>
+					</div>
+					
+					
+				</div>
+				<div class="col-md-4">
+					<div class="box-testimony animate-box">
+						<blockquote>
+							<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
+							<p>&ldquo;Покупали у вас тур в Турцию в отель Long Beach Resort 5*.  По отдыху скажу кратко: понравилось практически все.  Из Белгорода в Турцию летели вполне комфортно, за время в полете даже покормили немножко.   Питание, напитки, обслуживание в отеле на высшем уровне и придраться практически не к чему.&rdquo;</p>
+						</blockquote>
+						<p class="author">Антон Полозов<span class="subtext">06.03.2018</span></p>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row row-bottom-padded-md">
+						<div class="col-sm-4 footer-link">
+							<h3>О компании</h3>
+							<p>Туристическая фирма «Мир» - это позитивная команда активных и целеустремлённых туристов. Мы приглашаем вас в увлекательные путешествия по России и зарубежью.</p>
+						</div>
+						<div class="col-sm-2 footer-link">
+							<h3>Контакты</h3>
+							<ul>
+								<li><a href="tel:84722200500">8 (4722) 200-500</a></li>
+								<li><a href="tel:+79301710945">+7-930-171-09-45</a></li>
+								<li><a href="mailto:help@worldtravel.com">help@worldtravel.com</a></li>
+								<li>г. Белгород, ул. Попова, д. 40</li>
+								<li>Работаем ежедневно с 10:00 до 22:00</li>
+							</ul>
+						</div>
+						<div class="col-sm-2 footer-link">
+							<h3>Наши туры</h3>
+							<ul>
+								<li><a href="#">Экскурсионные</a></li>
+								<li><a href="#">Пляжные</a></li>
+								<li><a href="#">Активный туризм</a></li>
+								<li><a href="#">Туры выходного дня</a></li>
+							</ul>
+						</div>
+						<div class="col-sm-2 footer-link">
+							<h3>Популярные направления</h3>
+							<ul>
+								<li><a href="#">Франция</a></li>
+								<li><a href="#">Чехия</a></li>
+								<li><a href="#">Норвегия</a></li>
+								<li><a href="#">Россия</a></li>
+								<li><a href="#">Италия</a></li>
+							</ul>
+						</div>
+						<div class="col-sm-2 footer-link">
+							<h3>Классы туров</h3>
+							<ul>
+								<li><a href="#">Бюджет</a></li>
+								<li><a href="#">Комфорт</a></li>
+								<li><a href="#">Премиум</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 offset-md-3 text-center">
+							<p class="social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+								<a href="#"><i class="icon-dribbble2"></i></a>
+								<a href="#"><i class="icon-youtube"></i></a>
+							</p>
+							<p>Copyright 2018. Все права защищены! <br>By <a href="https://vk.com/pittsi" target="_blank">Peter Smolenko</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	
+
+	</div>
+	<!-- END page -->
+
+	</div>
+	<!-- END wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Date Picker -->
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<!-- CS Select -->
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
