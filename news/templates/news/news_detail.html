@@ -1,0 +1,55 @@
+{% extends 'news/base.html' %}
+
+
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+{% block title-page %}
+Новости
+{% endblock %}
+
+{% block description %}
+Все самые свежие новости из жизни нашей компании, туризма вцелом, и многое другое!
+{% endblock %}
+
+{% block content %}
+<div class="container" id="news">
+				<div class="row bg-white">
+					<div class="col-12 animate-box mb-3 text-center">
+						<div class="row">
+							<div class="col-lg-7">
+								<nav aria-label="breadcrumb">
+								  <ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.html">Главная</a></li>
+									<li class="breadcrumb-item"><a href="news.html">Новости</a></li>
+									<li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+								  </ol>
+								</nav>
+							</div>
+							<div class="col-lg-5 breadcrumb">
+								<span class="author-name mr-4 addi"><i class="icon-user mr-1"></i>{{ post.author }}</span>
+								<span class="publish-date"><i class="mr-1 icon-calendar"></i>{% if post.published_date %}{{ post.published_date }}{% endif %}</span>
+							</div>
+						</div>
+						<hr class="mb-5">
+					</div>
+					<div class="col-12 animate-box mb-3 text-center article-header">
+						<h3>{{ post.title }}</h3>
+					</div>
+					<div class="col-12 animate-box mb-3">
+						<img src="/static/images/news-image-1.jpg" alt="news-one" class="img-fluid mb-4 img-thumbnail">
+						<div class="content-block mb-2">
+							{{ post.text|linebreaksbr }}
+						</div>
+						<div id="tags">
+							<span class="mr-2">Тэги:</span>
+							<a href="#"><i class="fa fa-tag mr-1" aria-hidden="true"></i>Россия</a>
+							<a href="#"><i class="fa fa-tag mr-1" aria-hidden="true"></i>Санкт-Петербург</a>
+							<a href="#"><i class="fa fa-tag mr-1" aria-hidden="true"></i>Экскурсионный тур</a>
+						</div>
+						<hr>
+					</div>
+				</div>
+			</div>
+{% endblock %}
