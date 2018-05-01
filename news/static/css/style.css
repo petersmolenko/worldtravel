@@ -1496,7 +1496,7 @@ div.cs-select span {
 .blog .blog-text span.posted_by {
   font-style: italic;
   color: rgba(0, 0, 0, 0.3);
-  font-size: 10px!important;
+  font-size: .8em!important;
 }
 .blog .blog-text span.comment {
   float: right;
