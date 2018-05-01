@@ -22,7 +22,7 @@
 								<nav aria-label="breadcrumb">
 								  <ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">Главная</a></li>
-									<li class="breadcrumb-item"><a href="news.html">Новости</a></li>
+									<li class="breadcrumb-item"><a href="{% url 'post_list' %}">Новости</a></li>
 									<li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
 								  </ol>
 								</nav>
