@@ -1994,7 +1994,6 @@ div.cs-select span {
 }
 .author-name {
 	font-weight: bold;
-	float: right;
 }
 .addi::after {
 	content: ",";
