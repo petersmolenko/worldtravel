@@ -1992,9 +1992,6 @@ div.cs-select span {
 .breadcrumb {
 	background-color: white;
 }
-.author-name {
-	font-weight: bold;
-}
 .addi::after {
 	content: ",";
 }

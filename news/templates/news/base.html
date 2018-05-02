@@ -53,7 +53,7 @@
 									<li><a href="weekend-tours.html">Туры выходного дня</a></li>
 								</ul>
 							</li>
-							<li class="active"><a href="news.html">Новости</a></li>
+							<li class="active"><a href="{% url 'post_list' %}">Новости</a></li>
 							<li><a href="contact.html">Контакты</a></li>
 							<li><a href="about_us.html">О нас</a></li>
 						</ul>
@@ -189,7 +189,7 @@
             {% endblock %}
 		</div>
 		<!-- blog-section -->
-		<div id="testimonial" style="background-image:url(images/img_bg_1.jpg);">
+		<div id="testimonial">
 		<div class="container">
 			<div class="row animate-box">
 				<div class="col-md-8 offset-md-2 text-center heading">
