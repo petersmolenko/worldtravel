@@ -19,7 +19,7 @@
 			{% for post in posts %}
 			<div class="col-lg-4 col-md-6 col-sm-6">
 				<div class="blog animate-box">
-					<a href="{% url 'post_detail' pk=post.pk %}"><img class="img-fluid" src="/static/images/news-6.jpg" alt=""></a>
+					<a href="{% url 'post_detail' pk=post.pk %}"><img class="img-fluid" src="{{ post.photo_prev.url }}" alt=""></a>
 					<div class="blog-text">
 						<div class="prod-title">
 							<h3 class="mb-3"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
