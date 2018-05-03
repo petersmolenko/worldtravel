@@ -38,7 +38,11 @@
 						<h3>{{ post.title }}</h3>
 					</div>
 					<div class="col-12 animate-box mb-3">
-						<img src="{{ post.photo.url }}" alt="news-one" class="img-fluid mb-4 img-thumbnail">
+						<div class="row text-center">
+							<div class="col">
+								<img src="{{ post.photo.url }}" alt="news-one" class="img-fluid mb-4 img-thumbnail">
+							</div>
+						</div>
 						<div class="content-block mb-2">
 							{{ post.text|linebreaksbr }}
 						</div>
