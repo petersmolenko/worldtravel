@@ -11,6 +11,7 @@ class Post(models.Model):
     published_date = models.DateTimeField(blank=True, null=True, verbose_name='Дата публикации')
     photo_prev = models.ImageField(upload_to='news_images', blank=True, default='', verbose_name='Фото превью')
     photo = models.ImageField(upload_to='news_images', blank=True, default='', verbose_name='Фото к статье')
+    tags = models.CharField(max_length=100, verbose_name='Тэги')
 
     class Meta:
         verbose_name='Статья'

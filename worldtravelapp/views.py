@@ -8,4 +8,6 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    post.tags = post.tags.split(',')
+    print(post.short_descript)
     return render(request, 'news/news_detail.html', {'post': post})

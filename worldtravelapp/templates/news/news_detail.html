@@ -44,13 +44,13 @@
 							</div>
 						</div>
 						<div class="content-block mb-2">
-							{{ post.text|linebreaksbr }}
+							{{ post.text|linebreaks }}
 						</div>
 						<div id="tags">
 							<span class="mr-2">Тэги:</span>
-							<a href="#"><i class="fa fa-tag mr-1" aria-hidden="true"></i>Россия</a>
-							<a href="#"><i class="fa fa-tag mr-1" aria-hidden="true"></i>Санкт-Петербург</a>
-							<a href="#"><i class="fa fa-tag mr-1" aria-hidden="true"></i>Экскурсионный тур</a>
+							{% for i in post.tags %}
+									<a href="#"><i class="fa fa-tag mr-1" aria-hidden="true"></i>{{ i }}</a>
+							{% endfor %}
 						</div>
 						<hr>
 					</div>
