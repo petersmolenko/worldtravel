@@ -1,0 +1,79 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content_admin %}
+<div class="row bg-white mb-2">
+	<div class="col-12 p-2 text-center">
+		<h4 class="mb-0 text-dark text-uppercase"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</h4>
+	</div>
+	<div class="col-md-12 p-2 bg-green">
+		<div class="row no-gutters text-white">
+			<div class="col-sm-6 offset-sm-3">
+				<form class="needs-validation font-weight-bold" novalidate>
+					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltip01">Имя</label>
+							<input type="text" class="form-control" id="validationTooltip01" placeholder="Имя" value="Адам" required>
+							<div class="valid-tooltip">
+								Превосходно!
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+								<label for="validationTooltip02">Фамилия</label>
+								<input type="text" class="form-control" id="validationTooltip02" placeholder="Фамилия" value="Дарски" required>
+								<div class="valid-tooltip">
+							Превосходно!
+								</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltipUsername">Имя пользователя</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+								</div>
+								<input type="text" class="form-control" id="validationTooltipUsername" placeholder="Имя пользователя" aria-describedby="validationTooltipUsernamePrepend" required>
+								<div class="invalid-tooltip">
+									Пожалуйста, выбирите уникальное имя пользователя.
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltip03">Город</label>
+							<input type="text" class="form-control" id="validationTooltip03" placeholder="Гданьск" required>
+							<div class="invalid-tooltip">
+								Please provide a valid city.
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltip04">День рождения</label>
+							<input type="text" class="form-control" id="date-birthday" placeholder="мм/дд/гггг" required>
+							<div class="invalid-tooltip">
+								Please provide a valid state.
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<span class="mr-3">Ваш пол</span>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+								<label class="custom-control-label font-weight-normal" for="customRadioInline1">Мужской</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+								<label class="custom-control-label font-weight-normal" for="customRadioInline2">Женский</label>
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="customFile">
+								<label class="custom-file-label" for="customFile">Загрузить фото</label>
+							</div>
+						</div>
+					</div>
+					<button class="btn btn-primary bg-white text-dark" type="submit">Изменить</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

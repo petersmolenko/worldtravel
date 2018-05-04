@@ -1496,7 +1496,7 @@ div.cs-select span {
 .blog .blog-text span.posted_by {
   font-style: italic;
   color: rgba(0, 0, 0, 0.3);
-  font-size: 1em!important;
+  font-size: 18px;
 }
 .blog .blog-text span.comment {
   float: right;
@@ -1992,6 +1992,10 @@ div.cs-select span {
 .breadcrumb {
 	background-color: white;
 }
+.author-name {
+	font-weight: bold;
+	float: right;
+}
 .addi::after {
 	content: ",";
 }
@@ -2142,7 +2146,7 @@ div.cs-select span {
  	color: white;
 }
 .font-size-1 {
-	font-size: 1em;
+	font-size: 1em!important;
 }
 .font-size-2 {
 	font-size: 1.5em;
@@ -2156,4 +2160,21 @@ div.cs-select span {
 }
 .raport:hover {
 	color: rgba(0, 0, 0, 0.5);
+}
+.sharp_id::before {
+	content: "#";
+}
+.open-section {
+	background-color: #F78536;
+	transition: all .2s linear;
+}
+.open-section:hover {
+	background-color: #faa466;
+	cursor: pointer;
+}
+.open-section:hover .open-section a p {
+	color: #4a4a4a!important;
+}
+a:focus {
+	outline: 0!important;
 }
