@@ -7,7 +7,8 @@ def post_list(request):
     return render(request, 'news/news.html', {'posts': posts})
 
 def admin_news(request):
-    return render(request, 'admin/admin_news.html', {})
+	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+	return render(request, 'admin/admin_news.html', {'posts': posts})
 
 def admin_tours(request):
     return render(request, 'admin/admin_tours.html', {})
