@@ -21,10 +21,11 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.post_list, name='post_list'),
     path('admin/news/', views.admin_news, name='admin_news'),
     path('admin/tours/', views.admin_tours, name='admin_tours'),
     path('admin/orders/', views.admin_orders, name='admin_orders'),
     path('admin/settings/', views.admin_settings, name='admin_settings'),
-    path('post/<int:pk>', views.post_detail, name='post_detail'),
+    path('', views.post_list, name='post_list'),
+    path('post/<int:pk>/', views.post_detail, name='post_detail'),
+    path('post/new/', views.post_new, name='post_new'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

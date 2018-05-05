@@ -40,7 +40,7 @@
 					<div class="col-12 animate-box mb-3">
 						<div class="row text-center">
 							<div class="col">
-								<img src="{{ post.photo.url }}" alt="news-one" class="img-fluid mb-4 img-thumbnail">
+								<img src="{{ post.photo_url|default_if_none:'#' }}" alt="news-one" class="img-fluid mb-4 img-thumbnail">
 							</div>
 						</div>
 						<div class="content-block mb-2">

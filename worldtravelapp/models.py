@@ -9,8 +9,7 @@ class Post(models.Model):
     text = models.TextField(verbose_name='Текст статьи')
     created_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
     published_date = models.DateTimeField(blank=True, null=True, verbose_name='Дата публикации')
-    photo_prev = models.ImageField(upload_to='news_images', blank=True, default='', verbose_name='Фото превью')
-    photo = models.ImageField(upload_to='news_images', blank=True, default='', verbose_name='Фото к статье')
+    photo = models.ImageField(upload_to='news_images/', blank=True, default='', verbose_name='Фото к статье')
     tags = models.CharField(max_length=100, verbose_name='Тэги')
 
     class Meta:
@@ -21,6 +20,10 @@ class Post(models.Model):
     def publish(self):
         self.published_date = timezone.now()
         self.save()
+
+    def photo_url(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
 
     def __str__(self):
         return self.title

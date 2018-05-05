@@ -1,0 +1,20 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content_admin %}
+<div class="row bg-white mb-2">
+	<div class="col-12 p-2 text-center">
+		<h4 class="mb-0 text-dark text-uppercase"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</h4>
+	</div>
+	<div class="col-md-12 p-2 bg-green">
+		<div class="row no-gutters text-white">
+			<div class="col-sm-6 offset-sm-3">
+				<form class="needs-validation font-weight-bold" method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+			        {{ form.as_p }}
+			        <button type="submit" class="btn btn-dark">Сохранить</button>
+			    </form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -20,7 +20,7 @@
 				<p class="text-white mb-0">Автор</p>
 			</div>
 			<div class="col-2">
-				<a href="#" class="btn btn-light bg-white font-weight-bold"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add</a>
+				<a href="{% url 'post_new' %}" class="btn btn-light bg-white font-weight-bold"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add</a>
 			</div>
 		</div>
 		{% for post in posts %}
