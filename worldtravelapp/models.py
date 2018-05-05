@@ -20,7 +20,8 @@ class Post(models.Model):
     def publish(self):
         self.published_date = timezone.now()
         self.save()
-
+        
+    @property
     def photo_url(self):
         if self.photo and hasattr(self.photo, 'url'):
             return self.photo.url
