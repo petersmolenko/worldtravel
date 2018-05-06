@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="py-6" style="background: url(/static/images/back_404.jpg) no-repeat;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 				<div class="modal-header">
@@ -16,7 +15,8 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form>
+					<form method="POST">
+						{% csrf_token %}
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Имя пользователя:</label>
 							{% render_field form.username type="text" class="form-control" id="recipient-name" %}
@@ -35,5 +35,4 @@
 				</form>
 			</div>
 		</div>
-	</div>
 {% endblock %}

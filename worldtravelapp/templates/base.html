@@ -66,46 +66,17 @@
 											<li><p class="font-weight-bold text-orange text-center">Pitt Smolenko</p></li>
 											<li><a href="beach-tours.html"><i class="fa fa-id-card mr-2 line-mini" aria-hidden="true"></i>Личный кабинет</a></li>
 											<li><a href="active-tours.html"><i class="fa fa-cogs mr-2 line-mini" aria-hidden="true"></i>Настройки</a></li>
-											<li><a href="weekend-tours.html"><i class="fa fa-sign-out mr-2 line-mini" aria-hidden="true"></i>Выход</a></li>
+											<li><a href="{% url 'auth_logout' %}?next={{request.path}}"><i class="fa fa-sign-out mr-2 line-mini" aria-hidden="true"></i>Выход</a></li>
 										</ul>
 							    </li>
 							{% else %}
-								<li><a href="log_in.html" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fa fa-user-circle-o ml-md-4 font-size-3" aria-hidden="true"></i></a></li>
+								<li><a href="{% url 'auth_login' %}?next={{request.path}}"><i class="fa fa-user-circle-o ml-md-4 font-size-3" aria-hidden="true"></i></a></li>
 							{% endif %}
 						</ul>
 					</nav>
 				</div>
 			</div>
 		</header>
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-						<div class="modal-content">
-						  <div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Авторизация</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							  <span aria-hidden="true">&times;</span>
-							</button>
-						  </div>
-						  <div class="modal-body">
-							<form>
-							  <div class="form-group">
-								<label for="recipient-name" class="col-form-label">Имя пользователя:</label>
-								<input type="text" class="form-control" id="recipient-name">
-							  </div>
-							  <div class="form-group">
-								<label for="password-field" class="col-form-label">Пароль:</label>
-								<input type="password" class="form-control" id="password-field">
-							  </div>
-							</form>
-							  <a class="btn-link" href="sign-up.html">Регистрация</a>
-						  </div>
-						  <div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-							<button type="button" class="btn btn-primary">Войти</button>
-						  </div>
-						</div>
-					  </div>
-		</div>
 		<!-- end:header-top -->
 		{% block hero %}
         {% endblock %}
