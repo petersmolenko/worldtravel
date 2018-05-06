@@ -2178,6 +2178,9 @@ div.cs-select span {
 a:focus {
 	outline: 0!important;
 }
-.w-10 {
-  width: 10% !important;
+.text-green {
+  color: #00AD7C!important;
+}
+.text-orange {
+  color: #F78536;
 }
