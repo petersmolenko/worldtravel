@@ -18,9 +18,11 @@ from django.urls import path, include
 from worldtravelapp import views
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/login/', auth_views.login, {'template_name': 'admin/log_in.html'}, name='auth_login'),
     path('admin/news/', views.admin_news, name='admin_news'),
     path('admin/tours/', views.admin_tours, name='admin_tours'),
     path('admin/orders/', views.admin_orders, name='admin_orders'),

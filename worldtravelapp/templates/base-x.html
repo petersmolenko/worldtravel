@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+	{% block header %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 text-center heading-section animate-box">
+				<h3>{% block title-page %}{% endblock %}</h3>
+				<p>{% block description %}{% endblock %}</p>
+			</div>
+		</div>
+	</div>
+	{% endblock %}

@@ -48,7 +48,7 @@ def post_edit(request, pk):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('admin_news')
     else:
         form = PostForm(instance=post)
     return render(request, 'news/news_edit.html', {'form': form})
