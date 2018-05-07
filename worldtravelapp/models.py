@@ -1,6 +1,20 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='users', verbose_name='Фото профиля')
+    city = models.CharField(max_length=30, verbose_name='Город')
+    birthday = models.DateField(verbose_name='День рождения')
+ 
+    def __unicode__(self):
+        return self.user
+ 
+    class Meta:
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Профили'
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Автор')

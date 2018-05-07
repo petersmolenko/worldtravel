@@ -1,6 +1,17 @@
 from django import forms
 
-from .models import Post
+from .models import Post, UserProfile
+from django.contrib.auth.models import User
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'email', 'first_name', 'last_name')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('avatar', 'city', 'birthday')
 
 class PostForm(forms.ModelForm):
 	class Meta:

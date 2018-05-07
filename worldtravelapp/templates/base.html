@@ -63,7 +63,7 @@
 							    <li>
 							    	<a href="log_in.html"><i class="fa fa-user-circle ml-md-4 font-size-3" aria-hidden="true"></i></a>
 							    		<ul class="sub-menu">
-											<li><p class="font-weight-bold text-orange text-center">Pitt Smolenko</p></li>
+											<li><p class="font-weight-bold text-orange text-center">{{ user.first_name }} {{ user.last_name }}</p></li>
 											<li><a href="beach-tours.html"><i class="fa fa-id-card mr-2 line-mini" aria-hidden="true"></i>Личный кабинет</a></li>
 											<li><a href="active-tours.html"><i class="fa fa-cogs mr-2 line-mini" aria-hidden="true"></i>Настройки</a></li>
 											<li><a href="{% url 'auth_logout' %}?next={{request.path}}"><i class="fa fa-sign-out mr-2 line-mini" aria-hidden="true"></i>Выход</a></li>
