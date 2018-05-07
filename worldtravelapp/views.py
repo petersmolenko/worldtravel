@@ -30,7 +30,7 @@ def sign_up(request):
         'user_profile_form': user_profile_form
         })
 
-@login_required(login_url='/auth/login/')
+@login_required(login_url='/auth/sign-in/')
 def admin_news(request):
 	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 	return render(request, 'admin/admin_news.html', {'posts': posts})
@@ -66,7 +66,7 @@ def post_new(request):
         form = PostForm()
     return render(request, 'news/news_edit.html', {'form': form})
   
-@login_required(login_url='/auth/login/')
+@login_required(login_url='/auth/sign-in/')
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":

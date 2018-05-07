@@ -26,7 +26,7 @@
 							{% render_field form.password type="password" class="form-control" id="password-field" %}
 						</div>
 					
-					<a class="btn-link" href="sign-up.html">Регистрация</a>
+					<a class="btn-link" href="{% url 'auth_sign_up' %}">Регистрация</a>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
