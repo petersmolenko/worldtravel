@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+Администрирование
+{% endblock %}
+
+{% block content %}
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Регистрация</h5>
+				</div>
+				<form class="needs-validation font-weight-bold" novalidate>
+				<div class="modal-body">
+					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltipUsername">Имя пользователя</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-user-o" aria-hidden="true"></i></span>
+								</div>
+								<input type="text" class="form-control" placeholder="Имя пользователя">
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltipUsername">Пароль</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
+								</div>
+								<input type="text" class="form-control" placeholder="Пароль">
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltipUsername">Электронная почта</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+								</div>
+								<input type="text" class="form-control" placeholder="E-mail">
+							</div>
+						</div>
+						<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-8 order-md-2 mb-3 mb-md-0"><button class="btn btn-dark" type="submit">Зарегистрироваться</button></div>
+							<div class="col-md-4"><a class="text-dark" href="#collapseModal" data-toggle="collapse"><i class="fa fa-get-pocket mr-2" aria-hidden="true"></i>Больше</a></div>
+						</div>
+					</div>
+					</div>
+				</div>
+				<div class="collapse" id="collapseModal">
+					<div class="modal-footer">
+					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltip01">Имя</label>
+							<input type="text" class="form-control" id="validationTooltip01" placeholder="Имя">
+						</div>
+						<div class="col-md-12 mb-3">
+								<label for="validationTooltip02">Фамилия</label>
+								<input type="text" class="form-control" id="validationTooltip02" placeholder="Фамилия">
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltip03">Город</label>
+							<input type="text" class="form-control" placeholder="Город">
+							<div class="invalid-tooltip">
+								Please provide a valid city.
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="validationTooltip04">День рождения</label>
+							<input type="text" class="form-control" id="date-birthday" placeholder="мм/дд/гггг">
+							<div class="invalid-tooltip">
+								Please provide a valid state.
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<span class="mr-3">Ваш пол</span>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+								<label class="custom-control-label font-weight-normal" for="customRadioInline1">Мужской</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+								<label class="custom-control-label font-weight-normal" for="customRadioInline2">Женский</label>
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="customFile">
+								<label class="custom-file-label" for="customFile">Загрузить фото</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+				</form>
+			</div>
+		</div>
+{% endblock %}

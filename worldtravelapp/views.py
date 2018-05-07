@@ -4,6 +4,12 @@ from .models import Post
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 
+
+
+def sign_up(request):
+    
+    return render(request, 'admin/sign_up.html', {})
+
 @login_required(login_url='/auth/login/')
 def admin_news(request):
 	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
