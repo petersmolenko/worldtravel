@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='users', verbose_name='Фото профиля')
-    city = models.CharField(max_length=30, verbose_name='Город')
-    birthday = models.DateField(verbose_name='День рождения')
+    avatar = models.ImageField(upload_to='users', blank=True, verbose_name='Фото профиля')
+    city = models.CharField(max_length=30, blank=True, verbose_name='Город')
+    birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
  
     def __unicode__(self):
         return self.user
