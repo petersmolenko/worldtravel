@@ -33,7 +33,9 @@
 
 	//Date Picker
 
-   $('#date-start, #date-end, #birthday_fields').datepicker();
+   $('#date-start, #date-end, #birthday_field').datepicker({
+                    locale: 'ru'
+                });
 
    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
       new SelectFx(el);
