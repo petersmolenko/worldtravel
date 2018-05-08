@@ -42,3 +42,21 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    post = models.ForeignKey('worldtravelapp.Post', related_name='comments', on_delete=models.CASCADE, verbose_name='Пост')
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Автор')
+    text = models.TextField(verbose_name='Текст')
+    created_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
+    approved_comment = models.BooleanField(default=False, verbose_name='Одобренный комментарий')
+
+    class Meta:
+        verbose_name='Комментарий'
+        verbose_name_plural='Комментарии'
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    def __str__(self):
+        return self.text

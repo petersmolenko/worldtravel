@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post, UserProfile
+from .models import Post, UserProfile, Comment
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -24,3 +24,7 @@ class PostForm(forms.ModelForm):
         'tags' : forms.TextInput(attrs={'placeholder' : 'тэг1, тэг2, ..', 'class' : 'form-control'}),
         'photo' : forms.FileInput(attrs={'class' : 'custom-file-input', 'lang' : 'ru'}),
     }
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('author', 'text',)

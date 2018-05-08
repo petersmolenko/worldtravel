@@ -33,6 +33,7 @@ urlpatterns = [
     path('admin/settings/', views.admin_settings, name='admin_settings'),
     path('', views.post_list, name='post_list'),
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
+    path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
     path('post/<int:pk>/publish/', views.post_publish, name='post_publish'),
     path('post/<int:pk>/remove/', views.post_remove, name='post_remove'),
     path('post/new/', views.post_new, name='post_new'),

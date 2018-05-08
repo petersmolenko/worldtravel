@@ -29,8 +29,9 @@
 								<div class="col-12">
 									<span class="posted_by mb-0">{{ post.published_date }}</span>
 								</div>
-								<div class="col-12">
+								<div class="col-12 d-flex justify-content-between">
 									<span class="mb-0 font-weight-bold"><i class="icon-user mr-1"></i>{{ post.author }}</span>
+									<span><a href="{% url 'post_detail' pk=post.pk %}">{{ post.comments.count }}<i class="icon-bubble2 ml-1"></i></a></span>
 								</div>
 							</div>
 							<p>{{ post.short_descript|linebreaksbr }}</p>
