@@ -47,19 +47,19 @@ def admin_news_draft(request):
 @login_required(login_url='/auth/sign-in/')
 def admin_tours(request):
     return render(request, 'admin/admin_tours.html', {})
-    
+
 @login_required(login_url='/auth/sign-in/')
 def admin_mytours(request):
     return render(request, 'admin/admin_mytours.html', {})
-    
+
 @login_required(login_url='/auth/sign-in/')
 def admin_comments(request):
     return render(request, 'admin/admin_comments.html', {})
-    
+
 @login_required(login_url='/auth/sign-in/')
 def admin_orders(request):
     return render(request, 'admin/admin_orders.html', {})
-    
+
 @login_required(login_url='/auth/sign-in/')
 def admin_settings(request):
     return render(request, 'admin/admin_settings.html', {})
@@ -80,7 +80,7 @@ def post_new(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            return redirect('admin_news_draft', pk=post.pk)
+            return redirect('admin_news_draft')
     else:
         form = PostForm()
     return render(request, 'news/news_edit.html', {'form': form})
