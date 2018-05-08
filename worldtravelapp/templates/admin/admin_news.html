@@ -11,7 +11,7 @@
 				<p class="text-white mb-0">Код поста</p>
 			</div>
 			<div class="col-md-2 align-items-center justify-content-center d-none d-md-flex">
-				<p class="text-white mb-0">Время публикации</p>
+				<p class="text-white mb-0">{% block date_news %}{% endblock %}</p>
 			</div>
 			<div class="col-md-4 align-items-center justify-content-center d-none d-md-flex">
 				<p class="text-white mb-0">Заголовок поста</p>
@@ -23,32 +23,15 @@
 				<a href="{% url 'post_new' %}" class="btn btn-light bg-white font-weight-bold"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add</a>
 			</div>
 		</div>
-		{% for post in posts %}
-		<div class="row text-center bg-white no-gutters p-2 mb-1">
-			<div class="col-md-1 d-flex align-items-center justify-content-center">
-				<p class="text-dark mb-0 font-weight-bold sharp_id">{{ post.id }}</p>
-			</div>
-			<div class="col-md-2 d-flex align-items-center justify-content-center">
-				<p class="text-dark mb-0">{{ post.published_date }}</p>
-			</div>
-			<div class="col-md-4 d-flex align-items-center justify-content-center">
-				<a href="{% url 'post_detail' pk=post.id %}"><p class="text-dark mb-0">{{ post.title }}</p></a>
-			</div>
-			<div class="col-md-3 d-flex align-items-center justify-content-center">
-				<p class="text-dark mb-0 font-weight-bold">
-				{% if post.author.last_name and post.author.first_name %}
-				    {{ post.author.first_name }} {{ post.author.last_name }}
-				{% else %}
-				    {{ post.author }}
-				{% endif %}
-				</p>
-			</div>
-			<div class="col-md-2 d-flex align-items-center justify-content-center">
-				<a href="{% url 'post_edit' pk=post.pk %}"><p class="font-size-2 mr-3 mb-0 raport"><i class="fa fa-pencil" aria-hidden="true"></i></p></a>
-				<a href=""><p class="font-size-2  mb-0 raport"><i class="fa fa-times" aria-hidden="true"></i></p></a>
+		<div class="col-12 text-center bg-dark circle-h d-flex justify-content-between">
+			<p class="font-weight-bold font-size-1 text-white p-2 text-uppercase mb-1 circle-h">{% block title_news_status %}{% endblock %}</p>
+			<div class="d-flex justify-content-between">
+				<a href="{% url 'admin_news_ok' %}" title="Опубликованные"><p class="font-size-2  mb-0 text-white"><i class="fa fa-bullhorn mr-3" aria-hidden="true"></i></p></a>
+				<a href="{% url 'admin_news_draft' %}" title="Черновик"><p class="font-size-2  mb-0"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></p></a>
 			</div>
 		</div>
-		{% endfor %}									
+		{% block content_news_admin %}
+		{% endblock %}								
 	</div>
 </div>
 {% endblock %}

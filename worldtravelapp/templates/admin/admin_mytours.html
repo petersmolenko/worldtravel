@@ -1,0 +1,171 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content_admin %}
+<div class="row bg-white mb-2">
+	<div class="col-12 bg-white">
+		<h4 class="my-2 text-dark text-uppercase text-center">Мои туры</h4>
+		<nav class="mb-3 text-center">
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<a class="nav-item nav-link-top nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa fa-star mr-1" aria-hidden="true"></i>Мои желания</a>
+				<a class="nav-item nav-link-top nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fa fa-pencil-square-o mr-1" aria-hidden="true"></i>Текущие заказы</a>
+				<a class="nav-item nav-link-top nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa fa-history mr-1" aria-hidden="true"></i>История</a>
+			</div>
+		</nav>
+	</div>
+	<div class="col-12 p-0">
+		<div class="tab-content" id="nav-tabContent">
+			<div class="tab-pane fade show active bg-green p-1" id="nav-home">
+				<div class="row no-gutters mb-1">
+					<div class="col-12 bg-green px-1 pt-1">
+						<div class="row no-gutters bg-green pb-2 pt-0 d-none d-md-flex">
+							<div class="col-md-9 offset-md-3 ">
+								<div class="row no-gutters">
+									<div class="col-md-4 text-center">
+										<p class="mb-0 font-weight-bold text-white">Название тура</p>
+									</div>
+									<div class="col-md-3 text-center">
+										<p class="mb-0 font-weight-bold text-white">Цена</p>
+									</div>
+									<div class="col-md-3 text-center">
+										<p class="mb-0 font-weight-bold text-white">Количество</p>
+									</div>
+									<div class="col-md-2 text-center">
+										<p class="mb-0 font-weight-bold text-white">Сумма</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 bg-green">
+						<div class="row no-gutters text-center bg-white">
+							<div class="col-md-3">
+								<img src="/static/images/image_tour_2.jpg" alt="" class="img-fluid">
+							</div>
+							<div class="col-md-9">
+								<div class="row no-gutters">
+									<div class="col-md-4 p-2 pl-3">
+										<p class="mb-0 big-discript"><span class="font-weight-bold">R28.0</span> Прага - Мюнхен - Вена - Баварские Замки</p>
+									</div>
+									<div class="col-md-3 p-2">
+										<p class="money mb-0 descript">39000</p>
+									</div>
+									<div class="col-md-3 p-2">
+										<input type="number" name="summy" id="" class="w-50 count-serv" value="1">
+									</div>
+									<div class="col-md-2 p-2">
+										<p class="money mb-0 descript">39000</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3 py-4">
+										<a class="" data-toggle="collapse" href="#collapseService" ><i class="fa fa-get-pocket mr-2" aria-hidden="true"></i>Больше</a>
+									</div>
+									<div class="col-md-6 offset-md-3 p-2">
+										<button class="btn btn-primary bg-dark"><i class="fa fa-shopping-bag mr-2" aria-hidden="true"></i>Заказать</button>
+										<button class="btn btn-primary bg-dark"><i class="fa fa-trash mx-2" aria-hidden="true"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row no-gutters collapse" id="collapseService">
+							<div class="col-12">
+								<div class="row no-gutters bg-white d-none d-md-flex">
+									<div class="col-12 p-2">
+										<div class="row">						
+											<div class="col-md-4 text-center">
+												<p class="mb-0 font-weight-bold">Название услуги</p>
+											</div>
+											<div class="col-md-3 text-center">
+												<p class="mb-0 font-weight-bold">Цена</p>
+											</div>
+											<div class="col-md-3 text-center">
+												<p class="mb-0 font-weight-bold">Количество</p>
+											</div>
+											<div class="col-md-2 text-center">
+												<p class="mb-0 font-weight-bold">Сумма</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row no-gutters bg-green p-1">
+									<div class="col-12 text-center">
+										<p class="text-white text-uppercase mb-0">Базовые услуги</p>
+									</div>
+								</div>
+								<div class="row no-gutters bg-white mb-1 serv-container">
+									<div class="col-md-4 bg-orange p-2">
+										<p class="mb-0 text-white text-center text-md-left">Туркласс</p>
+									</div>
+									<div class="col-md-3 text-center p-2">
+										<p class="mb-0 money mb-0 price-val">39000</p>
+									</div>
+									<div class="col-md-3 text-center d-flex justify-content-center p-2">
+										<input type="number" name="count-serv" class="w-50 count-serv" placeholder="0" value="1"/>
+									</div>
+									<div class="col-md-2 text-center p-2">
+										<p class="mb-0 money mb-0 sum-val">12000</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade bg-green p-2" id="nav-profile">
+				<div class="row text-center font-weight-bold d-none d-md-flex">
+					<div class="col-md-2">
+						<p class="text-white">Код заказа</p>
+					</div>
+					<div class="col-md-2">
+						<p class="text-white">Дата</p>
+					</div>
+					<div class="col-md-3">
+						<p class="text-white">Название тура</p>
+					</div>
+					<div class="col-md-3">
+						<p class="text-white">Сумма</p>
+					</div>
+					<div class="col-auto"></div>
+				</div>
+				<div class="row text-center bg-white no-gutters p-2 mb-1">
+					<div class="col-md-2 d-flex align-items-center justify-content-center">
+						<p class="text-dark mb-0 font-weight-bold">#53412</p>
+					</div>
+					<div class="col-md-2 d-flex align-items-center justify-content-center">
+						<p class="text-dark mb-0">23.04.2018</p>
+					</div>
+					<div class="col-md-3 d-flex align-items-center justify-content-center">
+						<p class="text-dark mb-0">R28.0 Прага - Мюнхен - Вена - Баварские Замки</p>
+					</div>
+					<div class="col-md-3 d-flex align-items-center justify-content-center">
+						<p class="text-dark mb-0 money font-weight-bold">41780</p>
+					</div>
+					<div class="col-md-2 d-flex align-items-center justify-content-center">
+						<a href=""><p class="font-size-3 mb-0 raport"><i class="fa fa-file-text" aria-hidden="true"></i></p></a>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade bg-green" id="nav-contact">
+				<table class="table table-hover table-light mb-0">
+					<thead>
+						<tr class="bg-green text-white">
+							<th scope="col">Код заказа</th>
+							<th scope="col">Название тура</th>
+							<th scope="col">Сумма</th>
+							<th scope="col">Дата заказа</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">1893</th>
+							<td>R28.0 Прага - Мюнхен - Вена - Баварские Замки</td>
+							<td><span class="money">39850</span></td>
+							<td>23/04/2018</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

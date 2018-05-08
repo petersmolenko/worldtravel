@@ -70,7 +70,13 @@
 										</ul>
 							    </li>
 							{% else %}
-								<li><a href="{% url 'auth_login' %}?next={{request.path}}"><i class="fa fa-user-circle-o ml-md-4 font-size-3" aria-hidden="true"></i></a></li>
+								<li>
+									<a href="{% url 'auth_login' %}?next={{request.path}}"><i class="fa fa-user-circle-o ml-md-4 font-size-3" aria-hidden="true"></i></a>
+									<ul class="sub-menu">
+											<li><a href="{% url 'auth_login' %}?next={{request.path}}"><i class="fa fa-sign-in mr-2 line-mini" aria-hidden="true"></i>Вход</a></li>
+											<li><a href="{% url 'auth_sign_up' %}"><i class="fa fa-user-plus mr-2 line-mini" aria-hidden="true"></i>Регистрация</a></li>
+										</ul>
+								</li>
 							{% endif %}
 						</ul>
 					</nav>

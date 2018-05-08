@@ -15,6 +15,9 @@
 					</button>
 				</div>
 				<div class="modal-body">
+					 {% if form.errors %}
+				        <p class="text-danger">Ваше имя и пароль не совпадают. Попробуйте ещё раз.</p>
+				    {% endif %}
 					<form method="POST">
 						{% csrf_token %}
 						<div class="form-group">

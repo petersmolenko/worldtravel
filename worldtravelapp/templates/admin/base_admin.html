@@ -28,10 +28,23 @@
 									<a class="nav-link d-block" href="{% url 'admin_news' %}"><i class="fa fa-newspaper-o mr-2" aria-hidden="true"></i>Новости</a>
 								  </li>
 								  <li class="nav-item">
+									<a class="nav-link d-block" href="{% url 'admin_news' %}"><i class="fa fa-commenting mr-2" aria-hidden="true"></i>Сообщения</a>
+								  </li>
+								  <li class="nav-item">
+									<a class="nav-link d-block" href="{% url 'admin_news' %}"><i class="fa fa-users mr-2" aria-hidden="true"></i>Персонал</a>
+								  </li>
+								  <hr>
+								  <li class="nav-item">
+									<a class="nav-link d-block" href="{% url 'admin_mytours' %}"><i class="fa fa-bus mr-2" aria-hidden="true"></i>Мои туры</a>
+								  </li>
+								  <li class="nav-item">
+									<a class="nav-link d-block" href="{% url 'admin_comments' %}"><i class="fa fa-comments mr-2" aria-hidden="true"></i>Отзывы</a>
+								  </li>
+								  <li class="nav-item">
 									<a class="nav-link d-block" href="{% url 'admin_settings' %}"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</a>
 								  </li>
 								  <li class="">
-									<a class="nav-link d-block active" href="#"><i class="fa fa-window-close mr-2" aria-hidden="true"></i>Выход</a>
+									<a class="nav-link d-block active" href="{% url 'auth_logout' %}"><i class="fa fa-window-close mr-2" aria-hidden="true"></i>Выход</a>
 								  </li>
 								</ul>
 							</div>

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container" id="news">
+	<div class="container" id="news">
 				<div class="row bg-white">
 					<div class="col-12 animate-box mb-3 text-center">
 						<div class="row">
@@ -21,7 +21,7 @@
 							</div>
 							<div class="col-lg-5 breadcrumb mb-0">
 								<span class="mr-4 addi"><i class="icon-user mr-1"></i>{{ post.author }}</span>
-								<span class="publish-date"><i class="mr-1 icon-calendar"></i>{% if post.published_date %}{{ post.published_date }}{% endif %}</span>
+								<span class="publish-date"><i class="mr-1 icon-calendar"></i>{% if post.published_date %}{{ post.published_date }}{% else %}{{ post.created_date }} <span class="badge badge-secondary ml-2 px-2 font-size-1">Черновик</span>{% endif %}</span>
 							</div>
 						</div>
 						<hr class="mb-2 mb-md-5 mt-0">
@@ -47,5 +47,37 @@
 						<hr>
 					</div>
 				</div>
+				<div class="row bg-white">
+					<div class="col-12 p-2 text-center">
+						<h4 class="mb-0 text-dark">Комментарии</h4>
+					</div>
+				</div>
+				<div class="row bg-orange p-3">
+					<div class="col-md-2 p-3 d-flex align-items-center  flex-column">
+						<img src="/static/images/profile-photo.jpg" class="img-fluid rounded-circle w-50 d-none d-md-flex ml-md-4 border-3 border-white border" alt="">
+						<p class="text-white font-weight-bold pt-2">Pitt Smolenko</p>
+					</div>
+					<div class="col-md-10">
+						<blockquote class="blockquote-edit p-2 bg-white">
+							<span class="tringle">&#9668;</span>
+							<p>&ldquo;Большое спасибо за наш отдых в Испании в Салоу на побережье Коста Дорада. В Барселону ездили в зоопарк и аквариум, были в Монако и Монте Карло, в Ницце, в Портавентуре.  Отель Belvedere 3* на самом деле очень классный, расположение просто супер!&rdquo;</p>
+							<span class="text-dark font-weight-bold mx-2"><i class="fa fa-pencil mr-1" aria-hidden="true"></i>Редактировать</span>
+							<span class="font-weight-bold"><i class="fa fa-trash mr-1" aria-hidden="true"></i>Удалить</span>
+							<span class="subtext text-right float-right font-italic px-3"><i class="fa fa-calendar mr-1" aria-hidden="true"></i>24.03.2018</span>
+						</blockquote>
+					</div>
+				</div>
+				<div class="row bg-orange pt-2">
+					<div class="col-lg-8 offset-lg-2">
+						<div class="form-group">
+							<textarea name="" class="form-control" id="" cols="30" rows="7" placeholder="Ваш отзыв"></textarea>
+						</div>
+					</div>
+					<div class="col-md-3 offset-md-8">
+						<div class="form-group">
+							<input type="submit" value="Отправить" class="btn btn-primary bg-white text-dark">
+						</div>
+					</div>
 			</div>
+	</div>
 {% endblock %}
