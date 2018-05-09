@@ -11,7 +11,7 @@
 					<div class="col-md-3 animate-box bg-white p-3">
 						<div class="row mb-2">
 							<div class="col-12 text-center">
-								<img src="{{ user.profile.avatar.url }}" class="img-fluid rounded mb-1" alt="">
+								<img src="{{ user.profile.photo_url }}" class="img-fluid rounded mb-1" alt="">
 								<p class="text-dark font-weight-bold mb-0">{% if user.first_name and user.last_name  %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</p>
 								<p class="mb-0"><small>{{ user.email }}</small></p>
 								<p class="mb-0 info-profile"><strong class="font-weight-bold">Город:</strong> {{ user.profile.city }}</p>
@@ -20,6 +20,7 @@
 							</div>
 							<div class="col-12">
 								<ul class="nav nav-tabs" id="myTab" role="tablist">
+								{% if perms.worldtravelapp.add_post %}
 								  <li class="nav-item">
 									<a class="nav-link d-block" href="{% url 'admin_orders' %}"><i class="fa fa-tasks mr-2" aria-hidden="true"></i>Заказы</a>
 								  </li>
@@ -36,14 +37,15 @@
 									<a class="nav-link d-block" href="{% url 'admin_news' %}"><i class="fa fa-users mr-2" aria-hidden="true"></i>Персонал</a>
 								  </li>
 								  <hr>
+								  {% endif %}
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_mytours' %}"><i class="fa fa-bus mr-2" aria-hidden="true"></i>Мои туры</a>
+									<a class="nav-link d-block" href="{% url 'user_mytours' %}"><i class="fa fa-bus mr-2" aria-hidden="true"></i>Мои туры</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_comments' %}"><i class="fa fa-comments mr-2" aria-hidden="true"></i>Отзывы</a>
+									<a class="nav-link d-block" href="{% url 'user_comments' %}"><i class="fa fa-comments mr-2" aria-hidden="true"></i>Отзывы</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_settings' %}"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</a>
+									<a class="nav-link d-block" href="{% url 'user_settings' %}"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</a>
 								  </li>
 								  <li class="">
 									<a class="nav-link d-block active" href="{% url 'auth_logout' %}"><i class="fa fa-window-close mr-2" aria-hidden="true"></i>Выход</a>

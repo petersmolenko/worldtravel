@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, UserProfile, Comment
+from .models import Post, UserProfile, Comment, Tour
 from .forms import PostForm, UserForm, UserProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Permission
@@ -33,50 +33,109 @@ def sign_up(request):
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
-def admin_news(request):
-    return redirect('admin_news_ok')
+def admin_room(request):
+    return redirect('admin_orders')
 
-@login_required(login_url='/auth/sign-in/')
-def admin_news_ok(request):
-	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-	return render(request, 'admin/admin_news_ok.html', {'posts': posts})
-
-@login_required(login_url='/auth/sign-in/')
-def admin_news_draft(request):
-    posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
-    return render(request, 'admin/admin_news_draft.html', {'posts': posts})
-
-@login_required(login_url='/auth/sign-in/')
-def admin_tours(request):
-    return render(request, 'admin/admin_tours.html', {})
-
-@login_required(login_url='/auth/sign-in/')
-def admin_mytours(request):
-    return render(request, 'admin/admin_mytours.html', {})
-
-@login_required(login_url='/auth/sign-in/')
-def admin_comments(request):
-    return render(request, 'admin/admin_comments.html', {})
 
 @login_required(login_url='/auth/sign-in/')
 def admin_orders(request):
     return render(request, 'admin/admin_orders.html', {})
 
+
 @login_required(login_url='/auth/sign-in/')
-def admin_settings(request):
-    return render(request, 'admin/admin_settings.html', {})
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_tours(request):
+    return render(request, 'admin/admin_tours.html', {})
+
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_news(request):
+    return redirect('admin_news_ok')
+
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_news_ok(request):
+	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+	return render(request, 'admin/admin_news_ok.html', {'posts': posts})
+
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_news_draft(request):
+    posts = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
+    return render(request, 'admin/admin_news_draft.html', {'posts': posts})
+
+
+
+
+
+
+
+
+@login_required(login_url='/auth/sign-in/')
+def user_room(request):
+    return redirect('user_mytours')
+
+
+@login_required(login_url='/auth/sign-in/')
+def user_mytours(request):
+    return render(request, 'user/user_mytours.html', {})
+
+
+@login_required(login_url='/auth/sign-in/')
+def user_comments(request):
+    return render(request, 'user/user_comments.html', {})
+
+
+@login_required(login_url='/auth/sign-in/')
+def user_settings(request):
+    user = request.user
+    #---------To created in console users--------
+    if not UserProfile.objects.filter(user=user):
+        profile_form = UserProfileForm()
+        new_profile = profile_form.save(commit=False)
+        new_profile.user = request.user
+        new_profile.save()
+    #---------------------------------------------
+    user_profile = UserProfile.objects.get(user=user)
+    if request.method == "POST":
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.save()
+            user_profile = profile_form.save()
+            user_profile.save()
+            return redirect('user_settings')
+    else:
+        user_form = UserForm(instance=user)
+        profile_form = UserProfileForm(instance=user_profile)
+    return render(request, 'user/user_settings.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+        })
+
+
+
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'news/news.html', {'posts': posts})
 
+
 def post_detail(request, pk):
+    dates = Tour.objects.get(pk=1)
     comments = Comment.objects.filter(post=pk)
     post = get_object_or_404(Post, pk=pk)
     post.tags = post.tags.split(',')
     form = CommentForm()
-    return render(request, 'news/news_detail.html', {'post': post, 'comments': comments, 'form': form})
+    return render(request, 'news/news_detail.html', {'post': post, 'dates': dates, 'comments': comments, 'form': form})
 
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
@@ -89,15 +148,22 @@ def post_new(request):
         form = PostForm()
     return render(request, 'news/news_edit.html', {'form': form})
 
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.publish()
-    return redirect('admin_news', pk=pk)
+    return redirect('admin_news')
 
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('admin_news')
+
 
 @login_required(login_url='/auth/sign-in/')
 def post_edit(request, pk):
@@ -113,7 +179,8 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'news/news_edit.html', {'form': form})
 
-@login_required
+
+@login_required(login_url='/auth/sign-in/')
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -125,12 +192,17 @@ def add_comment_to_post(request, pk):
             comment.save()
             return redirect('post_detail', pk=post.pk)
 
-@login_required
+
+
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.delete_comment', login_url='/')
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
     return redirect('post_detail', pk=comment.post.pk)
 
+@permission_required('worldtravelapp.delete_comment', login_url='/')
 @login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)

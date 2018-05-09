@@ -64,8 +64,8 @@
 							    	<a href="log_in.html"><i class="fa fa-user-circle ml-md-4 font-size-3" aria-hidden="true"></i></a>
 							    		<ul class="sub-menu">
 											<li><p class="font-weight-bold text-orange text-center">{% if user.first_name and user.last_name  %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</p></li>
-											<li><a href="beach-tours.html"><i class="fa fa-id-card mr-2 line-mini" aria-hidden="true"></i>Личный кабинет</a></li>
-											<li><a href="active-tours.html"><i class="fa fa-cogs mr-2 line-mini" aria-hidden="true"></i>Настройки</a></li>
+											<li><a href="{% if perms.worldtravelapp.add_post %}{% url 'admin_room' %}{% else %}{% url 'user_room' %}{% endif %}"><i class="fa fa-id-card mr-2 line-mini" aria-hidden="true"></i>Личный кабинет</a></li>
+											<li><a href="{% url 'user_settings' %}"><i class="fa fa-cogs mr-2 line-mini" aria-hidden="true"></i>Настройки</a></li>
 											<li><a href="{% url 'auth_logout' %}?next={{request.path}}"><i class="fa fa-sign-out mr-2 line-mini" aria-hidden="true"></i>Выход</a></li>
 										</ul>
 							    </li>

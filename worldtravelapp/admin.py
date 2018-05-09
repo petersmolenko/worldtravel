@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment
+from .models import Post, Comment, NearestDate, Tour, Message, Worker, Review
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from .models import UserProfile
@@ -25,3 +25,8 @@ class AdminPost(admin.ModelAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Post, AdminPost)
+admin.site.register(NearestDate)
+admin.site.register(Tour)
+admin.site.register(Message)
+admin.site.register(Worker)
+admin.site.register(Review)

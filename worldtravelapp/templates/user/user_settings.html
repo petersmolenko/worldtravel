@@ -1,0 +1,72 @@
+{% extends 'admin/base_admin.html' %}
+{% load widget_tweaks %}
+
+
+{% block content_admin %}
+<div class="row bg-white mb-2">
+	<div class="col-12 p-2 text-center">
+		<h4 class="mb-0 text-dark text-uppercase"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</h4>
+	</div>
+	<div class="col-md-12 p-2 bg-green">
+		<div class="row no-gutters text-white">
+			<div class="col-sm-6 offset-sm-3">
+				<form class="needs-validation font-weight-bold" novalidate method="POST" enctype="multipart/form-data">{% csrf_token %}
+					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<label for="username_field">Имя пользователя</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-user-o" aria-hidden="true"></i></span>
+								</div>
+								{% render_field user_form.username placeholder="Имя пользователя" class="form-control" id="username_field" %}
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="password_field">Пароль</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
+								</div>
+								{% render_field user_form.password placeholder="Пароль" class="form-control" id="password_field" type="password" %}
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="email_field">Электронная почта</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+								</div>
+								{% render_field user_form.email placeholder="E-mail" class="form-control" id="email_field" %}
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<label for="first_name_field">Имя</label>
+							{% render_field user_form.first_name placeholder="Имя" class="form-control" id="first_name_field" %}
+						</div>
+						<div class="col-md-12 mb-3">
+								<label for="last_name_field">Фамилия</label>
+								{% render_field user_form.last_name placeholder="Фамилия" class="form-control" id="last_name_field" %}
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="city_field">Город</label>
+							{% render_field profile_form.city placeholder="Город" class="form-control" id="city_field" %}
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="birthday_field">День рождения</label>
+							{% render_field profile_form.birthday placeholder="дд.мм.гггг" class="form-control" id="birthday_field" data-date-format="dd.mm.yyyy" %}
+						</div>
+						<div class="col-md-12 mb-3">
+							<div class="custom-file">
+								{% render_field profile_form.avatar class="file-input" id="avatar_field" %}
+							</div>
+						</div>
+					</div>
+					<button class="btn btn-primary bg-white text-dark" type="submit">Изменить</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

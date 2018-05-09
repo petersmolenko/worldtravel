@@ -58,7 +58,7 @@
 				{% if user.is_authenticated or comment.approved_comment %}
 				<div class="row bg-orange px-3 pt-3 pb-0">
 					<div class="col-md-2 p-3 d-flex align-items-center  flex-column">
-						<img src="/static/images/profile-photo.jpg" class="img-fluid rounded-circle w-50 d-none d-md-flex ml-md-4 border-3 border-white border" alt="">
+						<img src="{{ comment.author.profile.avatar.url }}" class="img-fluid rounded-circle w-50 d-none d-md-flex ml-md-4 border-3 border-white border" alt="">
 						<p class="text-white font-weight-bold pt-2">{{ comment.author }}</p>
 					</div>
 					<div class="col-md-10">
@@ -66,7 +66,7 @@
 							<span class="tringle">&#9668;</span>
 							<p>&ldquo;{{ comment.text }}&rdquo;</p>
 							<span class="subtext font-italic px-3 mr-2"><i class="fa fa-calendar mr-1" aria-hidden="true"></i>{{ comment.created_date }}</span>
-							{% if not comment.approved_comment %}
+							{% if not comment.approved_comment and perms.worldtravelapp.delete_comment %}
 				                <a class="" href="{% url 'comment_approve' pk=comment.pk %}"><span class="text-dark fa fa-check-circle mx-2"></span></a>
 				                <a class="" href="{% url 'comment_remove' pk=comment.pk %}"><span class="font-weight-bold"><i class="fa fa-trash mr-1" aria-hidden="true"></i></span></a>
 				            {% endif %}
