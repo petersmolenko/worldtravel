@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, UserProfile
+from .models import Post, UserProfile, Comment
 from .forms import PostForm, UserForm, UserProfileForm, CommentForm
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login
 
 
@@ -31,6 +32,7 @@ def sign_up(request):
         })
 
 @login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
 def admin_news(request):
     return redirect('admin_news_ok')
 
@@ -69,9 +71,11 @@ def post_list(request):
     return render(request, 'news/news.html', {'posts': posts})
 
 def post_detail(request, pk):
+    comments = Comment.objects.filter(post=pk)
     post = get_object_or_404(Post, pk=pk)
     post.tags = post.tags.split(',')
-    return render(request, 'news/news_detail.html', {'post': post})
+    form = CommentForm()
+    return render(request, 'news/news_detail.html', {'post': post, 'comments': comments, 'form': form})
 
 def post_new(request):
     if request.method == "POST":
@@ -109,6 +113,7 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'news/news_edit.html', {'form': form})
 
+@login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -119,6 +124,15 @@ def add_comment_to_post(request, pk):
             comment.author = request.user
             comment.save()
             return redirect('post_detail', pk=post.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.approve()
+    return redirect('post_detail', pk=comment.post.pk)
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('post_detail', pk=comment.post.pk)

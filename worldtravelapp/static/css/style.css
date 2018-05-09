@@ -2154,6 +2154,9 @@ div.cs-select span {
 .font-size-3 {
 	font-size: 2em;
 }
+.font-size-xl {
+  font-size: 5em!important;
+}
 .raport {
 	transition: all .2s linear;
 	color: #343a40;

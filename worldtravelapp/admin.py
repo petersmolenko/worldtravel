@@ -13,8 +13,15 @@ class UserInline(admin.StackedInline):
 class UserAdmin(UserAdmin):
     inlines = (UserInline, )
  
+
+class PostInline(admin.StackedInline):
+	model = Comment
+	extra = 1
+
+class AdminPost(admin.ModelAdmin):
+	list_display = ['title', 'created_date']
+	inlines = [PostInline]
 # Перерегистрируем модель User
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-admin.site.register(Post)
-admin.site.register(Comment)
+admin.site.register(Post, AdminPost)

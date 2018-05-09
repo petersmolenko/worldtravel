@@ -11,9 +11,11 @@
 					<div class="col-md-3 animate-box bg-white p-3">
 						<div class="row mb-2">
 							<div class="col-12 text-center">
-								<img src="/static/images/profile-photo.jpg" class="img-fluid rounded mb-1" alt="">
-								<p class="text-dark font-weight-bold mb-0">Pitt Smolenko</p>
-								<p class="mb-0"><small>pittsmolenko@gmail.com</small></p>
+								<img src="{{ user.profile.avatar.url }}" class="img-fluid rounded mb-1" alt="">
+								<p class="text-dark font-weight-bold mb-0">{% if user.first_name and user.last_name  %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</p>
+								<p class="mb-0"><small>{{ user.email }}</small></p>
+								<p class="mb-0 info-profile"><strong class="font-weight-bold">Город:</strong> {{ user.profile.city }}</p>
+								<p class="mb-0 info-profile"><strong class="font-weight-bold">День рождения:</strong> {{ user.profile.birthday|date:"d.m.Y" }}</p>
 								<hr class="hr-margin-low">
 							</div>
 							<div class="col-12">

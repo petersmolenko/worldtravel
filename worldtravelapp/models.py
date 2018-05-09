@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     avatar = models.ImageField(upload_to='users', blank=True, verbose_name='Фото профиля')
     city = models.CharField(max_length=30, blank=True, verbose_name='Город')
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
@@ -34,6 +34,9 @@ class Post(models.Model):
     def publish(self):
         self.published_date = timezone.now()
         self.save()
+
+    def approved_comments(self):
+        return self.comments.filter(approved_comment=True)
         
     @property
     def photo_url(self):
