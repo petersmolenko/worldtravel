@@ -35,6 +35,8 @@ urlpatterns = [
     path('admin/news/drafts/', views.admin_news_draft, name='admin_news_draft'),
     path('admin/tours/', views.admin_tours, name='admin_tours'),
     path('admin/orders/', views.admin_orders, name='admin_orders'),
+    path('admin/workers/', views.admin_workers, name='admin_workers'),
+    path('admin/messages/', views.admin_messages, name='admin_messages'),
 
     path('user/room/', views.user_room, name='user_room'),
     path('user/comments/', views.user_comments, name='user_comments'),

@@ -19,6 +19,13 @@
 				{% if password_form.errors %}
 					<p class="text-danger">Ошибка password_form. Попробуйте ещё раз.</p>
 				{% endif %}
+				{% if messages %}
+				    {% for message in messages %}
+				        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+				            {{ message }}
+				        </p>
+				    {% endfor %}
+				{% endif %}
 				<form class="needs-validation font-weight-bold" novalidate method="POST" enctype="multipart/form-data">{% csrf_token %}
 					<div class="form-row">
 						<div class="col-md-12 mb-3">

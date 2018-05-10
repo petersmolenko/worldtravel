@@ -2190,3 +2190,7 @@ a:focus {
 .circle-h {
   border-radius: 5px;
 }
+.crop {
+  height: 200px;
+  overflow: hidden;
+}

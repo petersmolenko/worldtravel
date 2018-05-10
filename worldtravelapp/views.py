@@ -8,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 
 
 
@@ -48,6 +49,16 @@ def admin_orders(request):
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_tours(request):
     return render(request, 'admin/admin_tours.html', {})
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_workers(request):
+    return render(request, 'admin/admin_workers.html', {})
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_messages(request):
+    return render(request, 'admin/admin_messages.html', {})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -114,6 +125,9 @@ def user_settings(request):
             if password_form.is_valid():
                 password_user = password_form.save()
                 update_session_auth_hash(request, password_user)
+                messages.success(request, 'Ваш пароль успешно изменен!')
+            else:
+                messages.error(request, 'Исправьте ошибки!')
             return redirect('user_settings')
     else:
         user_form = UserForm(instance=user)

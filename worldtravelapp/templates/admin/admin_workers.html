@@ -1,0 +1,30 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block content_admin %}
+		<div class="row text-center bg-white no-gutters p-2 mb-1">
+				<div class="col-12 p-2 text-center">
+					<h4 class="mb-0 text-dark text-uppercase"><i class="fa fa-cogs mr-2"></i>Настройки</h4>
+				</div>
+				<div class="col-md-12 p-2 bg-green">
+		<div class="row no-gutters text-white">
+			<div class="col-md-4">
+				<div class="card">
+					<div class="crop">
+						<img class="card-img-top crop" src="/static/images/person-3.jpg" alt="Card image cap">
+					</div>
+				  <div class="card-body">
+				    <p class="mb-0"><span class="font-weight-bold">Имя:</span> Ева Павлова</p>
+					<p class="mb-0"><span class="font-weight-bold">Должность:</span> Менеджер</p>
+					<a href="#"><span class="font-size-2 mr-3 mb-0 raport" title="Редактировать"><i class="fa fa-pencil" aria-hidden="true"></i></span></a>
+					<a href="#"><span class="font-size-2  mb-0 raport" title="Удалить"><i class="fa fa-times" aria-hidden="true"></i></span></a>
+				  </div>
+				</div>
+			</div>
+			<div class="col-md-2 d-flex align-items-center justify-content-center">
+				<a href="#"><p class="font-size-2 mr-3 mb-0 raport" title="Редактировать"><i class="fa fa-pencil" aria-hidden="true"></i></p></a>
+				<a href="#"><p class="font-size-2  mb-0 raport" title="Удалить"><i class="fa fa-times" aria-hidden="true"></i></p></a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
