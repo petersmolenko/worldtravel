@@ -31,7 +31,6 @@
 		<link rel="stylesheet" href="{% static 'css/cs-skin-border.css' %}">
 
 		<link rel="stylesheet" href="{% static 'css/style.css' %}">
-		<link rel="stylesheet" href="{% static 'css/fileinput.min.css' %}">
 			<!-- Modernizr JS -->
 		<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
 	</head>
@@ -59,7 +58,7 @@
 							</li>
 							<li class="active"><a href="{% url 'post_list' %}">Новости</a></li>
 							<li><a href="contact.html">Контакты</a></li>
-							<li><a href="about_us.html">О нас</a></li>
+							<li><a href="{% url 'about_us' %}">О нас</a></li>
 							{% if user.is_authenticated %}
 							    <li>
 							    	<a href="log_in.html"><i class="fa fa-user-circle ml-md-4 font-size-3" aria-hidden="true"></i></a>
@@ -188,7 +187,6 @@
 	<!-- Date Picker -->
 	<script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
 	<!-- CS Select -->
-	<script src="{% static 'js/fileinput.min.js' %}"></script>
 	<script src="{% static 'js/classie.js' %}"></script>
 	<script src="{% static 'js/selectFx.js' %}"></script>
 	

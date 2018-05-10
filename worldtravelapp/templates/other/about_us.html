@@ -1,0 +1,231 @@
+{% extends 'base-xx.html' %}
+
+
+{% block title %}
+О нас
+{% endblock %}
+
+{% block title-page %}
+О нас
+{% endblock %}
+
+{% block description %}
+Туристическая фирма «Мир» - это позитивная команда молодых, активных и целеустремлённых туристов. Мы приглашаем вас в увлекательные путешествия по России, зарубежью.
+{% endblock %}
+
+{% block content_ex %}
+	<div id="team" class="about bg-white">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 animate-box mb-3 text-center">
+						<h3>Наша команда</h3>
+					</div>
+					{% for worker in workers %}
+					<div class="col-sm-6 col-md-4 col-lg-3 animate-box">
+						<div>
+							<div class="photobox photobox_type17">
+								<div class="photobox__previewbox">
+								  <img src="{{ worker.photo_url }}" class="photobox__preview img-fluid" alt="Preview">
+								  <span class="photobox__label"><span>{{ worker.first_name|capfirst }}</span>{{ worker.job|lower }}</span>
+								</div>
+							  </div>
+							<div class="person-caption">
+								<h2>{{ worker.first_name|capfirst }} {{ worker.last_name|capfirst }}</h2>
+								<h3>{{ worker.job|capfirst }}</h3>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	<div class="section-gray empty-cell"></div>
+		<div id="work" class="about">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-md-5 animate-box bg-white">
+						<div class="row">
+							<div class="col-12 mb-3 text-center">
+								<h3>Направления деятельности</h3>
+							</div>
+							<div class="col-12">
+								<div class="feature-left">
+									<span class="icon">
+										<i class="icon-compass"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Активный туризм</h3>
+										<p>Сплавы, пешие и велопоходы, восхождения в горы, горнолыжные туры, конные туры, мультиактивные туры, рыбалка.</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left">
+									<span class="icon">
+										<i class="icon-anchor"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Пляжный отдых</h3>
+										<p>Крым, Краснодарский край, Абхазия, заграничный отдых.</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left">
+									<span class="icon">
+										<i class="icon-camera"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Экскурсионные тур</h3>
+										<p>Белгородская область, Черноземье, Туры дальнего следования</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left">
+									<span class="icon">
+										<i class="icon-hotairballoon"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Туры выходного дня</h3>
+										<p>Казань, Санкт-Петербург, Беларусь, Москва, Золотое кольцо России, Адлер, Абхазия</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 offset-md-1 animate-box">
+						<div class="row mb-4">
+							<div class="col-12 mb-3 text-center">
+								<h3>Задачи</h3>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-images"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Организация незабываемого отдыха</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-eye3"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Знакомство с достопримечательностями и историей родного края, России, мира</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-users3"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Знакомство с новыми интересными людьми</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-home3"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Развитие сельского туризма путём организованных выездов в действующие усадьбы области</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 mb-3 text-center">
+								<h3>Пути решения задач</h3>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-user-check"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Команда организаторов представлена компетентными, инициативными профессионалами</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-info-with-circle"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Повышение профессионализма сотрудников фирмы путём непрерывной организации инфотуров</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-flag4"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Проведение мероприятий, направленных на сплочение туристов во время путешествия</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-location3"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Безупречная организация путешествия</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 animate-box">
+						<div class="row">
+							<div class="col-12 mb-3 text-center">
+								<h3>Секрет успеха</h3>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-checkmark"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Индивидуальный подбор туров для людей разной возрастной категории</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-checkmark"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Широкий выбор направлений отдыха (курортный, экскурсионный, палаточные лагеря, конные прогулки, сплавы, походы, восхождения в горы, горнолыжные туры, санаторно-курортное оздоровление, мульти-актив-туры, спелеотуры, фитнестуры, автомобильные туры по Европе, свадебные путешествия и т.д.)</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="feature-left mb-3">
+									<span class="icon">
+										<i class="icon-checkmark"></i>
+									</span>
+									<div class="feature-copy">
+										<h3>Разнообразная ценовая категория туров</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post, UserProfile, Comment, Tour, Worker
-from .forms import PostForm, UserForm, UserProfileForm, CommentForm
+from .forms import PostForm, UserForm, UserProfileForm, CommentForm, WorkerForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -60,7 +60,35 @@ def admin_workers(request):
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_workers_new(request):
     workers = Worker.objects.all().order_by('first_name')
-    return render(request, 'admin/admin_workers_new.html', {'workers': workers})
+    if request.method == "POST":
+        workers_form = WorkerForm(request.POST, request.FILES)
+        if workers_form.is_valid():
+            workers_form.save()
+            return redirect('admin_workers')
+    else:
+        workers_form = WorkerForm()
+    return render(request, 'admin/admin_workers_new.html', {'workers': workers, 'workers_form': workers_form})
+
+
+@login_required(login_url='/auth/sign-in/')
+def admin_workers_edit(request, pk):
+    workers = Worker.objects.exclude(pk=pk).order_by('first_name')
+    worker = get_object_or_404(Worker, pk=pk)
+    if request.method == "POST":
+        workers_form = WorkerForm(request.POST, request.FILES, instance=worker)
+        if workers_form.is_valid():
+            worker = workers_form.save()
+            return redirect('admin_workers')
+    else:
+        workers_form = WorkerForm(initial={'first_name': worker.first_name, 'last_name': worker.last_name, 'job': worker.job})
+    return render(request, 'admin/admin_workers_edit.html', {'workers': workers, 'workers_form': workers_form})
+
+
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_workers_remove(request, pk):
+    worker = get_object_or_404(Worker, pk=pk)
+    worker.delete()
+    return redirect('admin_workers')
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -237,3 +265,8 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
+
+
+def about_us(request):
+    workers = Worker.objects.order_by('first_name')
+    return render(request, 'other/about_us.html', {'workers': workers})

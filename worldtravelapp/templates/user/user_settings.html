@@ -30,6 +30,38 @@
 					<div class="form-row">
 						<div class="col-md-12 mb-3">
 							<hr class="hr-margin-low border-2">
+							<p class="text-white text-center text-uppercase my-1">Изменение пароля</p>
+							<hr class="hr-margin-low border-2">
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="old_password_field">Старый пароль</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
+								</div>
+								{% render_field password_form.old_password placeholder="Старый пароль" class="form-control" id="old_password_field" type="password" %}
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="new_password1_field">Новый пароль</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
+								</div>
+								{% render_field password_form.new_password1 placeholder="Новый пароль" class="form-control" id="new_password1_field" type="password" %}
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="new_password2_field">Подтверждение нового пароля</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
+								</div>
+								{% render_field password_form.new_password2 placeholder="Подтверждение нового пароля" class="form-control" id="new_password2_field" type="password" %}
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<hr class="hr-margin-low border-2">
 							<p class="text-white text-center text-uppercase my-1">Основные настройки</p>
 							<hr class="hr-margin-low border-2">
 						</div>
@@ -82,38 +114,13 @@
 						</div>
 						<div class="col-md-12 mb-3">
 							<hr class="hr-margin-low border-2">
-							<p class="text-white text-center text-uppercase my-1">Изменение пароля</p>
-							<hr class="hr-margin-low border-2">
-						</div>
-						<div class="col-md-12 mb-3">
-							<label for="old_password_field">Старый пароль</label>
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
-								</div>
-								{% render_field password_form.old_password placeholder="Старый пароль" class="form-control" id="old_password_field" type="password" %}
-							</div>
-						</div>
-						<div class="col-md-12 mb-3">
-							<label for="new_password1_field">Новый пароль</label>
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
-								</div>
-								{% render_field password_form.new_password1 placeholder="Новый пароль" class="form-control" id="new_password1_field" type="password" %}
-							</div>
-						</div>
-						<div class="col-md-12 mb-3">
-							<label for="new_password2_field">Подтверждение нового пароля</label>
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
-								</div>
-								{% render_field password_form.new_password2 placeholder="Подтверждение нового пароля" class="form-control" id="new_password2_field" type="password" %}
-							</div>
 						</div>
 					</div>
-					<button class="btn btn-primary bg-white text-dark" type="submit">Изменить</button>
+					<div class="row">
+						<div class="col-12 text-center">
+							<button class="btn btn-primary bg-white text-dark" type="submit">Изменить</button>
+						</div>
+					</div>
 				</form>
 			</div>
 		</div>

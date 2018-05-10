@@ -36,7 +36,9 @@ urlpatterns = [
     path('admin/tours/', views.admin_tours, name='admin_tours'),
     path('admin/orders/', views.admin_orders, name='admin_orders'),
     path('admin/workers/', views.admin_workers, name='admin_workers'),
-    path('admin/workers/new', views.admin_workers_new, name='admin_workers_new'),
+    path('admin/workers/new/', views.admin_workers_new, name='admin_workers_new'),
+    path('admin/workers/<int:pk>/edit/', views.admin_workers_edit, name='admin_workers_edit'),
+    path('admin/workers/<int:pk>/remove/', views.admin_workers_remove, name='admin_workers_remove'),
     path('admin/messages/', views.admin_messages, name='admin_messages'),
 
     path('user/room/', views.user_room, name='user_room'),
@@ -53,4 +55,6 @@ urlpatterns = [
 
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
+
+    path('about_us/', views.about_us, name='about_us'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

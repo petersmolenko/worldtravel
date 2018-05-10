@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post, UserProfile, Comment
+from .models import Post, UserProfile, Comment, Worker
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -28,3 +28,8 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('text',)
+
+class WorkerForm(forms.ModelForm):
+    class Meta:
+        model = Worker
+        fields = ('__all__')

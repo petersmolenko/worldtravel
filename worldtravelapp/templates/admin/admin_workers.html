@@ -19,6 +19,7 @@
 						</tr>
 					</thead>
 					<tbody>
+						{% block content_worker %}{% endblock %}
 						{% for worker in workers %}
 						<tr>
 							<td scope="row">{{ worker.first_name }}</td>
@@ -26,12 +27,11 @@
 							<td>{{ worker.job }}</td>
 							<td><a href="{{ worker.photo_url }}" target="_blank"><i class="fa fa-camera-retro font-size-2 raport" aria-hidden="true"></i></a></td>
 							<td>
-								<a href=""><p class="font-size-1 mb-0 mr-2 raport d-inline"><i class="fa fa-pencil" aria-hidden="true"></i></p></a>
-								<a href=""><p class="font-size-1  mb-0 raport d-inline"><i class="fa fa-times" aria-hidden="true"></i></p></a>
+								<a href="{% url 'admin_workers_edit' pk=worker.pk %}"><p class="font-size-1 mb-0 mr-2 raport d-inline"><i class="fa fa-pencil" aria-hidden="true"></i></p></a>
+								<a href="{% url 'admin_workers_remove' pk=worker.pk %}"><p class="font-size-1  mb-0 raport d-inline"><i class="fa fa-times" aria-hidden="true"></i></p></a>
 							</td>
 						</tr>
 						{% endfor %}
-						{% block new_worker %}{% endblock %}
 					</tbody>
 				</table>
 			</div>
