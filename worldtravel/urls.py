@@ -57,4 +57,5 @@ urlpatterns = [
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
 
     path('about_us/', views.about_us, name='about_us'),
+    path('contacts/', views.contacts, name='contacts'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,56 @@
+{% extends 'base-xx.html' %}
+
+
+{% block title %}
+Контакты
+{% endblock %}
+
+{% block title-page %}
+Наши контакты
+{% endblock %}
+
+{% block description %}
+В нашей компании вы гарантированно получите профессиональную консультацию от опытных менеджеров. Обращайтесь к нам с любыми вопросами.
+{% endblock %}
+
+{% block xxx-content %}
+	<form action="#">
+		<div class="row animate-box">
+			<div class="col-md-6">
+				<h3 class="section-title">Наш адрес</h3>
+				<p>Мы работаем с 10.00 до 22.00 в будни и  по выходным - без перерыва, а при необходимости выходим на мобильную связь круглосуточно!</p>
+				<ul class="contact-info">
+					<li><i class="icon-location-pin"></i>г. Белгород, ул. Попова, д. 40</li>
+					<li><i class="icon-phone2"></i><a href="tel:84722200500">8 (4722) 200-500</a></li>
+					<li><i class="icon-mail"></i><a href="mailto:help@worldtravel.com">help@worldtravel.com</a></li>
+					<li><i class="icon-globe2"></i><a href="https://worldtravel.com">worldtravel.com</a></li>
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Имя">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Email">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<textarea name="" class="form-control" id="" cols="30" rows="7" placeholder="Сообщение"></textarea>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<input type="submit" value="Отправить" class="btn btn-primary">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div id="map" class="map"></div>
+{% endblock %}

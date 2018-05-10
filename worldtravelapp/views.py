@@ -270,3 +270,8 @@ def comment_remove(request, pk):
 def about_us(request):
     workers = Worker.objects.order_by('first_name')
     return render(request, 'other/about_us.html', {'workers': workers})
+
+
+def contacts(request):
+    workers = Worker.objects.order_by('first_name')
+    return render(request, 'other/contacts.html', {'workers': workers})

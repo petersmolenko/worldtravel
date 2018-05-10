@@ -57,7 +57,7 @@
 								</ul>
 							</li>
 							<li class="active"><a href="{% url 'post_list' %}">Новости</a></li>
-							<li><a href="contact.html">Контакты</a></li>
+							<li><a href="{% url 'contacts' %}">Контакты</a></li>
 							<li><a href="{% url 'about_us' %}">О нас</a></li>
 							{% if user.is_authenticated %}
 							    <li>
