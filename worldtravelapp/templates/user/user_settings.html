@@ -10,8 +10,22 @@
 	<div class="col-md-12 p-2 bg-green">
 		<div class="row no-gutters text-white">
 			<div class="col-sm-6 offset-sm-3">
+				{% if user_form.errors %}
+					<p class="text-danger">Ошибка user_form. Попробуйте ещё раз.</p>
+				{% endif %}
+				{% if profile_form.errors %}
+					<p class="text-danger">Ошибка profile_form. Попробуйте ещё раз.</p>
+				{% endif %}
+				{% if password_form.errors %}
+					<p class="text-danger">Ошибка password_form. Попробуйте ещё раз.</p>
+				{% endif %}
 				<form class="needs-validation font-weight-bold" novalidate method="POST" enctype="multipart/form-data">{% csrf_token %}
 					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<hr class="hr-margin-low border-2">
+							<p class="text-white text-center text-uppercase my-1">Основные настройки</p>
+							<hr class="hr-margin-low border-2">
+						</div>
 						<div class="col-md-12 mb-3">
 							<label for="username_field">Имя пользователя</label>
 							<div class="input-group">
@@ -21,15 +35,7 @@
 								{% render_field user_form.username placeholder="Имя пользователя" class="form-control" id="username_field" %}
 							</div>
 						</div>
-						<div class="col-md-12 mb-3">
-							<label for="password_field">Пароль</label>
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
-								</div>
-								{% render_field user_form.password placeholder="Пароль" class="form-control" id="password_field" type="password" %}
-							</div>
-						</div>
+						{% render_field user_form.password placeholder="Пароль" class="form-control" id="password_field" type="hidden" %}
 						<div class="col-md-12 mb-3">
 							<label for="email_field">Электронная почта</label>
 							<div class="input-group">
@@ -41,6 +47,11 @@
 						</div>
 					</div>
 					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<hr class="hr-margin-low border-2">
+							<p class="text-white text-center text-uppercase my-1">Дополнительная информация</p>
+							<hr class="hr-margin-low border-2">
+						</div>
 						<div class="col-md-12 mb-3">
 							<label for="first_name_field">Имя</label>
 							{% render_field user_form.first_name placeholder="Имя" class="form-control" id="first_name_field" %}
@@ -60,6 +71,38 @@
 						<div class="col-md-12 mb-3">
 							<div class="custom-file">
 								{% render_field profile_form.avatar class="file-input" id="avatar_field" %}
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<hr class="hr-margin-low border-2">
+							<p class="text-white text-center text-uppercase my-1">Изменение пароля</p>
+							<hr class="hr-margin-low border-2">
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="old_password_field">Старый пароль</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
+								</div>
+								{% render_field password_form.old_password placeholder="Старый пароль" class="form-control" id="old_password_field" type="password" %}
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="new_password1_field">Новый пароль</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
+								</div>
+								{% render_field password_form.new_password1 placeholder="Новый пароль" class="form-control" id="new_password1_field" type="password" %}
+							</div>
+						</div>
+						<div class="col-md-12 mb-3">
+							<label for="new_password2_field">Подтверждение нового пароля</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fa fa-lock pr-1" aria-hidden="true"></i></span>
+								</div>
+								{% render_field password_form.new_password2 placeholder="Подтверждение нового пароля" class="form-control" id="new_password2_field" type="password" %}
 							</div>
 						</div>
 					</div>

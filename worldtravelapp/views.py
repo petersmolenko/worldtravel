@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 
@@ -103,18 +105,24 @@ def user_settings(request):
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=user)
         profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        password_form = PasswordChangeForm(request.user, request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             user.save()
             user_profile = profile_form.save()
             user_profile.save()
+            if password_form.is_valid():
+                password_user = password_form.save()
+                update_session_auth_hash(request, password_user)
             return redirect('user_settings')
     else:
         user_form = UserForm(instance=user)
         profile_form = UserProfileForm(instance=user_profile)
+        password_form = PasswordChangeForm(request.user)
     return render(request, 'user/user_settings.html', {
         'user_form': user_form,
-        'profile_form': profile_form
+        'profile_form': profile_form,
+        'password_form': password_form
         })
 
 
