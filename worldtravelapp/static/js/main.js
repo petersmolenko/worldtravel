@@ -31,6 +31,12 @@
 
 	};
 
+	//Fileinput 
+		$("#fileinput").fileinput();
+
+
+
+
 	//Date Picker
 
    $('#date-start, #date-end, #birthday_field').datepicker();
