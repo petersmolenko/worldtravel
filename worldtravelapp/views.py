@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, UserProfile, Comment, Tour
+from .models import Post, UserProfile, Comment, Tour, Worker
 from .forms import PostForm, UserForm, UserProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Permission
@@ -53,7 +53,14 @@ def admin_tours(request):
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_workers(request):
-    return render(request, 'admin/admin_workers.html', {})
+    workers = Worker.objects.all().order_by('first_name')
+    return render(request, 'admin/admin_workers.html', {'workers': workers})
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_workers_new(request):
+    workers = Worker.objects.all().order_by('first_name')
+    return render(request, 'admin/admin_workers_new.html', {'workers': workers})
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')

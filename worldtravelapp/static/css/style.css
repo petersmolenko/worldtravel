@@ -2190,7 +2190,10 @@ a:focus {
 .circle-h {
   border-radius: 5px;
 }
-.crop {
-  height: 250px;
-  overflow: hidden;
+.line-height-0 {
+  line-height: 0;
+}
+.custom-inp {
+  border: none;
+  background: inherit;
 }
