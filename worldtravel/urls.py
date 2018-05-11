@@ -58,4 +58,4 @@ urlpatterns = [
 
     path('about_us/', views.about_us, name='about_us'),
     path('contacts/', views.contacts, name='contacts'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
