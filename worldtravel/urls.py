@@ -25,7 +25,7 @@ urlpatterns = [
 
     path('', views.post_list, name='post_list'),
 
-    path('auth/sign-in/', auth_views.login, {'template_name': 'admin/sign_in.html'}, name='auth_login'),
+    path('auth/sign-in/', auth_views.login, {'template_name': 'worldtravelapp/admin/sign_in.html'}, name='auth_login'),
     path('auth/sign-up/', views.sign_up, name='auth_sign_up'),
     path('auth/logout/', auth_views.logout, name='auth_logout'),
 
