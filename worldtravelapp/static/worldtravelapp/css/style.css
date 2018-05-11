@@ -1350,28 +1350,28 @@ div.cs-select span {
   }
 }
 
-#contact .contact-info {
+.contact-info {
   margin: 0;
   padding: 0;
 }
-#contact .contact-info li {
+.contact-info li {
   list-style: none;
   margin: 0 0 20px 0;
   position: relative;
   padding-left: 40px;
 }
-#contact .contact-info li i {
+.contact-info li i {
   position: absolute;
   top: .3em;
   left: 0;
   font-size: 22px;
   color: rgba(0, 0, 0, 0.3);
 }
-#contact .contact-info li a {
+.contact-info li a {
   font-weight: 400 !important;
   color: rgba(0, 0, 0, 0.3);
 }
-#contact .form-control {
+.form-control {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   -ms-box-shadow: none;
@@ -1386,13 +1386,13 @@ div.cs-select span {
   -ms-border-radius: 0px;
   border-radius: 0px;
 }
-#contact .form-control:focus, #contact .form-control:active {
+.form-control:focus, #contactic .form-control:active {
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
-#contact input[type="text"] {
+#contactic input[type="text"] {
   height: 50px;
 }
-#contact .form-group {
+.form-group {
   margin-bottom: 30px;
 }
 

@@ -29,7 +29,7 @@ def sign_up(request):
                 password = user_form.cleaned_data['password']
                 ))
             return redirect('/')
-    return render(request, 'admin/sign_up.html', {
+    return render(request, 'worldtravelapp/admin/sign_up.html', {
         'user_form': user_form,
         'user_profile_form': user_profile_form
         })
@@ -42,19 +42,19 @@ def admin_room(request):
 
 @login_required(login_url='/auth/sign-in/')
 def admin_orders(request):
-    return render(request, 'admin/admin_orders.html', {})
+    return render(request, 'worldtravelapp/admin/admin_orders.html', {})
 
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_tours(request):
-    return render(request, 'admin/admin_tours.html', {})
+    return render(request, 'worldtravelapp/admin/admin_tours.html', {})
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_workers(request):
     workers = Worker.objects.all().order_by('first_name')
-    return render(request, 'admin/admin_workers.html', {'workers': workers})
+    return render(request, 'worldtravelapp/admin/admin_workers.html', {'workers': workers})
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -67,7 +67,7 @@ def admin_workers_new(request):
             return redirect('admin_workers')
     else:
         workers_form = WorkerForm()
-    return render(request, 'admin/admin_workers_new.html', {'workers': workers, 'workers_form': workers_form})
+    return render(request, 'worldtravelapp/admin/admin_workers_new.html', {'workers': workers, 'workers_form': workers_form})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -81,7 +81,7 @@ def admin_workers_edit(request, pk):
             return redirect('admin_workers')
     else:
         workers_form = WorkerForm(initial={'first_name': worker.first_name, 'last_name': worker.last_name, 'job': worker.job})
-    return render(request, 'admin/admin_workers_edit.html', {'workers': workers, 'workers_form': workers_form})
+    return render(request, 'worldtravelapp/admin/admin_workers_edit.html', {'workers': workers, 'workers_form': workers_form})
 
 
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -93,7 +93,7 @@ def admin_workers_remove(request, pk):
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_messages(request):
-    return render(request, 'admin/admin_messages.html', {})
+    return render(request, 'worldtravelapp/admin/admin_messages.html', {})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -106,14 +106,14 @@ def admin_news(request):
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_news_ok(request):
 	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-	return render(request, 'admin/admin_news_ok.html', {'posts': posts})
+	return render(request, 'worldtravelapp/admin/admin_news_ok.html', {'posts': posts})
 
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_news_draft(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
-    return render(request, 'admin/admin_news_draft.html', {'posts': posts})
+    return render(request, 'worldtravelapp/admin/admin_news_draft.html', {'posts': posts})
 
 
 
@@ -129,12 +129,12 @@ def user_room(request):
 
 @login_required(login_url='/auth/sign-in/')
 def user_mytours(request):
-    return render(request, 'user/user_mytours.html', {})
+    return render(request, 'worldtravelapp/user/user_mytours.html', {})
 
 
 @login_required(login_url='/auth/sign-in/')
 def user_comments(request):
-    return render(request, 'user/user_comments.html', {})
+    return render(request, 'worldtravelapp/user/user_comments.html', {})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -168,7 +168,7 @@ def user_settings(request):
         user_form = UserForm(instance=user)
         profile_form = UserProfileForm(instance=user_profile)
         password_form = PasswordChangeForm(request.user)
-    return render(request, 'user/user_settings.html', {
+    return render(request, 'worldtravelapp/user/user_settings.html', {
         'user_form': user_form,
         'profile_form': profile_form,
         'password_form': password_form
@@ -179,7 +179,7 @@ def user_settings(request):
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render(request, 'news/news.html', {'posts': posts})
+    return render(request, 'worldtravelapp/news/news.html', {'posts': posts})
 
 
 def post_detail(request, pk):
@@ -188,7 +188,7 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.tags = post.tags.split(',')
     form = CommentForm()
-    return render(request, 'news/news_detail.html', {'post': post, 'dates': dates, 'comments': comments, 'form': form})
+    return render(request, 'worldtravelapp/news/news_detail.html', {'post': post, 'dates': dates, 'comments': comments, 'form': form})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -203,7 +203,7 @@ def post_new(request):
             return redirect('admin_news_draft')
     else:
         form = PostForm()
-    return render(request, 'news/news_edit.html', {'form': form})
+    return render(request, 'worldtravelapp/news/news_edit.html', {'form': form})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -234,7 +234,7 @@ def post_edit(request, pk):
             return redirect('admin_news')
     else:
         form = PostForm(instance=post)
-    return render(request, 'news/news_edit.html', {'form': form})
+    return render(request, 'worldtravelapp/news/news_edit.html', {'form': form})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -269,9 +269,9 @@ def comment_remove(request, pk):
 
 def about_us(request):
     workers = Worker.objects.order_by('first_name')
-    return render(request, 'other/about_us.html', {'workers': workers})
+    return render(request, 'worldtravelapp/other/about_us.html', {'workers': workers})
 
 
 def contacts(request):
     workers = Worker.objects.order_by('first_name')
-    return render(request, 'other/contacts.html', {'workers': workers})
+    return render(request, 'worldtravelapp/other/contacts.html', {'workers': workers})
