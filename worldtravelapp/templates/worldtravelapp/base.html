@@ -94,6 +94,8 @@
 		</div>
         {% block testomonial %}
         {% endblock %}
+        {% block google_map %}
+        {% endblock %}
 		<footer>
 			<div id="footer">
 				<div class="container">
@@ -192,6 +194,9 @@
 	
 	<!-- Main JS -->
 	<script src="{% static 'worldtravelapp/js/main.js' %}"></script>
+	<p id="hiddy" hidden="hidden">{% static 'worldtravelapp/images/loc.png'%}</p>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="{% static 'worldtravelapp/js/google_map.js' %}"></script>
 
 	</body>
 </html>
