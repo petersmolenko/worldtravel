@@ -2,33 +2,33 @@
 
 {% block content_admin %}
 <div class="row bg-white">
-	<div class="col-12 p-2 text-center">
-		<h4 class="mb-0 text-dark text-uppercase"><i class="fa fa-plane mr-2" aria-hidden="true"></i>Туры</h4>
+	<div class="col-12 p-2 text-center bg-green">
+		<h4 class="mb-0 text-uppercase text-white"><i class="fa fa-plane mr-2" aria-hidden="true"></i>Туры</h4>
 	</div>
-</div>
-<div class="row bg-green">
 	<div class="col-12 p-0">
-		<table class="table table-responsive table table-hover table-light mb-0">
+		<table class="table add-700-table table table-striped table-light mb-0">
 			<thead>
-				<tr class="bg-green text-white">
+				<tr>
 					<th scope="col">Код тура</th>
 					<th scope="col">Название тура</th>
 					<th scope="col">Тип</th>
 					<th scope="col">Цена</th>
-					<th scope="col" class="p-1"><a href="#" class="btn btn-light bg-white"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add</a></th>
+					<th scope="col" class="p-1"><a href="{% url 'admin_tours_new' %}" class="font-size-2 font-weight-bold raport"><i class="fa fa-plus mr-1" aria-hidden="true"></i></a></th>
 				</tr>
 			</thead>
 			<tbody>
+				{% for tour in tours %}
 				<tr>
-					<th scope="row" class="sharp_id">1893</th>
-					<td>R28.0 Прага - Мюнхен - Вена - Баварские Замки</td>
-					<td>Экскурсионный</td>
-					<td><span class="money font-weight-bold">39850</span></td>
+					<th scope="row" class="sharp_id">{{ tour.pk }}</th>
+					<td>{{ tour.title }}</td>
+					<td>{{ tour.type_tour }}</td>
+					<td><span class="money font-weight-bold">{{ tour.price }}</span></td>
 					<td>
-						<a href=""><p class="font-size-1 mb-0 mr-1 raport d-inline"><i class="fa fa-pencil" aria-hidden="true"></i></p></a>
-						<a href=""><p class="font-size-1  mb-0 raport d-inline"><i class="fa fa-times" aria-hidden="true"></i></p></a>
+						<a href="{% url 'admin_tours_edit' pk=tour.pk %}"><p class="font-size-1 mb-0 mr-1 raport d-inline"><i class="fa fa-pencil" aria-hidden="true"></i></p></a>
+						<a href="{% url 'admin_tours_remove' pk=tour.pk %}"><p class="font-size-1  mb-0 raport d-inline"><i class="fa fa-times" aria-hidden="true"></i></p></a>
 					</td>
 				</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>

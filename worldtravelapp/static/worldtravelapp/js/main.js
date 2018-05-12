@@ -33,7 +33,7 @@
 
 	//Date Picker
 
-   $('#date-start, #date-end, #birthday_field').datepicker();
+   $('#date-start, #date-end, #birthday_field, #date-input-field').datepicker();
 
    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
       new SelectFx(el);
@@ -162,17 +162,35 @@
 			list[i].style.backgroundRepeat="no-repeat";
 		}
 	}
+	function addClassToTable(){
+		var arr = document.getElementsByClassName('add-700-table')
+		for (var i=0; i<arr.length; i++){
+			arr[i].classList.add("table-responsive");
+		}
+	}
+	function removeClassToTable(){
+		var arr = document.getElementsByClassName('add-700-table')
+		for (var i=0; i<arr.length; i++){
+			arr[i].classList.remove("table-responsive");
+		}
+	}
 	
 	if(document.documentElement.clientWidth < 770) {
 		changeBack();
+		addClassToTable()
+  	}
+  	else {
+  		removeClassToTable()
   	}
 	$(window).resize(function() {
 		if(document.documentElement.clientWidth < 770) {
 			changeBack();
+			addClassToTable()
 	  } else {
 		   $(".tour-container").css({
 			'background': '#fff',
 		});
+		removeClassToTable()   
 	  }
 	});
 	//-----------------------------------------------

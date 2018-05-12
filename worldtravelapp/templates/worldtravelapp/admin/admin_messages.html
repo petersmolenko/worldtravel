@@ -1,32 +1,30 @@
-{% extends 'worldtravelapp/admin/admin_news.html' %}
+{% extends 'worldtravelapp/admin/base_admin.html' %}
 
-{% block title_news_status %}Опубликованные{% endblock %}
-{% block date_news %}Время публикации{% endblock %}
-{% block content_news_admin %}
-		{% for post in posts %}
-		<div class="row text-center bg-white no-gutters p-2 mb-1">
-			<div class="col-md-1 d-flex align-items-center justify-content-center">
-				<p class="text-dark mb-0 font-weight-bold sharp_id">{{ post.id }}</p>
-			</div>
-			<div class="col-md-2 d-flex align-items-center justify-content-center">
-				<p class="text-dark mb-0">{{ post.published_date }}</p>
-			</div>
-			<div class="col-md-4 d-flex align-items-center justify-content-center">
-				<a href="{% url 'post_detail' pk=post.id %}"><p class="text-dark mb-0">{{ post.title }}</p></a>
-			</div>
-			<div class="col-md-3 d-flex align-items-center justify-content-center">
-				<p class="text-dark mb-0 font-weight-bold">
-				{% if post.author.last_name and post.author.first_name %}
-				    {{ post.author.first_name }} {{ post.author.last_name }}
-				{% else %}
-				    {{ post.author }}
-				{% endif %}
-				</p>
-			</div>
-			<div class="col-md-2 d-flex align-items-center justify-content-center">
-				<a href="{% url 'post_edit' pk=post.pk %}"><p class="font-size-2 mr-3 mb-0 raport" title="Редактировать"><i class="fa fa-pencil" aria-hidden="true"></i></p></a>
-				<a href="{% url 'post_remove' pk=post.pk %}"><p class="font-size-2  mb-0 raport" title="Удалить"><i class="fa fa-times" aria-hidden="true"></i></p></a>
+{% block content_admin %}
+	<div class="row">
+		<div class="col-12 bg-green mb-1">
+			<h4 class="my-2 text-white text-uppercase text-center"><i class="fa fa-commenting mr-2" aria-hidden="true"></i>Сообщения</h4>
+		</div>
+		{% for message in messages %}
+		<div class="col-12 p-2 bg-white mb-1">
+			<div class="row no-gutters">
+				<div class="col-md-3 p-1">
+					<p class="mb-1"><span class="text-dark font-weight-bold">{{ message.name }}</span>, <cite title="Source Title">{{ message.email }}</cite></p>
+			      	<p class="text-dark mb-0">{{ message.created_date }}</p>
+				</div>
+				<div class="col-md-9 p-1">
+					<div class="row no-gutters">
+						<div class="col-12">
+							<p class="mb-0">{{ message.message }}</p>
+						</div>
+						<div class="col-12 text-right">
+							<a href="mailto:{{ message.email }}"><span class="font-size-2  mb-0 raport" title="Ответить"><i class="fa fa-envelope mr-3" aria-hidden="true"></i></span></a>
+							<a href="{% url 'admin_messages_remove' pk=message.pk %}" title="Удалить"><span class="font-size-2  mb-0 raport"><i class="fa fa-times" aria-hidden="true"></i></span></a>
+						</div>
+					</div>
+				</div>				
 			</div>
 		</div>
 		{% endfor %}
+	</div>
 {% endblock %}

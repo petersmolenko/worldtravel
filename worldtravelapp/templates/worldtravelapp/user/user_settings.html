@@ -10,20 +10,11 @@
 	<div class="col-md-12 p-2 bg-green">
 		<div class="row no-gutters text-white">
 			<div class="col-sm-6 offset-sm-3">
-				{% if user_form.errors %}
-					<p class="text-danger">Ошибка user_form. Попробуйте ещё раз.</p>
-				{% endif %}
-				{% if profile_form.errors %}
-					<p class="text-danger">Ошибка profile_form. Попробуйте ещё раз.</p>
-				{% endif %}
-				{% if password_form.errors %}
-					<p class="text-danger">Ошибка password_form. Попробуйте ещё раз.</p>
-				{% endif %}
 				{% if messages %}
 				    {% for message in messages %}
-				        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-				            {{ message }}
-				        </p>
+				    <div class="alert alert-success" role="alert">
+					  <span{% if message.tags %} class="{{ message.tags }} font-weight-bold"{% endif %} >{{ message }}</span> 
+					</div>
 				    {% endfor %}
 				{% endif %}
 				<form class="needs-validation font-weight-bold" novalidate method="POST" enctype="multipart/form-data">{% csrf_token %}

@@ -1,0 +1,37 @@
+{% extends 'worldtravelapp/admin/base_admin.html' %}
+
+{% block content_admin %}
+		<div class="row  bg-white">
+			<div class="col-12 p-2 text-center bg-green">
+				<h4 class="mb-0 text-white text-uppercase croper"><i class="fa fa-university mr-2"></i>Города</h4>
+			</div>
+			<div class="col-12 p-0">
+				<table class="table table table-light table-striped mb-0 add-700-table">
+					<thead>
+						<tr>
+							<th scope="col">Код</th>
+							<th scope="col">Город</th>
+							<th scope="col">Страна</th>
+							<th scope="col">Фото</th>
+							<th scope="col" class="p-1"><a href="{% url 'admin_citys_new' %}" class="raport font-size-2"><i class="fa fa-plus mr-1" aria-hidden="true"></i></a></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% block content_citys %}{% endblock %}
+						{% for city in citys %}
+						<tr>
+							<td scope="row">{{ city.pk }}</td>
+							<td>{{ city.title }}</td>
+							<td>{{ city.country }}</td>
+							<td><a href="{{ city.photo_url }}" target="_blank"><i class="fa fa-camera-retro font-size-2 raport" aria-hidden="true"></i></a></td>
+							<td>
+								<a href="{% url 'admin_citys_edit' pk=city.pk %}"><p class="font-size-1 mb-0 mr-2 raport d-inline"><i class="fa fa-pencil" aria-hidden="true"></i></p></a>
+								<a href="{% url 'admin_citys_remove' pk=city.pk %}"><p class="font-size-1  mb-0 raport d-inline"><i class="fa fa-times" aria-hidden="true"></i></p></a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+{% endblock %}

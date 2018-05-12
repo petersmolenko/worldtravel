@@ -1,28 +1,28 @@
-{% extends 'worldtravelapp/admin/admin_workers.html' %}
+{% extends 'worldtravelapp/admin/admin_citys.html' %}
 {% load widget_tweaks %}
 
-{% block content_worker %}
+{% block content_citys %}
 		<tr class="bg-dark">
 			<form method="POST" enctype="multipart/form-data">
 			{% csrf_token %}
 			<td class="pt-3">
 				<div class="input-field">
-					{% render_field workers_form.first_name class="form-control" placeholder="Имя" autofocus="autofocus" %}
+					{{ city.pk }}
 				</div>
 			</td>
 			<td class="pt-3">
 				<div class="input-field">
-					{% render_field workers_form.last_name class="form-control" placeholder="Фамилия" %}
+					{% render_field form.title class="form-control" placeholder="Название" autofocus="autofocus" %}
 				</div>
 			</td>
 			<td class="pt-3">
 				<div class="input-field">
-					{% render_field workers_form.job class="form-control" placeholder="Должность" %}
+					{% render_field form.country class="form-control" placeholder="Страна" %}
 				</div>
 			</td>
 			<td class="pt-3">
 				<div class="input-field">
-					{% render_field workers_form.photo class="form-control-file" %}
+					{% render_field form.photo class="form-control-file" %}
 				</div>
 			</td>
 			<td>

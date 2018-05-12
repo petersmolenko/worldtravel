@@ -534,7 +534,7 @@ figure {
     width: 40%;
   }
 }
-.get-tour input[type="text"], .count-serv {
+.get-tour input[type="text"], .count-serv, .date-field-boot {
   background: rgba(0, 0, 0, 0.05);
   border: none;
   box-shadow: none;
@@ -2192,4 +2192,7 @@ a:focus {
 }
 .line-height-0 {
   line-height: 0;
+}
+.text-grey {
+  color: #848484;
 }

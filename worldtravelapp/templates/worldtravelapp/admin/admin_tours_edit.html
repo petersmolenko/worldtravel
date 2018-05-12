@@ -1,0 +1,44 @@
+{% extends 'worldtravelapp/admin/base_admin.html' %}
+{% load widget_tweaks %}
+{% load bootstrap4 %}
+
+{% block content_admin %}
+<div class="row bg-white mb-2">
+	<div class="col-12 p-2 text-center bg-green">
+		<h4 class="mb-0 text-white text-uppercase"><i class="fa fa-plane mr-2" aria-hidden="true"></i>Туры</h4>
+	</div>
+	<div class="col-md-12 p-2">
+		<div class="row no-gutters text-orange">
+			<div class="col-8 offset-sm-2">
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					{% bootstrap_form tours_form %}
+						<div class="">Даты: </div>
+						{% for date in nearestdates %}
+						<div class="text-grey">{{ date.date }}<a href="{% url 'admin_tours_date_remove' pk=date.pk %}" class="font-size-1 font-weight-bold raport ml-2"><i class="fa fa-minus mr-1" aria-hidden="true"></i></a></div>
+						{% endfor %}
+						<a href="{% url 'admin_tours_edit_date' pk=tour.pk %}" class="font-size-1 font-weight-bold raport ml-2"><i class="fa fa-plus mr-1" aria-hidden="true"></i></a>
+
+						<div class="">План тура: </div>
+						{% for day in days %}
+						<div class="text-grey mb-2">
+							<h5 class="mb-1"><span class="font-weight-bold mr-2">{{ day.number }}</span>{{ day.title }}</h5>
+							<p class="mb-1">{{ day.text }}</p>
+							<a href="{% url 'admin_tours_day_edit' pk=day.pk %}" class="font-size-1 font-weight-bold raport"><i class="fa fa-pencil mr-1" aria-hidden="true"></i></a>
+							<a href="{% url 'admin_tours_day_remove' pk=day.pk %}" class="font-size-1 font-weight-bold raport ml-2"><i class="fa fa-minus mr-1" aria-hidden="true"></i></a>
+						</div>
+						{% endfor %}
+
+						<a href="{% url 'admin_tours_day_new' pk=tour.pk %}" class="font-size-2 font-weight-bold raport ml-2"><i class="fa fa-plus mr-1" aria-hidden="true"></i></a>
+					{% buttons %}
+					<div class="col-12 text-center">
+						<button type="submit"  class=" btn btn-primary"><i class="fa fa-check-circle mr-2" aria-hidden="true"></i>Сохранить</button>
+					</div>
+					{% endbuttons %}
+					{{ formset.as_p }}
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

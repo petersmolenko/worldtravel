@@ -1,12 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, UserProfile, Comment, Tour, Worker
-from .forms import PostForm, UserForm, UserProfileForm, CommentForm, WorkerForm
+from .models import Post, UserProfile, Comment, Tour, Worker, Message, NearestDate, Day, Country, City, HotTour
+from .forms import PostForm, UserForm, UserProfileForm, CommentForm, WorkerForm, MessageForm, ToursForm, NearestDateForm, DayForm, CountryForm, CityForm, HotTourForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth import authenticate, login
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
@@ -48,7 +47,107 @@ def admin_orders(request):
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_tours(request):
-    return render(request, 'worldtravelapp/admin/admin_tours.html', {})
+    tours = Tour.objects.all().order_by('title')
+    return render(request, 'worldtravelapp/admin/admin_tours.html', {'tours': tours})
+
+
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_tours_new(request):
+    if request.method == "POST":
+        tours_form = ToursForm(request.POST, request.FILES)
+        if tours_form.is_valid():
+            tours_form.save()
+            return redirect('admin_tours')
+    else:
+        tours_form = ToursForm()
+    return render(request, 'worldtravelapp/admin/admin_tours_new.html', {'tours_form': tours_form})
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_tours_edit(request, pk):
+    tour = get_object_or_404(Tour, pk=pk)
+    nearestdates = NearestDate.objects.filter(tour=tour)
+    days = Day.objects.filter(tours_list=tour).order_by('number')
+    if request.method == "POST":
+        tours_form = ToursForm(request.POST, request.FILES, instance=tour)
+        if tours_form.is_valid():
+            tours_form.save()
+            return redirect('admin_tours')
+    else:
+        tours_form = ToursForm(instance=tour)
+    return render(request, 'worldtravelapp/admin/admin_tours_edit.html', {
+        'tours_form': tours_form, 
+        'nearestdates' : nearestdates, 
+        'tour':tour, 
+        'days':days})
+
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_tours_edit_date(request, pk):
+    tour = get_object_or_404(Tour, pk=pk)
+    if request.method == "POST":
+        dates_form = NearestDateForm(request.POST)
+        if dates_form.is_valid():
+            new_date = dates_form.save(commit=False)
+            new_date.tour = tour
+            new_date.save()
+            return redirect('admin_tours_edit', pk=tour.pk)
+    else:
+        dates_form = NearestDateForm()
+    return render(request, 'worldtravelapp/admin/admin_tours_edit_date.html', {'dates_form' : dates_form})
+
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_tours_date_remove(request, pk):
+    date = get_object_or_404(NearestDate, pk=pk)
+    date.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_tours_day_new(request, pk):
+    tour = get_object_or_404(Tour, pk=pk)
+    if request.method == "POST":
+        days_form = DayForm(request.POST)
+        if days_form.is_valid():
+            new_day = days_form.save(commit=False)
+            new_day.tours_list = tour
+            new_day.save()
+            return redirect('admin_tours_edit', pk=tour.pk)
+    else:
+        days_form = DayForm()
+    return render(request, 'worldtravelapp/admin/admin_tours_edit_day.html', {'days_form' : days_form})
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_tours_day_edit(request, pk):
+    day = get_object_or_404(Day, pk=pk)
+    tour = get_object_or_404(Tour, pk=day.tours_list.pk)
+    if request.method == "POST":
+        days_form = DayForm(request.POST, instance=day)
+        if days_form.is_valid():
+            days_form.save()
+            return redirect('admin_tours_edit', pk=tour.pk)
+    else:
+        days_form = DayForm(instance=day)
+    return render(request, 'worldtravelapp/admin/admin_tours_edit_day.html', {'days_form' : days_form})
+
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_tours_day_remove(request, pk):
+    day = get_object_or_404(Day, pk=pk)
+    day.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_tours_remove(request, pk):
+    tour = get_object_or_404(Tour, pk=pk)
+    tour.delete()
+    return redirect('admin_tours')
+
+
+
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -61,13 +160,13 @@ def admin_workers(request):
 def admin_workers_new(request):
     workers = Worker.objects.all().order_by('first_name')
     if request.method == "POST":
-        workers_form = WorkerForm(request.POST, request.FILES)
-        if workers_form.is_valid():
-            workers_form.save()
+        form = WorkerForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
             return redirect('admin_workers')
     else:
-        workers_form = WorkerForm()
-    return render(request, 'worldtravelapp/admin/admin_workers_new.html', {'workers': workers, 'workers_form': workers_form})
+        form = WorkerForm()
+    return render(request, 'worldtravelapp/admin/admin_workers_new.html', {'workers': workers, 'form': form})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -75,13 +174,13 @@ def admin_workers_edit(request, pk):
     workers = Worker.objects.exclude(pk=pk).order_by('first_name')
     worker = get_object_or_404(Worker, pk=pk)
     if request.method == "POST":
-        workers_form = WorkerForm(request.POST, request.FILES, instance=worker)
-        if workers_form.is_valid():
-            worker = workers_form.save()
+        form = WorkerForm(request.POST, request.FILES, instance=worker)
+        if form.is_valid():
+            worker = form.save()
             return redirect('admin_workers')
     else:
-        workers_form = WorkerForm(initial={'first_name': worker.first_name, 'last_name': worker.last_name, 'job': worker.job})
-    return render(request, 'worldtravelapp/admin/admin_workers_edit.html', {'workers': workers, 'workers_form': workers_form})
+        form = WorkerForm(initial={'first_name': worker.first_name, 'last_name': worker.last_name, 'job': worker.job})
+    return render(request, 'worldtravelapp/admin/admin_workers_new.html', {'workers': workers, 'form': form})
 
 
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -90,10 +189,143 @@ def admin_workers_remove(request, pk):
     worker.delete()
     return redirect('admin_workers')
 
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_countrys(request):
+    countrys = Country.objects.all().order_by('title')
+    return render(request, 'worldtravelapp/admin/admin_countrys.html', {'countrys': countrys})
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_countrys_new(request):
+    countrys = Country.objects.all().order_by('title')
+    if request.method == "POST":
+        form = CountryForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_countrys')
+    else:
+        form = CountryForm()
+    return render(request, 'worldtravelapp/admin/admin_countrys_new.html', {'countrys': countrys, 'form': form})
+
+
+@login_required(login_url='/auth/sign-in/')
+def admin_countrys_edit(request, pk):
+    countrys = Country.objects.exclude(pk=pk).order_by('title')
+    country = get_object_or_404(Country, pk=pk)
+    if request.method == "POST":
+        form = CountryForm(request.POST, request.FILES, instance=country)
+        if form.is_valid():
+            country = form.save()
+            return redirect('admin_countrys')
+    else:
+        form = CountryForm(initial={'title': country.title, 'continent': country.continent, 'pk': country.pk})
+    return render(request, 'worldtravelapp/admin/admin_countrys_new.html', {'country': country, 'countrys': countrys, 'form': form})
+
+
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_countrys_remove(request, pk):
+    country = get_object_or_404(Country, pk=pk)
+    country.delete()
+    return redirect('admin_countrys')
+
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_citys(request):
+    citys = City.objects.all().order_by('title')
+    return render(request, 'worldtravelapp/admin/admin_citys.html', {'citys': citys})
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_citys_new(request):
+    citys = City.objects.all().order_by('title')
+    if request.method == "POST":
+        form = CityForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_citys')
+    else:
+        form = CityForm()
+    return render(request, 'worldtravelapp/admin/admin_citys_new.html', {'citys': citys, 'form': form})
+
+
+@login_required(login_url='/auth/sign-in/')
+def admin_citys_edit(request, pk):
+    citys = City.objects.exclude(pk=pk).order_by('title')
+    city = get_object_or_404(City, pk=pk)
+    if request.method == "POST":
+        form = CityForm(request.POST, request.FILES, instance=city)
+        if form.is_valid():
+            city = form.save()
+            return redirect('admin_citys')
+    else:
+        form = CityForm(initial={'title': city.title, 'country': city.country, 'pk': city.pk})
+    return render(request, 'worldtravelapp/admin/admin_citys_edit.html', {'city': city, 'citys': citys, 'form': form})
+
+
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_citys_remove(request, pk):
+    city = get_object_or_404(City, pk=pk)
+    city.delete()
+    return redirect('admin_citys')
+
+
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_hottours(request):
+    hottours = HotTour.objects.all().order_by('tour')
+    return render(request, 'worldtravelapp/admin/admin_hottours.html', {'hottours': hottours})
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_hottours_new(request):
+    hottours = HotTour.objects.all().order_by('tour')
+    if request.method == "POST":
+        form = HotTourForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_hottours')
+    else:
+        form = HotTourForm()
+    return render(request, 'worldtravelapp/admin/admin_hottours_new.html', {'hottours': hottours, 'form': form})
+
+
+@login_required(login_url='/auth/sign-in/')
+def admin_hottours_edit(request, pk):
+    hottours = HotTour.objects.exclude(pk=pk).order_by('tour')
+    hottour = get_object_or_404(HotTour, pk=pk)
+    if request.method == "POST":
+        form = HotTourForm(request.POST, request.FILES, instance=hottour)
+        if form.is_valid():
+            hottour = form.save()
+            return redirect('admin_hottours')
+    else:
+        form = HotTourForm()
+    return render(request, 'worldtravelapp/admin/admin_hottours_new.html', {'hottour': hottour, 'hottours': hottours, 'form': form})
+
+
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_hottours_remove(request, pk):
+    hottour = get_object_or_404(HotTour, pk=pk)
+    hottour.delete()
+    return redirect('admin_hottours')
+
+
+
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_messages(request):
-    return render(request, 'worldtravelapp/admin/admin_messages.html', {})
+    messages = Message.objects.all().order_by('-created_date')
+    return render(request, 'worldtravelapp/admin/admin_messages.html', {'messages': messages})
+
+@permission_required('worldtravelapp.add_post', login_url='/')
+def admin_messages_remove(request, pk):
+    message = get_object_or_404(Message, pk=pk)
+    message.delete()
+    return redirect('admin_messages')
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -128,13 +360,17 @@ def user_room(request):
 
 
 @login_required(login_url='/auth/sign-in/')
-def user_mytours(request):
-    return render(request, 'worldtravelapp/user/user_mytours.html', {})
+def user_order(request):
+    return render(request, 'worldtravelapp/user/user_order.html', {})
 
 
 @login_required(login_url='/auth/sign-in/')
-def user_comments(request):
-    return render(request, 'worldtravelapp/user/user_comments.html', {})
+def user_history(request):
+    return render(request, 'worldtravelapp/user/user_history.html', {})
+
+@login_required(login_url='/auth/sign-in/')
+def user_desire(request):
+    return render(request, 'worldtravelapp/user/user_desire.html', {})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -161,8 +397,6 @@ def user_settings(request):
                 password_user = password_form.save()
                 update_session_auth_hash(request, password_user)
                 messages.success(request, 'Ваш пароль успешно изменен!')
-            else:
-                messages.error(request, 'Исправьте ошибки!')
             return redirect('user_settings')
     else:
         user_form = UserForm(instance=user)
@@ -273,5 +507,11 @@ def about_us(request):
 
 
 def contacts(request):
-    workers = Worker.objects.order_by('first_name')
-    return render(request, 'worldtravelapp/other/contacts.html', {'workers': workers})
+    if request.method == "POST":
+        form = MessageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('contacts')
+    else:
+        form = MessageForm()
+    return render(request, 'worldtravelapp/other/contacts.html', {'form': form})

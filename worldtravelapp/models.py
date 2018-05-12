@@ -21,6 +21,8 @@ class UserProfile(models.Model):
         verbose_name = 'Профиль'
         verbose_name_plural = 'Профили'
 
+
+
 class Tour(models.Model):
     TYPE_TOUR_CHOICES = (
         ('EXC', 'Экскурсионный'),
@@ -28,15 +30,22 @@ class Tour(models.Model):
         ('WEE', 'Выходного дня'),
         ('ACT', 'Активный'),
     )
+    TYPE_TRANSPORT_CHOICES = (
+        ('AUT', 'Атобусный'),
+        ('AVI', 'Авиа'),
+        ('CRU', 'Круизный'),
+    )
     type_tour = models.CharField(max_length=3, choices=TYPE_TOUR_CHOICES, default='EXC', verbose_name='Тип тура')
+    transport = models.CharField(max_length=3, choices=TYPE_TRANSPORT_CHOICES, default='AUT', verbose_name='Тип транспорта')
     duration = models.IntegerField(verbose_name='Продолжительность')
     price = models.FloatField(verbose_name='Цена')
-    cities = models.CharField(max_length=200, verbose_name='Города')
-    countries = models.CharField(max_length=200, verbose_name='Страны')
+    cities = models.ManyToManyField('worldtravelapp.City', verbose_name='Города', related_name='tours')
+    countries = models.ManyToManyField('worldtravelapp.Country', related_name='tours', verbose_name='Страны')
     title = models.CharField(max_length=200, verbose_name='Название тура')
     text = models.TextField(verbose_name='Описание тура')
-    nearest_date = models.ManyToManyField('worldtravelapp.NearestDate', related_name='tours', verbose_name='Ближайшие даты', blank=True)
     photo = models.ImageField(upload_to='tours/', blank=True, default='', verbose_name='Фото тура')
+    duration = models.IntegerField(verbose_name='Количество дней')
+    discount_tour = models.BooleanField(default=False, verbose_name='Скидка', blank=True)
 
     
     class Meta:
@@ -44,12 +53,18 @@ class Tour(models.Model):
         verbose_name_plural='Туры'
         ordering=['title']
 
-    def publish(self):
-        self.published_date = timezone.now()
+    def discounter(self):
+        if self.discount_tour == True:
+            self.discount_tour = False
+        else:
+            self.discount_tour = True
         self.save()
 
-    def approved_comments(self):
-        return self.comments.filter(approved_comment=True)
+    def discount_get(self):
+        if self.discount_tour == True:
+            return self.price + self.hottour.discount
+        else:
+            return self.price
         
     @property
     def photo_url(self):
@@ -59,8 +74,26 @@ class Tour(models.Model):
     def __str__(self):
         return self.title
 
+
+class Day(models.Model):
+    title = models.CharField(max_length=300, verbose_name='Заголовок дня')
+    number = models.IntegerField(verbose_name='Номер дня')
+    text = models.TextField(verbose_name='Описание дня')
+    tours_list = models.ForeignKey('worldtravelapp.Tour', related_name='dates', on_delete=models.CASCADE, verbose_name='Тур')
+
+    class Meta:
+        verbose_name='День'
+        verbose_name_plural='Дни'
+
+    def __str__(self):
+        return self.title
+
+
+
+
+
 class NearestDate(models.Model):
-    tours_list = models.ManyToManyField('worldtravelapp.Tour', related_name='dates', verbose_name='Туры', blank=True)
+    tour = models.ForeignKey('worldtravelapp.Tour', related_name='nearestdates', on_delete=models.CASCADE, verbose_name='Тур')
     date = models.DateField(default=timezone.now, verbose_name='Дата тура')
 
     class Meta:
@@ -151,6 +184,64 @@ class Worker(models.Model):
 
     def __str__(self):
         return self.last_name
+
+
+class Country(models.Model):
+    title = models.CharField(max_length=30, verbose_name='Название')
+    continent = models.CharField(max_length=30, verbose_name='Континент')
+    photo = models.ImageField(upload_to='news_images/', blank=True, verbose_name='Фото страны')
+
+    class Meta:
+        verbose_name='Страна'
+        verbose_name_plural='Страны'
+
+    @property
+    def photo_url(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
+
+    def __str__(self):
+        return self.title
+
+
+class City(models.Model):
+    title = models.CharField(max_length=30, verbose_name='Название')
+    country = models.ForeignKey('worldtravelapp.Country', related_name='citys', on_delete=models.CASCADE, verbose_name='Страна')
+    photo = models.ImageField(upload_to='news_images/', blank=True, verbose_name='Фото города')
+
+    class Meta:
+        verbose_name='Город'
+        verbose_name_plural='Города'
+
+    @property
+    def photo_url(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
+
+    def __str__(self):
+        return self.title
+
+
+class HotTour(models.Model):
+    tour = models.OneToOneField('worldtravelapp.Tour', related_name='hottour', on_delete=models.CASCADE, verbose_name='Тур')
+    text = models.TextField(verbose_name='Описание')
+    photo = models.ImageField(upload_to='news_images/', blank=True, verbose_name='Фото тура')
+    discount = models.IntegerField(verbose_name='Скидка')
+
+    class Meta:
+        verbose_name='Горящий тур'
+        verbose_name_plural='Горящие туры'
+
+    @property
+    def photo_url(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
+
+    def __str__(self):
+        return self.tour.title
+
+
+
 
 class Review(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Автор')

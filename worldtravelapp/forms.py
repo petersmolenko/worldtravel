@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post, UserProfile, Comment, Worker
+from .models import Post, UserProfile, Comment, Worker, Message, Tour, NearestDate, Day, Country, City, HotTour
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -32,4 +32,39 @@ class CommentForm(forms.ModelForm):
 class WorkerForm(forms.ModelForm):
     class Meta:
         model = Worker
+        fields = ('__all__')
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ('name', 'email', 'message')
+
+class ToursForm(forms.ModelForm):
+    class Meta:
+        model = Tour
+        fields = ('__all__')
+
+class NearestDateForm(forms.ModelForm):
+    class Meta:
+        model = NearestDate
+        fields = ('date', )
+
+class DayForm(forms.ModelForm):
+    class Meta:
+        model = Day
+        fields = ('number', 'title', 'text')
+
+class CountryForm(forms.ModelForm):
+    class Meta:
+        model = Country
+        fields = ('__all__')
+
+class CityForm(forms.ModelForm):
+    class Meta:
+        model = City
+        fields = ('__all__')
+
+class HotTourForm(forms.ModelForm):
+    class Meta:
+        model = HotTour
         fields = ('__all__')

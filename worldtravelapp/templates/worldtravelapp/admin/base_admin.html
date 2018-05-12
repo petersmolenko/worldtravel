@@ -28,10 +28,19 @@
 									<a class="nav-link d-block" href="{% url 'admin_tours' %}"><i class="fa fa-plane mr-2" aria-hidden="true"></i>Туры</a>
 								  </li>
 								  <li class="nav-item">
+									<a class="nav-link d-block" href="{% url 'admin_hottours' %}"><i class="fa fa-rocket mr-2" aria-hidden="true"></i>Горящие туры</a>
+								  </li>
+								  <li class="nav-item">
+									<a class="nav-link d-block" href="{% url 'admin_countrys' %}"><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Страны</a>
+								  </li>
+								  <li class="nav-item">
+									<a class="nav-link d-block" href="{% url 'admin_citys' %}"><i class="fa fa-university mr-2" aria-hidden="true"></i>Города</a>
+								  </li>
+								  <li class="nav-item">
 									<a class="nav-link d-block" href="{% url 'admin_news' %}"><i class="fa fa-newspaper-o mr-2" aria-hidden="true"></i>Новости</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_news' %}"><i class="fa fa-commenting mr-2" aria-hidden="true"></i>Сообщения</a>
+									<a class="nav-link d-block" href="{% url 'admin_messages' %}"><i class="fa fa-commenting mr-2" aria-hidden="true"></i>Сообщения</a>
 								  </li>
 								  <li class="nav-item">
 									<a class="nav-link d-block" href="{% url 'admin_workers' %}"><i class="fa fa-users mr-2" aria-hidden="true"></i>Персонал</a>
@@ -39,10 +48,13 @@
 								  <hr>
 								  {% endif %}
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'user_mytours' %}"><i class="fa fa-bus mr-2" aria-hidden="true"></i>Мои туры</a>
+									<a class="nav-link d-block" href="{% url 'user_desire' %}"><i class="fa fa-star mr-2" aria-hidden="true"></i>Мои желания</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'user_comments' %}"><i class="fa fa-comments mr-2" aria-hidden="true"></i>Отзывы</a>
+									<a class="nav-link d-block" href="{% url 'user_order' %}"><i class="fa fa-bus mr-2" aria-hidden="true"></i>Мои заказы</a>
+								  </li>
+								  <li class="nav-item">
+									<a class="nav-link d-block" href="{% url 'user_history' %}"><i class="fa fa-history mr-2" aria-hidden="true"></i>История</a>
 								  </li>
 								  <li class="nav-item">
 									<a class="nav-link d-block" href="{% url 'user_settings' %}"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</a>
