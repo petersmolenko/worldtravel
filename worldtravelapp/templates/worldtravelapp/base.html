@@ -46,14 +46,14 @@
 					<!-- START #menu-wrap -->
 					<nav id="menu-wrap" role="navigation">
 						<ul class="sf-menu" id="primary-menu">
-							<li><a href="index.html">Главная</a></li>
+							<li><a href="{% url 'index' %}">Главная</a></li>
 							<li>
-								<a href="tours.html" class="sub-ddown">Туры</a>
+								<a href="{% url 'tours' %}" class="sub-ddown">Туры</a>
 								<ul class="sub-menu">
-									<li><a href="excursion-tours.html">Экскурсионные туры</a></li>
-									<li><a href="beach-tours.html">Пляжный отдых</a></li>
-									<li><a href="active-tours.html">Активный туризм</a></li>
-									<li><a href="weekend-tours.html">Туры выходного дня</a></li>
+									<li><a href="{% url 'tours_act' %}">Экскурсионные туры</a></li>
+									<li><a href="{% url 'tours_bea' %}">Пляжный отдых</a></li>
+									<li><a href="{% url 'tours_act' %}">Активный туризм</a></li>
+									<li><a href="{% url 'tours_wee' %}">Туры выходного дня</a></li>
 								</ul>
 							</li>
 							<li class="active"><a href="{% url 'post_list' %}">Новости</a></li>
@@ -86,12 +86,14 @@
 		<!-- end:header-top -->
 		{% block hero %}
         {% endblock %}
-		<div id="blog-section" class="section-gray">
+		<div id="{% block id %}blog-section{% endblock %}" class="section-gray">
 			{% block header %}
             {% endblock %}
 			{% block content %}
             {% endblock %}
 		</div>
+		{% block content_exend %}
+        {% endblock %}
         {% block testomonial %}
         {% endblock %}
         {% block google_map %}

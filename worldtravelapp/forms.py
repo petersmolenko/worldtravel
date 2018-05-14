@@ -68,3 +68,21 @@ class HotTourForm(forms.ModelForm):
     class Meta:
         model = HotTour
         fields = ('__all__')
+
+class SortTourForm(forms.Form):
+    sort_tour_choice = (
+        ('title', 'По алфавиту'),
+        ('price', 'По цене &#9650;'),
+        ('-price', 'По цене &#9660;'),
+        ('order_count', 'По популярности &#9650;'),
+        ('-order_count', 'По популярности &#9660;'),
+    )
+    filter_tour_choice = (
+        ('', 'Все'),
+        ('EXC', 'Экскурсионный'),
+        ('BEA', 'Пляжный'),
+        ('WEE', 'Выходного дня'),
+        ('ACT', 'Активный'),
+    )
+    ordering = forms.ChoiceField(choices = sort_tour_choice, required=False)
+    filter_tour = forms.ChoiceField(choices = filter_tour_choice, required=False)

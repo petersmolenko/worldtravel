@@ -23,7 +23,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', views.post_list, name='post_list'),
+    path('', views.index, name='index'),
 
     path('auth/sign-in/', auth_views.login, {'template_name': 'worldtravelapp/admin/sign_in.html'}, name='auth_login'),
     path('auth/sign-up/', views.sign_up, name='auth_sign_up'),
@@ -67,7 +67,15 @@ urlpatterns = [
     path('user/order/', views.user_order, name='user_order'),
     path('user/history/', views.user_history, name='user_history'),
     path('user/settings/', views.user_settings, name='user_settings'),
+
+
+    path('tours/', views.tours, name='tours'),
+    path('tours/exc', views.tours_exc, name='tours_exc'),
+    path('tours/wee', views.tours_wee, name='tours_wee'),
+    path('tours/act', views.tours_act, name='tours_act'),
+    path('tours/bea', views.tours_bea, name='tours_bea'),
     
+    path('post_list/', views.post_list, name='post_list'),
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
     path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
     path('post/<int:pk>/publish/', views.post_publish, name='post_publish'),

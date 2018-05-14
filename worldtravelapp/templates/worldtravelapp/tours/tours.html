@@ -1,0 +1,167 @@
+{% extends 'worldtravelapp/base-xx.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+Туры
+{% endblock %}
+
+{% block title-page %}
+Наши туры
+{% endblock %}
+
+{% block description %}
+Туры от компании Мир - это низкие цены за самое высокое качество обслуживания!
+{% endblock %}
+{% block id %}car{% endblock %}
+{% block xxx-content %}
+	{% block tours_type %}
+	<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box mb-3">
+						<h3>Экскурсионные туры</h3>
+						<p>Туристам, которым надоел спокойный скучный пляжный отдых, наверняка по душе придется экскурсионный тур. Экскурсионные туры могут дать огромное количество полезной насыщенной информации по поводу быта, досуга и истории разных стран и все чаще становятся выбором активных любознательных путешественников.</p>
+						<p>Пройтись по самой узкой улочке в Праге, насладиться вкуснейшими круассанами и видом на Эйфелеву башню в Париже, посетить шикарные древние замки Рима и торговые центры в Милане, все это сочетать в одной поездке возможно, если выбрать наши экскурсионные туры.</p>
+						<a href="{% url 'tours_exc' %}">Посмотреть больше <i class="icon-arrow-right22"></i></a>
+					</div>
+					<div class="col-md-6 animate-box">
+						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_2.jpg' %}" alt="travel">
+					</div>
+				</div>
+	<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box mb-3">
+						<h3>Туры выходного дня</h3>
+						<p>Поездки на уикенд пользуются заслуженной популярностью туристов: в кратчайшие сроки можно выпасть из рутины трудовых будней и неплохо развеяться вдали от родного дома. И на рынке туров выходного дня успели сложиться свои фавориты. В первую очередь, конечно, это туры по ближайшим окрестностям Москвы и Петербурга и городам Золотого кольца — они исключительно интересны и расположены совсем рядом с мегаполисами.</p>
+						<a href="{% url 'tours_wee' %}">Посмотреть больше <i class="icon-arrow-right22"></i></a>
+					</div>
+					<div class="col-md-6 animate-box order-md-first">
+						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_1.jpg' %}" alt="travel">
+					</div>
+				</div>
+	<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box mb-3">
+						<h3>Пляжные туры</h3>
+						<p>Для многих путешественников выбор пляжного отдыха является отличной возможностью отдохнуть от мирской суеты, получить шикарный шоколадный загар и заняться водными видами спорта. Отпуск у многих людей ассоциируется с теплым солнцем, кристально чистым морем, золотистым пляжем и сочными красками подводного мира. Пляжный отдых на морских побережьях это, прежде всего, обогащение организма полезными витаминами и вклад в крепкое здоровье.</p>
+						<p>Самые лучшие варианты для отдыха всей семьей предлагают Греция, Турция, Египет, Испания, Черногория, Болгария, Тунис, Хорватия.</p>
+						<a href="{% url 'tours_bea' %}">Посмотреть больше <i class="icon-arrow-right22"></i></a>
+					</div>
+					<div class="col-md-6 animate-box">
+						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_3.jpg' %}" alt="travel">
+					</div>
+				</div>
+	<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box mb-3">
+						<h3>Активный туризм</h3>
+						<p>Все больше туристов предпочитают отдыхать активно скучному проведению отпуска на пляже. Экстремальный туризм оставит гораздо более яркие впечатления, которые вы будете помнить всю жизнь, нежели поездка в комфортабельный отель в Турции. Наиболее популярные направления - это сплавы (рафтинг), джип-туры, путешествия на велосипедах и квадроциклах, на лошадях и другие виды отдыха и экстремального туризма. Мы предлагаем увлекательные туры, которые оставят незабываемые впечатления в вашей жизни.</p>
+						<a href="{% url 'tours_act' %}">Посмотреть больше <i class="icon-arrow-right22"></i></a>
+					</div>
+					<div class="col-md-6 animate-box  order-md-first">
+						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_4.jpg' %}" alt="travel">
+					</div>
+				</div>
+				{% endblock %}
+	<div class="row row-bottom-padded-md">
+					<div class="col-12 bg-white mb-2 p-3">
+						<form method="GET">
+						<div class="row">
+							<div class="col-md-2 d-flex align-items-center justify-content-end">
+								<label for="type">Тип отдыха:</label>
+							</div>
+							<div class="col-md-3">
+								<section>
+									{% render_field form.filter_tour class="cs-select cs-skin-border" id="type" %}
+								</section>
+							</div>
+							<div class="col-md-2 d-flex align-items-center justify-content-end">
+								<label for="sort">Сортировать:</label>
+							</div>
+							<div class="col-md-3">
+								<section>
+									{% render_field form.ordering class="cs-select cs-skin-border" id="sort" %}
+								</section>
+							</div>
+							<div class="col-md-2">
+								<button type="submit" class="btn btn-primary">Найти туры</button>
+							</div>
+						</div>
+						</form>
+					</div>
+					{% if tours %}
+					{% for tour in tours %}
+					<div class="col-12 animate-box">
+						<div class="row mb-2">
+							<div class="col-md-7 col-lg-8 tour-container" data-image="{{ tour.photo_url}}">
+									<h3 class="mb-1 text-center"><span class="font-weight-bold">{{ tour.type_tour }}{{ tour.pk }}</span> {{ tour.title }}</h3>
+									<hr class="d-none d-md-flex hr-margin-low">
+									<div class="row no-gutters">
+										<div class="col-6 col-md-4 col-lg-2 tour-day">
+											<p class="mb-0">{{ tour.duration }} дней</p>
+										</div>
+										<div class="col-6 col-md-8 col-lg-4 mb-0 tour-cost">
+											<p class="descript d-none d-md-flex">Стоимость тура</p>
+											<p class="tour-cost-val money">{{ tour.price|floatformat:2 }}</p>
+										</div>
+										<div class="col-md-6 m-0 tour-path d-none d-lg-flex">
+											<p class="descript">Города</p>
+											<p class="tour-path-val">
+												{% for city in tour.citys.all %}
+												<span class="point-path">{{ city.title }}</span>
+												{% endfor %}
+												<span>&#10031;</span>
+											</p>
+										</div>
+									</div>
+									<hr class="d-none d-md-flex hr-margin-low">
+									<div class="row no-gutters">
+										<div class="col-lg-4 col-xl-3 range-tour d-none d-lg-flex">
+											<p class="mb-0">
+												{% if tour.transport == 'AUT' %}
+												<i class="fa fa-bus"></i>
+												{% elif tour.transport == 'AVI' %}
+												<i class="fa fa-plane"></i>
+												{% elif tour.transport == 'CRU' %}
+												<i class="fa fa-ship"></i>
+												{% endif %}
+											</p>
+											<p class="mb-0">
+												{% if tour.type_tour == 'EXC' %}
+												<i class="icon-camera"></i>
+												{% elif tour.type_tour == 'BEA' %}
+												<i class="icon-anchor"></i>
+												{% elif tour.type_tour == 'WEE' %}
+												<i class="icon-wine"></i>
+												{% elif tour.type_tour == 'ACT' %}
+												<i class="icon-compass"></i>
+												{% endif %}
+											</p>
+											<p class="mb-0 tour-place">{{ tour.continent }}</p>
+										</div>
+										<div class="col-xl-5 date-container d-none d-xl-flex">
+											{% for date in tour.nearestdates.all %}
+											<div class="card-date-free" title="Начало тура">
+												<div class="date-begin-tour">
+													<span class="m-0 text-uppercase">{{ date.date|date:"M" }}</span>
+													<span class="m-0 font-weight-bold">{{ date.date|date:"d" }}</span>
+												</div>
+												<div class="free-place">
+													<p class="m-0 bg-orange text-white">есть</p>
+												</div>
+											</div>
+											{% endfor %}
+										</div>
+										<div class="col-lg-5 offset-lg-3 offset-xl-0 col-xl-4 mb-0 tour-cost">
+												<a href="tour_001.html"  class="btn btn-primary">Подробнее</a>
+										</div>
+									</div>
+								</div>
+							<div class="col-md-5 col-lg-4 one-1 d-none d-md-flex" style="background-image: url({{ tour.photo_url}})"></div>
+						</div>
+					</div>
+					{% endfor %}
+					{% else %}
+					<div class="col-12 animate-box p-3 bg-white text-center">
+						<p class="font-size-xl font-weight-bold mb-1"><i class="fa fa-info-circle" aria-hidden="true"></i></p>
+						<p class="font-size-1 font-weight-bold">По вашему запросу ничего не найдено.</p>
+					</div>
+					{% endif %}
+				</div>
+	{% endblock %}

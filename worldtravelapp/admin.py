@@ -16,7 +16,6 @@ class UserAdmin(UserAdmin):
 
 class PostInline(admin.StackedInline):
 	model = Comment
-	extra = 1
 
 class AdminPost(admin.ModelAdmin):
 	list_display = ['title', 'created_date']
@@ -25,12 +24,10 @@ class AdminPost(admin.ModelAdmin):
 
 class DayInline(admin.StackedInline):
     model = Day
-    extra = 1
     verbose_name_plural = 'Программа тура'
 
 class DateInline(admin.StackedInline):
     model = NearestDate
-    extra = 1
     verbose_name_plural = 'Ближайшие даты'
 
 class AdminDays(admin.ModelAdmin):

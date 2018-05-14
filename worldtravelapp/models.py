@@ -39,13 +39,14 @@ class Tour(models.Model):
     transport = models.CharField(max_length=3, choices=TYPE_TRANSPORT_CHOICES, default='AUT', verbose_name='Тип транспорта')
     duration = models.IntegerField(verbose_name='Продолжительность')
     price = models.FloatField(verbose_name='Цена')
-    cities = models.ManyToManyField('worldtravelapp.City', verbose_name='Города', related_name='tours')
-    countries = models.ManyToManyField('worldtravelapp.Country', related_name='tours', verbose_name='Страны')
+    citys = models.ManyToManyField('worldtravelapp.City', verbose_name='Города', related_name='tours')
+    countrys = models.ManyToManyField('worldtravelapp.Country', related_name='tours', verbose_name='Страны')
     title = models.CharField(max_length=200, verbose_name='Название тура')
     text = models.TextField(verbose_name='Описание тура')
     photo = models.ImageField(upload_to='tours/', blank=True, default='', verbose_name='Фото тура')
-    duration = models.IntegerField(verbose_name='Количество дней')
+    continent = models.CharField(max_length=20, verbose_name='Континент')
     discount_tour = models.BooleanField(default=False, verbose_name='Скидка', blank=True)
+    order_count = models.IntegerField(verbose_name='Количество заказов')
 
     
     class Meta:
@@ -95,6 +96,7 @@ class Day(models.Model):
 class NearestDate(models.Model):
     tour = models.ForeignKey('worldtravelapp.Tour', related_name='nearestdates', on_delete=models.CASCADE, verbose_name='Тур')
     date = models.DateField(default=timezone.now, verbose_name='Дата тура')
+    count_place = models.IntegerField(verbose_name='Количество мест', blank=True, null=True)
 
     class Meta:
         verbose_name='Дата тура'

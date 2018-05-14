@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post, UserProfile, Comment, Tour, Worker, Message, NearestDate, Day, Country, City, HotTour
-from .forms import PostForm, UserForm, UserProfileForm, CommentForm, WorkerForm, MessageForm, ToursForm, NearestDateForm, DayForm, CountryForm, CityForm, HotTourForm
+from .forms import PostForm, UserForm, UserProfileForm, CommentForm, WorkerForm, MessageForm, ToursForm, NearestDateForm, DayForm, CountryForm, CityForm, HotTourForm, SortTourForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -32,6 +32,71 @@ def sign_up(request):
         'user_form': user_form,
         'user_profile_form': user_profile_form
         })
+
+
+@login_required(login_url='/auth/sign-in/')
+def index(request):
+    news = Post.objects.all().order_by('-published_date')[:3]
+    return render(request, 'worldtravelapp/tours/index.html', {'news': news })
+
+@login_required(login_url='/auth/sign-in/')
+def tours(request):
+    tours = Tour.objects.all()
+    form = SortTourForm(request.GET)
+    if form.is_valid():
+        if form.cleaned_data["ordering"]:
+            tours = tours.order_by(form.cleaned_data["ordering"])
+        if form.cleaned_data["filter_tour"]:
+            tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
+    return render(request, 'worldtravelapp/tours/tours.html', {'tours': tours, 'form' : form })
+
+@login_required(login_url='/auth/sign-in/')
+def tours_exc(request):
+    tours = Tour.objects.all().filter(type_tour='EXC')
+    form = SortTourForm(request.GET)
+    if form.is_valid():
+        if form.cleaned_data["ordering"]:
+            tours = tours.order_by(form.cleaned_data["ordering"])
+        if form.cleaned_data["filter_tour"]:
+            tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
+    return render(request, 'worldtravelapp/tours/tours-exc.html', {'tours': tours, 'form' : form })
+
+
+@login_required(login_url='/auth/sign-in/')
+def tours_act(request):
+    tours = Tour.objects.all().filter(type_tour='ACT')
+    form = SortTourForm(request.GET)
+    if form.is_valid():
+        if form.cleaned_data["ordering"]:
+            tours = tours.order_by(form.cleaned_data["ordering"])
+        if form.cleaned_data["filter_tour"]:
+            tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
+    return render(request, 'worldtravelapp/tours/tours-act.html', {'tours': tours, 'form' : form })
+
+
+@login_required(login_url='/auth/sign-in/')
+def tours_wee(request):
+    tours = Tour.objects.all().filter(type_tour='WEE')
+    form = SortTourForm(request.GET)
+    if form.is_valid():
+        if form.cleaned_data["ordering"]:
+            tours = tours.order_by(form.cleaned_data["ordering"])
+        if form.cleaned_data["filter_tour"]:
+            tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
+    return render(request, 'worldtravelapp/tours/tours-wee.html', {'tours': tours, 'form' : form })
+
+
+@login_required(login_url='/auth/sign-in/')
+def tours_bea(request):
+    tours = Tour.objects.all().filter(type_tour='BEA')
+    form = SortTourForm(request.GET)
+    if form.is_valid():
+        if form.cleaned_data["ordering"]:
+            tours = tours.order_by(form.cleaned_data["ordering"])
+        if form.cleaned_data["filter_tour"]:
+            tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
+    return render(request, 'worldtravelapp/tours/tours-bea.html', {'tours': tours, 'form' : form })
+
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -303,7 +368,7 @@ def admin_hottours_edit(request, pk):
             hottour = form.save()
             return redirect('admin_hottours')
     else:
-        form = HotTourForm()
+        form = HotTourForm(instance=hottour)
     return render(request, 'worldtravelapp/admin/admin_hottours_new.html', {'hottour': hottour, 'hottours': hottours, 'form': form})
 
 
