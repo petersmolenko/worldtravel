@@ -27,7 +27,7 @@ urlpatterns = [
 
     path('auth/sign-in/', auth_views.login, {'template_name': 'worldtravelapp/admin/sign_in.html'}, name='auth_login'),
     path('auth/sign-up/', views.sign_up, name='auth_sign_up'),
-    path('auth/logout/', auth_views.logout, name='auth_logout'),
+    path('auth/logout/', auth_views.logout, {'next_page': '/'}, name='auth_logout'),
 
     path('admin/room/', views.admin_room, name='admin_room'),
     path('admin/news/', views.admin_news, name='admin_news'),
@@ -43,6 +43,8 @@ urlpatterns = [
     path('admin/tours/day/<int:pk>/remove/', views.admin_tours_day_remove, name='admin_tours_day_remove'),
     path('admin/tours/<int:pk>/remove/', views.admin_tours_remove, name='admin_tours_remove'),
     path('admin/orders/', views.admin_orders, name='admin_orders'),
+    path('admin/orders/order/<int:pk>/approve', views.admin_order_approve, name='admin_order_approve'),
+    path('admin/orders/order/<int:pk>/deny', views.admin_order_deny, name='admin_order_deny'),
     path('admin/workers/', views.admin_workers, name='admin_workers'),
     path('admin/workers/new/', views.admin_workers_new, name='admin_workers_new'),
     path('admin/workers/<int:pk>/edit/', views.admin_workers_edit, name='admin_workers_edit'),
@@ -64,12 +66,20 @@ urlpatterns = [
 
     path('user/room/', views.user_room, name='user_room'),
     path('user/desire/', views.user_desire, name='user_desire'),
+    path('user/desire/<int:pk>/remove/', views.user_order_desire_remove, name='order_desire_remove'),
     path('user/order/', views.user_order, name='user_order'),
+    path('user/order/<int:pk>/new', views.user_order_new, name='order_new'),
+    path('user/order/<int:pk>/cancel/', views.user_order_cancel, name='user_order_cancel'),
     path('user/history/', views.user_history, name='user_history'),
+    path('user/history/clean/', views.user_history_clean, name='user_history_clean'),
     path('user/settings/', views.user_settings, name='user_settings'),
 
 
     path('tours/', views.tours, name='tours'),
+    path('tours/tour/<int:pk>/', views.tour_detail, name='tour_detail'),
+    path('tours/tour/<int:pk>/review/new', views.add_review_to_tour, name='add_review_to_tour'),
+    path('tours/tour/<int:pk>/review/approve/', views.review_approve, name='review_approve'),
+    path('tours/tour/<int:pk>/review/remove/', views.review_remove, name='review_remove'),
     path('tours/exc', views.tours_exc, name='tours_exc'),
     path('tours/wee', views.tours_wee, name='tours_wee'),
     path('tours/act', views.tours_act, name='tours_act'),
@@ -82,6 +92,7 @@ urlpatterns = [
     path('post/<int:pk>/remove/', views.post_remove, name='post_remove'),
     path('post/new/', views.post_new, name='post_new'),
     path('post/<int:pk>/edit', views.post_edit, name='post_edit'),
+    path('post/tag/<str:tag>/', views.tag_post, name='tag_post'),
 
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),

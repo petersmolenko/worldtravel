@@ -42,13 +42,13 @@
 						<div id="tags">
 							<span class="mr-2">Тэги:</span>
 							{% for i in post.tags %}
-									<a href="#"><i class="fa fa-tag mr-1" aria-hidden="true"></i>{{ i }}</a>
+									<a href="{% url 'tag_post' tag=i %}"><i class="fa fa-tag mr-1" aria-hidden="true"></i>{{ i }}</a>
 							{% endfor %}
 						</div>
 						<hr>
 					</div>
 				</div>
-				<div class="row bg-white">
+				<div class="row bg-white" id="comments">
 					<div class="col-12 p-2 text-center">
 						<h4 class="mb-0 text-dark">Комментарии</h4>
 					</div>

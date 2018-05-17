@@ -1,4 +1,4 @@
-{% extends 'worldtravelapp/base-xx.html' %}
+{% extends 'worldtravelapp/base-x+.html' %}
 {% load static %}
 {% load widget_tweaks %}
 
@@ -15,55 +15,98 @@
 {% endblock %}
 {% block id %}car{% endblock %}
 {% block xxx-content %}
-	{% block tours_type %}
-	<div class="row row-bottom-padded-md">
-					<div class="col-md-6 animate-box mb-3">
-						<h3>Экскурсионные туры</h3>
-						<p>Туристам, которым надоел спокойный скучный пляжный отдых, наверняка по душе придется экскурсионный тур. Экскурсионные туры могут дать огромное количество полезной насыщенной информации по поводу быта, досуга и истории разных стран и все чаще становятся выбором активных любознательных путешественников.</p>
-						<p>Пройтись по самой узкой улочке в Праге, насладиться вкуснейшими круассанами и видом на Эйфелеву башню в Париже, посетить шикарные древние замки Рима и торговые центры в Милане, все это сочетать в одной поездке возможно, если выбрать наши экскурсионные туры.</p>
-						<a href="{% url 'tours_exc' %}">Посмотреть больше <i class="icon-arrow-right22"></i></a>
-					</div>
-					<div class="col-md-6 animate-box">
-						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_2.jpg' %}" alt="travel">
-					</div>
-				</div>
-	<div class="row row-bottom-padded-md">
-					<div class="col-md-6 animate-box mb-3">
-						<h3>Туры выходного дня</h3>
-						<p>Поездки на уикенд пользуются заслуженной популярностью туристов: в кратчайшие сроки можно выпасть из рутины трудовых будней и неплохо развеяться вдали от родного дома. И на рынке туров выходного дня успели сложиться свои фавориты. В первую очередь, конечно, это туры по ближайшим окрестностям Москвы и Петербурга и городам Золотого кольца — они исключительно интересны и расположены совсем рядом с мегаполисами.</p>
-						<a href="{% url 'tours_wee' %}">Посмотреть больше <i class="icon-arrow-right22"></i></a>
-					</div>
-					<div class="col-md-6 animate-box order-md-first">
-						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_1.jpg' %}" alt="travel">
-					</div>
-				</div>
-	<div class="row row-bottom-padded-md">
-					<div class="col-md-6 animate-box mb-3">
-						<h3>Пляжные туры</h3>
-						<p>Для многих путешественников выбор пляжного отдыха является отличной возможностью отдохнуть от мирской суеты, получить шикарный шоколадный загар и заняться водными видами спорта. Отпуск у многих людей ассоциируется с теплым солнцем, кристально чистым морем, золотистым пляжем и сочными красками подводного мира. Пляжный отдых на морских побережьях это, прежде всего, обогащение организма полезными витаминами и вклад в крепкое здоровье.</p>
-						<p>Самые лучшие варианты для отдыха всей семьей предлагают Греция, Турция, Египет, Испания, Черногория, Болгария, Тунис, Хорватия.</p>
-						<a href="{% url 'tours_bea' %}">Посмотреть больше <i class="icon-arrow-right22"></i></a>
-					</div>
-					<div class="col-md-6 animate-box">
-						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_3.jpg' %}" alt="travel">
-					</div>
-				</div>
-	<div class="row row-bottom-padded-md">
-					<div class="col-md-6 animate-box mb-3">
-						<h3>Активный туризм</h3>
-						<p>Все больше туристов предпочитают отдыхать активно скучному проведению отпуска на пляже. Экстремальный туризм оставит гораздо более яркие впечатления, которые вы будете помнить всю жизнь, нежели поездка в комфортабельный отель в Турции. Наиболее популярные направления - это сплавы (рафтинг), джип-туры, путешествия на велосипедах и квадроциклах, на лошадях и другие виды отдыха и экстремального туризма. Мы предлагаем увлекательные туры, которые оставят незабываемые впечатления в вашей жизни.</p>
-						<a href="{% url 'tours_act' %}">Посмотреть больше <i class="icon-arrow-right22"></i></a>
-					</div>
-					<div class="col-md-6 animate-box  order-md-first">
-						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_4.jpg' %}" alt="travel">
-					</div>
-				</div>
-				{% endblock %}
+	{% block tours_type %}{% endblock %}
 	<div class="row row-bottom-padded-md">
 					<div class="col-12 bg-white mb-2 p-3">
-						<form method="GET">
-						<div class="row">
+						<form method="GET" action="{% url 'tours' %}">
+						<div class="row filter-tour">
+							<div class="col-md-1 d-flex align-items-center justify-content-end">
+								<label for="country">Страна:</label>
+							</div>
+							<div class="col-md-2 mb-2">
+								<div class="input-field">
+									{% render_field form.country class="form-control" id="country" placeholder="Норвегия" %}
+								</div>
+							</div>
+							<div class="col-md-1 d-flex align-items-center justify-content-end">
+								<label for="city-tour">Город:</label>
+							</div>
+							<div class="col-md-2 mb-2">
+								<div class="input-field">
+									{% render_field form.city class="form-control" id="city-tour" placeholder="Осло" %}
+								</div>
+							</div>
 							<div class="col-md-2 d-flex align-items-center justify-content-end">
+								<label for="">Стоимость тура</label>
+							</div>
+							<div class="col-6 col-md-2 mb-2 alternate">
+								<div class="input-field row">
+									<div class="col-2 font-italic">
+										<label for="price-for">От:</label>
+									</div>
+									<div class="col-10">
+										{% render_field form.price_for class="form-control" id="price-for" placeholder="1000" %}
+									</div>
+								</div>
+							</div>		
+							<div class="col-6 col-md-2 mb-2 alternate">
+								<div class="input-field row">
+									<div class="col-2 font-italic">
+										<label for="price-to">До:</label>
+									</div>
+									<div class="col-10">
+										{% render_field form.price_to class="form-control" id="price-to" placeholder="100000" %}
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 d-flex align-items-center">
+								<label for="">Дата выезда</label>
+							</div>
+							<div class="col-6 col-md-2 mb-2 alternate">
+								<div class="input-field row">
+									<div class="col-2 font-italic">
+										<label for="for-date">С:</label>
+									</div>
+									<div class="col-10">
+										{% render_field form.date_for data-date-format="mm.dd.yyyy" class="form-control" id="for-date" placeholder="мм/дд/гггг" %}
+									</div>
+								</div>
+							</div>									
+							<div class="col-6 col-md-2 mb-2 alternate">
+								<div class="input-field row">
+									<div class="col-2 font-italic">
+										<label for="to-date" class="d-inline">По:</label>
+									</div>
+									<div class="col-10">
+										{% render_field form.date_to data-date-format="mm.dd.yyyy" class="form-control" id="to-date" placeholder="мм/дд/гггг" %}
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 d-flex align-items-center justify-content-end">
+								<label for="">Количество дней</label>
+							</div>
+							<div class="col-6 col-md-2 mb-2 alternate">
+								<div class="input-field row">
+									<div class="col-2 font-italic">
+										<label for="inday">От:</label>
+									</div>
+									<div class="col-10">
+										{% render_field form.inday class="form-control" id="inday" placeholder="1" %}
+									</div>
+								</div>
+							</div>
+											
+							<div class="col-6 col-md-2 mb-2 alternate">
+								<div class="input-field row">
+									<div class="col-2 font-italic">
+										<label for="outday">До:</label>
+									</div>
+									<div class="col-10">
+										{% render_field form.outday class="form-control" id="outday" placeholder="14" %}
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 d-flex align-items-center">
 								<label for="type">Тип отдыха:</label>
 							</div>
 							<div class="col-md-3">
@@ -71,7 +114,7 @@
 									{% render_field form.filter_tour class="cs-select cs-skin-border" id="type" %}
 								</section>
 							</div>
-							<div class="col-md-2 d-flex align-items-center justify-content-end">
+							<div class="col-md-2 d-flex align-items-center">
 								<label for="sort">Сортировать:</label>
 							</div>
 							<div class="col-md-3">
@@ -80,7 +123,7 @@
 								</section>
 							</div>
 							<div class="col-md-2">
-								<button type="submit" class="btn btn-primary">Найти туры</button>
+								<button type="submit" class="btn btn-primary float-md-right">Найти туры</button>
 							</div>
 						</div>
 						</form>
@@ -98,7 +141,10 @@
 										</div>
 										<div class="col-6 col-md-8 col-lg-4 mb-0 tour-cost">
 											<p class="descript d-none d-md-flex">Стоимость тура</p>
-											<p class="tour-cost-val money">{{ tour.price|floatformat:2 }}</p>
+											{% if tour.discount_tour %}
+											<p class="mb-0 money"><strike>{{ tour.price|floatformat:2 }}</strike></p>
+											{% endif %}
+											<p class="mb-0 tour-cost-val money font-weight-bold">{{ tour.discount_get|floatformat:2 }}</p>
 										</div>
 										<div class="col-md-6 m-0 tour-path d-none d-lg-flex">
 											<p class="descript">Города</p>
@@ -143,13 +189,13 @@
 													<span class="m-0 font-weight-bold">{{ date.date|date:"d" }}</span>
 												</div>
 												<div class="free-place">
-													<p class="m-0 bg-orange text-white">есть</p>
+													<p class="m-0 bg-orange text-white px-1">{{ date.count_place }} мест</p>
 												</div>
 											</div>
 											{% endfor %}
 										</div>
 										<div class="col-lg-5 offset-lg-3 offset-xl-0 col-xl-4 mb-0 tour-cost">
-												<a href="tour_001.html"  class="btn btn-primary">Подробнее</a>
+												<a href="{% url 'tour_detail' pk=tour.pk %}"  class="btn btn-primary">Подробнее</a>
 										</div>
 									</div>
 								</div>
@@ -164,4 +210,48 @@
 					</div>
 					{% endif %}
 				</div>
+				{% block bottom-content %}
+				<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box mb-3">
+						<h3>Экскурсионные туры</h3>
+						<p>Туристам, которым надоел спокойный скучный пляжный отдых, наверняка по душе придется экскурсионный тур. Экскурсионные туры могут дать огромное количество полезной насыщенной информации по поводу быта, досуга и истории разных стран и все чаще становятся выбором активных любознательных путешественников.</p>
+						<p>Пройтись по самой узкой улочке в Праге, насладиться вкуснейшими круассанами и видом на Эйфелеву башню в Париже, посетить шикарные древние замки Рима и торговые центры в Милане, все это сочетать в одной поездке возможно, если выбрать наши экскурсионные туры.</p>
+						<a href="{% url 'tours_exc' %}?filter_tour=EXC">Посмотреть больше <i class="icon-arrow-right22"></i></a>
+					</div>
+					<div class="col-md-6 animate-box">
+						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_2.jpg' %}" alt="travel">
+					</div>
+				</div>
+	<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box mb-3">
+						<h3>Туры выходного дня</h3>
+						<p>Поездки на уикенд пользуются заслуженной популярностью туристов: в кратчайшие сроки можно выпасть из рутины трудовых будней и неплохо развеяться вдали от родного дома. И на рынке туров выходного дня успели сложиться свои фавориты. В первую очередь, конечно, это туры по ближайшим окрестностям Москвы и Петербурга и городам Золотого кольца — они исключительно интересны и расположены совсем рядом с мегаполисами.</p>
+						<a href="{% url 'tours_wee' %}?filter_tour=WEE">Посмотреть больше <i class="icon-arrow-right22"></i></a>
+					</div>
+					<div class="col-md-6 animate-box order-md-first">
+						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_1.jpg' %}" alt="travel">
+					</div>
+				</div>
+	<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box mb-3">
+						<h3>Пляжные туры</h3>
+						<p>Для многих путешественников выбор пляжного отдыха является отличной возможностью отдохнуть от мирской суеты, получить шикарный шоколадный загар и заняться водными видами спорта. Отпуск у многих людей ассоциируется с теплым солнцем, кристально чистым морем, золотистым пляжем и сочными красками подводного мира. Пляжный отдых на морских побережьях это, прежде всего, обогащение организма полезными витаминами и вклад в крепкое здоровье.</p>
+						<p>Самые лучшие варианты для отдыха всей семьей предлагают Греция, Турция, Египет, Испания, Черногория, Болгария, Тунис, Хорватия.</p>
+						<a href="{% url 'tours_bea' %}?filter_tour=BEA">Посмотреть больше <i class="icon-arrow-right22"></i></a>
+					</div>
+					<div class="col-md-6 animate-box">
+						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_3.jpg' %}" alt="travel">
+					</div>
+				</div>
+	<div class="row row-bottom-padded-md">
+					<div class="col-md-6 animate-box mb-3">
+						<h3>Активный туризм</h3>
+						<p>Все больше туристов предпочитают отдыхать активно скучному проведению отпуска на пляже. Экстремальный туризм оставит гораздо более яркие впечатления, которые вы будете помнить всю жизнь, нежели поездка в комфортабельный отель в Турции. Наиболее популярные направления - это сплавы (рафтинг), джип-туры, путешествия на велосипедах и квадроциклах, на лошадях и другие виды отдыха и экстремального туризма. Мы предлагаем увлекательные туры, которые оставят незабываемые впечатления в вашей жизни.</p>
+						<a href="{% url 'tours_act' %}?filter_tour=ACT">Посмотреть больше <i class="icon-arrow-right22"></i></a>
+					</div>
+					<div class="col-md-6 animate-box  order-md-first">
+						<img class="img-fluid img-thumbnail" src="{% static 'worldtravelapp/images/prev_4.jpg' %}" alt="travel">
+					</div>
+				</div>
+				{% endblock %}
 	{% endblock %}

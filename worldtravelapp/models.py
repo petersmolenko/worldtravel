@@ -8,6 +8,7 @@ class UserProfile(models.Model):
     avatar = models.ImageField(upload_to='users/', blank=True, verbose_name='Фото профиля')
     city = models.CharField(max_length=30, blank=True, verbose_name='Город')
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
+    tel = models.CharField(max_length=30, blank=True, verbose_name='Номер телефона')
  
     def __unicode__(self):
         return self.user
@@ -43,6 +44,9 @@ class Tour(models.Model):
     countrys = models.ManyToManyField('worldtravelapp.Country', related_name='tours', verbose_name='Страны')
     title = models.CharField(max_length=200, verbose_name='Название тура')
     text = models.TextField(verbose_name='Описание тура')
+    useful_info = models.TextField(verbose_name='Полезная информация')
+    tour_in = models.TextField(verbose_name='Входит в стоимость')
+    tour_out = models.TextField(verbose_name='Не входит в стоимость')
     photo = models.ImageField(upload_to='tours/', blank=True, default='', verbose_name='Фото тура')
     continent = models.CharField(max_length=20, verbose_name='Континент')
     discount_tour = models.BooleanField(default=False, verbose_name='Скидка', blank=True)
@@ -54,6 +58,11 @@ class Tour(models.Model):
         verbose_name_plural='Туры'
         ordering=['title']
 
+    def add_order(self):
+        self.order_count+=1
+        self.save()
+
+
     def discounter(self):
         if self.discount_tour == True:
             self.discount_tour = False
@@ -63,7 +72,7 @@ class Tour(models.Model):
 
     def discount_get(self):
         if self.discount_tour == True:
-            return self.price + self.hottour.discount
+            return self.price - ((self.price/100)*self.hottour.discount)
         else:
             return self.price
         
@@ -95,12 +104,20 @@ class Day(models.Model):
 
 class NearestDate(models.Model):
     tour = models.ForeignKey('worldtravelapp.Tour', related_name='nearestdates', on_delete=models.CASCADE, verbose_name='Тур')
-    date = models.DateField(default=timezone.now, verbose_name='Дата тура')
-    count_place = models.IntegerField(verbose_name='Количество мест', blank=True, null=True)
+    date = models.DateField(default=timezone.now, verbose_name='Дата тура', blank=True)
+    count_place = models.IntegerField(verbose_name='Количество мест', blank=True, null=True, default=40)
 
     class Meta:
+        ordering = ['date']
         verbose_name='Дата тура'
         verbose_name_plural='Даты туров'
+
+    def place_count(self):
+        if self.count_place > 1:
+            self.count_place-=1
+            self.save()
+        elif self.count_place == 1:
+            self.delete()
 
     def __str__(self):
         return str(self.date)
@@ -178,6 +195,7 @@ class Worker(models.Model):
     class Meta:
         verbose_name='Сотрудник'
         verbose_name_plural='Сотрудники'
+        unique_together = ('first_name', 'last_name',)
 
     @property
     def photo_url(self):
@@ -189,7 +207,7 @@ class Worker(models.Model):
 
 
 class Country(models.Model):
-    title = models.CharField(max_length=30, verbose_name='Название')
+    title = models.CharField(max_length=30, verbose_name='Название', unique=True)
     continent = models.CharField(max_length=30, verbose_name='Континент')
     photo = models.ImageField(upload_to='news_images/', blank=True, verbose_name='Фото страны')
 
@@ -207,7 +225,7 @@ class Country(models.Model):
 
 
 class City(models.Model):
-    title = models.CharField(max_length=30, verbose_name='Название')
+    title = models.CharField(max_length=30, verbose_name='Название', unique=True)
     country = models.ForeignKey('worldtravelapp.Country', related_name='citys', on_delete=models.CASCADE, verbose_name='Страна')
     photo = models.ImageField(upload_to='news_images/', blank=True, verbose_name='Фото города')
 
@@ -250,15 +268,47 @@ class Review(models.Model):
     tour = models.ForeignKey('worldtravelapp.Tour', related_name='reviews', on_delete=models.CASCADE, verbose_name='Тур')
     text = models.TextField(verbose_name='Отзыв')
     created_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
-    approved_reviews = models.BooleanField(default=False, verbose_name='Одобренный отзыв')
+    approved_review = models.BooleanField(default=False, verbose_name='Одобренный отзыв')
 
     class Meta:
         verbose_name='Отзыв'
         verbose_name_plural='Отзывы'
 
     def approve(self):
-        self.approved_comment = True
+        self.approved_review = True
         self.save()
 
     def __str__(self):
         return self.text
+
+class Order(models.Model):
+    client = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Заказчик')
+    tour = models.ForeignKey('worldtravelapp.Tour', related_name='orders', on_delete=models.CASCADE, verbose_name='Тур')
+    price = models.FloatField(verbose_name='Сумма')
+    tour_date = models.DateField(default=timezone.now, verbose_name='Дата тура', blank=True)
+    order_date = models.DateTimeField(default=timezone.now, verbose_name='Время заказа')
+    desire_order = models.BooleanField(default=False, verbose_name='Желаемый заказ')
+    order = models.BooleanField(default=False, verbose_name='Заказанный')
+    order_complete = models.BooleanField(default=False, verbose_name='Обаботанный заказ')
+    status = models.CharField(max_length=20, verbose_name='Статус', blank=True)
+
+    class Meta:
+        verbose_name='Заказ'
+        verbose_name_plural='Заказы'
+
+    def desire(self):
+        self.desire_order= True
+        self.save()
+
+    def order_get(self):
+        self.desire_order= False
+        self.order= True
+        self.save()
+
+    def complete(self):
+        self.order= False
+        self.order_complete= True
+        self.save()
+
+    def __str__(self):
+        return str(self.pk)

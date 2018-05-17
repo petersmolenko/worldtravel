@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, UserProfile, Comment, Tour, Worker, Message, NearestDate, Day, Country, City, HotTour
-from .forms import PostForm, UserForm, UserProfileForm, CommentForm, WorkerForm, MessageForm, ToursForm, NearestDateForm, DayForm, CountryForm, CityForm, HotTourForm, SortTourForm
+from .models import Post, UserProfile, Comment, Tour, Worker, Message, NearestDate, Day, Country, City, HotTour, Review, Order
+from .forms import PostForm, UserForm, UserProfileForm, CommentForm, WorkerForm, MessageForm, ToursForm, NearestDateForm, DayForm, CountryForm, CityForm, HotTourForm, SortTourForm, ReviewForm, waypointForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -33,70 +33,120 @@ def sign_up(request):
         'user_profile_form': user_profile_form
         })
 
-
-@login_required(login_url='/auth/sign-in/')
 def index(request):
+    form = SortTourForm(request.GET)
     news = Post.objects.all().order_by('-published_date')[:3]
-    return render(request, 'worldtravelapp/tours/index.html', {'news': news })
+    return render(request, 'worldtravelapp/tours/index.html', {'news': news, 'form': form })
 
-@login_required(login_url='/auth/sign-in/')
 def tours(request):
     tours = Tour.objects.all()
+    reviews = Review.objects.order_by('-created_date')[:3]
     form = SortTourForm(request.GET)
     if form.is_valid():
+        if form.cleaned_data["country"]:
+            tours = tours.filter(countrys__title__in = [form.cleaned_data["country"]])
+        if form.cleaned_data["city"]:
+            tours = tours.filter(citys__title__in = [form.cleaned_data["city"]])
+        if form.cleaned_data["price_for"]:
+            tours = tours.filter(price__gte = form.cleaned_data["price_for"])
+        if form.cleaned_data["price_to"]:
+            tours = tours.filter(price__lte = form.cleaned_data["price_to"])
+        if form.cleaned_data["date_for"]:
+            tours = tours.filter(nearestdates__date__gte = form.cleaned_data["date_for"]).distinct()
+        if form.cleaned_data["date_to"]:
+            tours = tours.filter(nearestdates__date__lte = form.cleaned_data["date_to"]).distinct()
+        if form.cleaned_data["inday"]:
+            tours = tours.filter(duration__gte = form.cleaned_data["inday"])
+        if form.cleaned_data["outday"]:
+            tours = tours.filter(duration__lte = form.cleaned_data["outday"])
         if form.cleaned_data["ordering"]:
             tours = tours.order_by(form.cleaned_data["ordering"])
         if form.cleaned_data["filter_tour"]:
             tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
-    return render(request, 'worldtravelapp/tours/tours.html', {'tours': tours, 'form' : form })
+        if form.cleaned_data["transport"]:
+            tours = tours.filter(transport=form.cleaned_data["transport"])
+    return render(request, 'worldtravelapp/tours/tours.html', {'tours': tours, 'form' : form, 'reviews': reviews })
+
+
+def add_review_to_tour(request, pk):
+    tour = get_object_or_404(Tour, pk=pk)
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.tour = tour
+            review.author = request.user
+            review.save()
+            return redirect('tour_detail', pk=tour.pk)
+
+
+
 
 @login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.delete_comment', login_url='/')
+def review_approve(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    review.approve()
+    return redirect('tour_detail', pk=review.tour.pk)
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.delete_comment', login_url='/')
+def review_remove(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    review.delete()
+    return redirect('tour_detail', pk=review.tour.pk)
+
+
+
+def tour_detail(request, pk):
+    tour = get_object_or_404(Tour, pk=pk)
+    reviews = Review.objects.filter(tour=pk)
+    nearestdates = NearestDate.objects.filter(tour=tour)
+    reviewform = ReviewForm()
+    form = SortTourForm(request.GET)
+    if request.method == "POST":
+        waypointform = waypointForm(nearestdates, request.POST)
+        if waypointform.is_valid():
+            new_order = Order()
+            new_order.client = request.user
+            new_order.tour = tour
+            new_order.price = tour.discount_get()
+            new_order.tour_date = waypointform.cleaned_data["waypoints"]
+            new_order.save()
+            new_order.desire()
+            return redirect('user_room')
+    else:
+        waypointform = waypointForm(nearestdates)
+    return render(request, 'worldtravelapp/tours/tour_detail.html', {'tour': tour, 'form': form, 'reviewform':reviewform, 'reviews': reviews, 'waypointform': waypointform})
+
+
 def tours_exc(request):
     tours = Tour.objects.all().filter(type_tour='EXC')
     form = SortTourForm(request.GET)
-    if form.is_valid():
-        if form.cleaned_data["ordering"]:
-            tours = tours.order_by(form.cleaned_data["ordering"])
-        if form.cleaned_data["filter_tour"]:
-            tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
     return render(request, 'worldtravelapp/tours/tours-exc.html', {'tours': tours, 'form' : form })
 
 
-@login_required(login_url='/auth/sign-in/')
 def tours_act(request):
     tours = Tour.objects.all().filter(type_tour='ACT')
     form = SortTourForm(request.GET)
-    if form.is_valid():
-        if form.cleaned_data["ordering"]:
-            tours = tours.order_by(form.cleaned_data["ordering"])
-        if form.cleaned_data["filter_tour"]:
-            tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
     return render(request, 'worldtravelapp/tours/tours-act.html', {'tours': tours, 'form' : form })
 
 
-@login_required(login_url='/auth/sign-in/')
 def tours_wee(request):
     tours = Tour.objects.all().filter(type_tour='WEE')
     form = SortTourForm(request.GET)
-    if form.is_valid():
-        if form.cleaned_data["ordering"]:
-            tours = tours.order_by(form.cleaned_data["ordering"])
-        if form.cleaned_data["filter_tour"]:
-            tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
     return render(request, 'worldtravelapp/tours/tours-wee.html', {'tours': tours, 'form' : form })
 
-
-@login_required(login_url='/auth/sign-in/')
 def tours_bea(request):
     tours = Tour.objects.all().filter(type_tour='BEA')
     form = SortTourForm(request.GET)
-    if form.is_valid():
-        if form.cleaned_data["ordering"]:
-            tours = tours.order_by(form.cleaned_data["ordering"])
-        if form.cleaned_data["filter_tour"]:
-            tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
     return render(request, 'worldtravelapp/tours/tours-bea.html', {'tours': tours, 'form' : form })
 
+
+@login_required(login_url='/auth/sign-in/')
+def order_disire(request):
+
+    return redirect('user_room')
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -106,7 +156,27 @@ def admin_room(request):
 
 @login_required(login_url='/auth/sign-in/')
 def admin_orders(request):
-    return render(request, 'worldtravelapp/admin/admin_orders.html', {})
+    orders=Order.objects.filter(order=True).order_by('-order_date')
+    return render(request, 'worldtravelapp/admin/admin_orders.html', {'orders':orders})
+
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.delete_comment', login_url='/')
+def admin_order_approve(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    order.status='Принят'
+    order.complete()
+    return redirect('admin_orders')
+
+@permission_required('worldtravelapp.delete_comment', login_url='/')
+@login_required
+def admin_order_deny(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    order.status='Отклонен'
+    order.complete()
+    return redirect('admin_orders')
+
+
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -351,7 +421,8 @@ def admin_hottours_new(request):
     if request.method == "POST":
         form = HotTourForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            new_hottour = form.save()
+            new_hottour.tour.discounter()
             return redirect('admin_hottours')
     else:
         form = HotTourForm()
@@ -375,6 +446,7 @@ def admin_hottours_edit(request, pk):
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_hottours_remove(request, pk):
     hottour = get_object_or_404(HotTour, pk=pk)
+    hottour.tour.discounter()
     hottour.delete()
     return redirect('admin_hottours')
 
@@ -421,21 +493,51 @@ def admin_news_draft(request):
 
 @login_required(login_url='/auth/sign-in/')
 def user_room(request):
-    return redirect('user_mytours')
+    return redirect('user_desire')
 
 
 @login_required(login_url='/auth/sign-in/')
 def user_order(request):
-    return render(request, 'worldtravelapp/user/user_order.html', {})
+    orders = Order.objects.filter(client=request.user, order=True).order_by('-order_date')
+    return render(request, 'worldtravelapp/user/user_order.html', {'orders': orders })
 
+@login_required(login_url='/auth/sign-in/')
+def user_order_desire_remove(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    order.delete()
+    return redirect('user_desire')
+
+@login_required(login_url='/auth/sign-in/')
+def user_order_new(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    order.order_date = timezone.now()
+    order.order_get()
+    order.tour.add_order()
+    order_date_dec = order.tour.nearestdates.get(date=order.tour_date)
+    order_date_dec.place_count()
+    return redirect('user_order')
+
+@login_required
+def user_order_cancel(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    order.status='Отменен'
+    order.complete()
+    return redirect('user_order')
 
 @login_required(login_url='/auth/sign-in/')
 def user_history(request):
-    return render(request, 'worldtravelapp/user/user_history.html', {})
+    orders = Order.objects.filter(client=request.user, order_complete=True).order_by('-order_date')
+    return render(request, 'worldtravelapp/user/user_history.html', {'orders': orders})
+
+@login_required(login_url='/auth/sign-in/')
+def user_history_clean(request):
+    orders = Order.objects.filter(client=request.user, order_complete=True).order_by('-order_date')
+    return render(request, 'worldtravelapp/user/user_history.html', {'orders': orders})
 
 @login_required(login_url='/auth/sign-in/')
 def user_desire(request):
-    return render(request, 'worldtravelapp/user/user_desire.html', {})
+    orders = Order.objects.filter(client=request.user, desire_order=True)
+    return render(request, 'worldtravelapp/user/user_desire.html', {'orders': orders})
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -477,8 +579,9 @@ def user_settings(request):
 
 
 def post_list(request):
+    form = SortTourForm(request.GET)
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render(request, 'worldtravelapp/news/news.html', {'posts': posts})
+    return render(request, 'worldtravelapp/news/news.html', {'form': form, 'posts': posts})
 
 
 def post_detail(request, pk):
@@ -549,6 +652,12 @@ def add_comment_to_post(request, pk):
             return redirect('post_detail', pk=post.pk)
 
 
+def tag_post(request, tag):
+    form = SortTourForm(request.GET)
+    posts = Post.objects.filter(tags__contains=tag).order_by('-published_date')
+    return render(request, 'worldtravelapp/news/news.html', {'form': form, 'posts': posts})
+
+
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -567,16 +676,18 @@ def comment_remove(request, pk):
 
 
 def about_us(request):
+    form = SortTourForm(request.GET)
     workers = Worker.objects.order_by('first_name')
-    return render(request, 'worldtravelapp/other/about_us.html', {'workers': workers})
+    return render(request, 'worldtravelapp/other/about_us.html', {'form': form, 'workers': workers})
 
 
 def contacts(request):
+    form = SortTourForm(request.GET)
     if request.method == "POST":
-        form = MessageForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+        post_form = MessageForm(request.POST, request.FILES)
+        if post_form.is_valid():
+            post_form.save()
             return redirect('contacts')
     else:
-        form = MessageForm()
-    return render(request, 'worldtravelapp/other/contacts.html', {'form': form})
+        post_form = MessageForm()
+    return render(request, 'worldtravelapp/other/contacts.html', {'form': form, 'post_form': post_form})

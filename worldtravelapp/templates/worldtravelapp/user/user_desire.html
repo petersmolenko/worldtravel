@@ -1,104 +1,92 @@
 {% extends 'worldtravelapp/admin/base_admin.html' %}
 
 {% block content_admin %}
-<div class="row bg-white mb-2">
-	<div class="col-12 bg-white">
-		<h4 class="my-2 text-dark text-uppercase text-center"><i class="fa fa-star mr-2" aria-hidden="true"></i>Мои желания</h4>
+<div class="row no-gutters">
+	<div class="col-12 bg-green">
+		<h4 class="my-2 text-white text-uppercase text-center"><i class="fa fa-star mr-2" aria-hidden="true"></i>Мои желания</h4>
 	</div>
 	<div class="col-12 p-0">
 		<div class="row no-gutters mb-1">
-			<div class="col-12 bg-green px-1 pt-1">
-				<div class="row no-gutters bg-green pb-2 pt-0 d-none d-md-flex">
+			{% if orders %}
+			<div class="col-12 px-1 pt-1">
+				<div class="row no-gutters pb-2 pt-0 d-none d-md-flex">
 					<div class="col-md-9 offset-md-3 ">
 						<div class="row no-gutters">
-							<div class="col-md-4 text-center">
-								<p class="mb-0 font-weight-bold text-white">Название тура</p>
+							<div class="col-md-5 text-center">
+								<p class="mb-0 font-weight-bold">Название тура</p>
 							</div>
 							<div class="col-md-3 text-center">
-								<p class="mb-0 font-weight-bold text-white">Цена</p>
+								<p class="mb-0 font-weight-bold">Дата</p>
 							</div>
 							<div class="col-md-3 text-center">
-								<p class="mb-0 font-weight-bold text-white">Количество</p>
+								<p class="mb-0 font-weight-bold">Сумма</p>
 							</div>
-							<div class="col-md-2 text-center">
-								<p class="mb-0 font-weight-bold text-white">Сумма</p>
+							<div class="col-md-1 text-center">
+								
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-12 bg-green">
-				<div class="row no-gutters text-center bg-white">
+			{% endif %}
+			<div class="col-12">
+				{% for order in orders %}
+				<div class="row no-gutters text-center bg-white mb-1">
 					<div class="col-md-3">
-						<img src="/static/worldtravelapp/images/image_tour_2.jpg" alt="" class="img-fluid">
+						<img src="{{ order.tour.photo_url }}" alt="" class="img-fluid">
 					</div>
 					<div class="col-md-9">
 						<div class="row no-gutters">
-							<div class="col-md-4 p-2 pl-3">
-								<p class="mb-0 big-discript"><span class="font-weight-bold">R28.0</span> Прага - Мюнхен - Вена - Баварские Замки</p>
+							<div class="col-md-5 p-2 pl-3">
+								<p class="mb-0 big-discript"><span class="font-weight-bold">{{ order.tour.type_tour }}{{ order.tour.pk }}</span> {{ order.tour.title }}</p>
 							</div>
 							<div class="col-md-3 p-2">
-								<p class="money mb-0 descript">39000</p>
+								<p class="mb-0 descript">{{ order.tour_date }}</p>
 							</div>
 							<div class="col-md-3 p-2">
-								<input type="number" name="summy" id="" class="w-50 count-serv" value="1">
+								<p class="money mb-0 descript">{{ order.tour.price }}</p>
 							</div>
-							<div class="col-md-2 p-2">
-								<p class="money mb-0 descript">39000</p>
+							<div class="col-md-1 p-2">
+								<a class="text-dark font-size-2" href="{% url 'order_desire_remove' pk=order.pk %}">&#x2718;</a>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-3 py-4">
-								<a class="" data-toggle="collapse" href="#collapseService" ><i class="fa fa-get-pocket mr-2" aria-hidden="true"></i>Больше</a>
+						<div class="row no-gutters">
+							<div class="col-md-2 d-flex align-items-center p-3">
+								<span class="text-orange font-size-3">
+									{% if order.tour.type_tour == 'EXC' %}
+									<i class="icon-camera mr-2" title="Экскурсионный тур"></i>
+									{% elif order.tour.type_tour == 'BEA' %}
+									<i class="icon-anchor mr-2"></i>
+									{% elif order.tour.type_tour == 'WEE' %}
+									<i class="icon-wine mr-2"></i>
+									{% elif order.tour.type_tour == 'ACT' %}
+									<i class="icon-compass mr-2"></i>
+									{% endif %}
+								</span>
+								<span class="text-orange font-size-3">
+									{% if order.tour.transport == 'AUT' %}
+									<i class="fa fa-bus" title="Автобусный тур"></i>
+									{% elif order.tour.transport == 'AVI' %}
+									<i class="fa fa-plane"></i>
+									{% elif order.tour.transport == 'CRU' %}
+									<i class="fa fa-ship"></i>
+									{% endif %}
+								</span>
 							</div>
-							<div class="col-md-6 offset-md-3 p-2">
-								<button class="btn btn-primary bg-dark"><i class="fa fa-shopping-bag mr-2" aria-hidden="true"></i>Заказать</button>
-								<button class="btn btn-primary bg-dark"><i class="fa fa-trash mx-2" aria-hidden="true"></i></button>
+							<div class="col-md-2 offset-md-6 p-3 d-flex align-items-center">
+								<a href="{% url 'order_new' pk=order.pk %}"><button class="btn btn-primary">Заказать</button></a>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row no-gutters collapse" id="collapseService">
-					<div class="col-12">
-						<div class="row no-gutters bg-white d-none d-md-flex">
-							<div class="col-12 p-2">
-								<div class="row">						
-									<div class="col-md-4 text-center">
-										<p class="mb-0 font-weight-bold">Название услуги</p>
-									</div>
-									<div class="col-md-3 text-center">
-										<p class="mb-0 font-weight-bold">Цена</p>
-									</div>
-									<div class="col-md-3 text-center">
-										<p class="mb-0 font-weight-bold">Количество</p>
-									</div>
-									<div class="col-md-2 text-center">
-										<p class="mb-0 font-weight-bold">Сумма</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row no-gutters bg-green p-1">
-							<div class="col-12 text-center">
-								<p class="text-white text-uppercase mb-0">Базовые услуги</p>
-							</div>
-						</div>
-						<div class="row no-gutters bg-white mb-1 serv-container">
-							<div class="col-md-4 bg-orange p-2">
-								<p class="mb-0 text-white text-center text-md-left">Туркласс</p>
-							</div>
-							<div class="col-md-3 text-center p-2">
-								<p class="mb-0 money mb-0 price-val">39000</p>
-							</div>
-							<div class="col-md-3 text-center d-flex justify-content-center p-2">
-								<input type="number" name="count-serv" class="w-50 count-serv" placeholder="0" value="1"/>
-							</div>
-							<div class="col-md-2 text-center p-2">
-								<p class="mb-0 money mb-0 sum-val">12000</p>
-							</div>
-						</div>
+				{% empty %}
+				<div class="row no-gutters bg-white p-4">
+					<div class="col-12 text-center">
+						<p class="font-size-xl mb-0"><i class="fa fa-star mr-2" aria-hidden="true"></i></p>
+						<p class="font-size-2 text-uppercase">Список желаний пуст</p>
 					</div>
 				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>

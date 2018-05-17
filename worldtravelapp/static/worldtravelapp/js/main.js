@@ -151,6 +151,12 @@
 		stickyBanner();
 	});
 	
+
+	$( document ).ready(function(){
+		if ($('#menu-panel').innerHeight() > $('#work-panel').height()) {
+			 $('#work-panel').height($('#menu-panel').innerHeight());
+		}
+	});
 	//-------------Script Background for Tours Cards---------------/
 	function changeBack(){
 		var list = document.querySelectorAll("div[data-image]");

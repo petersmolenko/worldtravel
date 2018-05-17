@@ -1,7 +1,7 @@
 {% extends 'worldtravelapp/admin/base_admin.html' %}
 
 {% block content_admin %}
-<div class="row bg-white">
+<div class="row no-gutters">
 	<div class="col-12 p-2 text-center bg-green">
 		<h4 class="mb-0 text-uppercase text-white"><i class="fa fa-plane mr-2" aria-hidden="true"></i>Туры</h4>
 	</div>
@@ -31,6 +31,12 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		{% if not tours %}
+		<div class="col-12 p-0 bg-white mb-1 text-center">
+			<p class="font-size-xl mb-0"><i class="fa fa-plane mr-2" aria-hidden="true"></i></p>
+			<p class="font-size-2 text-uppercase">Список туров пуст</p>
+		</div>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

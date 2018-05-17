@@ -50,10 +50,10 @@
 							<li>
 								<a href="{% url 'tours' %}" class="sub-ddown">Туры</a>
 								<ul class="sub-menu">
-									<li><a href="{% url 'tours_act' %}">Экскурсионные туры</a></li>
-									<li><a href="{% url 'tours_bea' %}">Пляжный отдых</a></li>
-									<li><a href="{% url 'tours_act' %}">Активный туризм</a></li>
-									<li><a href="{% url 'tours_wee' %}">Туры выходного дня</a></li>
+									<li><a href="{% url 'tours_act' %}?filter_tour=EXC">Экскурсионные туры</a></li>
+									<li><a href="{% url 'tours_bea' %}?filter_tour=BEA">Пляжный отдых</a></li>
+									<li><a href="{% url 'tours_act' %}?filter_tour=ACT">Активный туризм</a></li>
+									<li><a href="{% url 'tours_wee' %}?filter_tour=WEE">Туры выходного дня</a></li>
 								</ul>
 							</li>
 							<li class="active"><a href="{% url 'post_list' %}">Новости</a></li>

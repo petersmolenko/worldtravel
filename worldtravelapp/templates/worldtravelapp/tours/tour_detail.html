@@ -1,0 +1,246 @@
+{% extends 'worldtravelapp/base-xx.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+{{ tour.title }}
+{% endblock %}
+
+{% block title-page %}
+Наши туры
+{% endblock %}
+
+{% block description %}
+Туры от компании Мир - это низкие цены за самое высокое качество обслуживания!
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="row row-bottom-padded-md">
+			<div class="col-12 animate-box">
+				<div class="row mb-2">
+					<div class="col-12 bg-white p-3 pb-0 mb-1">
+						<h3 class="mb-1"><span class="font-weight-bold">{{ tour.type_tour }}{{ tour.pk }}</span> {{ tour.title }}</h3>
+						<hr class="d-none d-md-flex">
+						<div class="row m-3 m-md-0 no-gutters">
+							<div class="col-md-6">
+								{{ tour.text|linebreaks }}
+							</div>
+							<div class="col-md-6">
+								<img src="{{ tour.photo_url }}" class="img-fluid" alt="">
+							</div>
+						</div>
+						<hr class="d-none d-md-flex  hr-margin-low">
+						<div class="row no-gutters mb-3">
+							<div class="col-md-2 tour-day-dub">
+								<p class="mb-0">{{ tour.duration }} дней</p>
+							</div>
+							<div class="col-md-2 mb-0 text-center">
+								<p class="descript">Стоимость тура</p>
+								{% if tour.discount_tour %}
+								<p class="mb-0 money"><strike>{{ tour.price|floatformat:2 }}</strike></p>
+								<p class="mb-0 tour-cost-val-dub money font-weight-bold">{{ tour.discount_get|floatformat:2 }}</p>
+								{% else %}
+								<p class="mb-0 tour-cost-val-dub money">{{ tour.discount_get|floatformat:2 }}</p>
+								{% endif %}
+							</div>
+							<div class="col-md-2 align-items-center flex-column text-center">
+								<p class="descript mb-0">Тип тура</p>
+								<span class="mb-0">
+									{% if tour.type_tour == 'EXC' %}
+									Экскурсионный<i class="icon-camera ml-2"></i>
+									{% elif tour.type_tour == 'BEA' %}
+									Пляжный<i class="icon-anchor ml-2"></i>
+									{% elif tour.type_tour == 'WEE' %}
+									Выходного дня<i class="icon-wine ml-2"></i>
+									{% elif tour.type_tour == 'ACT' %}
+									Активный<i class="icon-compass ml-2"></i>
+									{% endif %}
+								</span>
+								<span class="mb-0">
+									{% if tour.transport == 'AUT' %}
+									Автобусный<i class="fa fa-bus ml-2"></i>
+									{% elif tour.transport == 'AVI' %}
+									Авиа<i class="fa fa-plane ml-2"></i>
+									{% elif tour.transport == 'CRU' %}
+									Круизный<i class="fa fa-ship ml-2"></i>
+									{% endif %}
+								</span>
+							</div>
+							<div class="col-md-3">
+								<p class="descript">Города в туре</p>
+								<p class="tour-path-val">
+									{% for city in tour.citys.all %}
+										<span class="point-path">{{ city.title }}</span>
+									{% endfor %}
+								</p>
+							</div>
+							<div class="col-md-3 date-container">
+								<div class="row">
+									<div class="col-12 mb-2">
+										<p class="descript">Ближайшие даты</p>
+									</div>
+									<div class="col-12 date-container">
+										{% for date in tour.nearestdates.all %}
+										<div class="card-date-free" title="Начало тура">
+											<div class="date-begin-tour">
+												<span class="m-0 text-uppercase">{{ date.date|date:"M" }}</span>
+												<span class="m-0 font-weight-bold">{{ date.date|date:"d" }}</span>
+											</div>
+											<div class="free-place">
+												<p class="m-0 bg-orange text-white px-1">{{ date.count_place }} мест</p>
+											</div>
+										</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 p-3 bg-green mb-1 order-tour">
+						<div class="row no-gutters d-flex align-items-center">
+							{% if not user.is_authenticated %}
+							<div class="col-12 d-flex flex-column justify-content-center align-items-center">
+								<span class="font-weight-bold font-size-2 text-center mb-0 text-white"><i class="fa fa-plane" aria-hidden="true"></i></span>
+								<span class="text-white font-weight-bold font-size-1 mb-0 p-1">Чтобы заказать тур <a href="{% url 'auth_login' %}">войдите</a> в систему или <a href="{% url 'auth_sign_up' %}">зарегистрируйтесь</a>.</span>
+							</div>
+							{% endif %}
+							{% if user.is_authenticated %}
+							<form method="POST" class="offset-md-3 col-md-6">
+								{% csrf_token %}
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center justify-content-end text-white px-2 pt-1 font-weight-bold text-uppercase">
+										<label for="type">Датa:</label>
+									</div>
+									<div class="col-md-4">
+										<section>
+											{% render_field waypointform.waypoints class="cs-select cs-skin-border cs-skin-border-x" %}
+										</section>
+									</div>
+									<div class="col-md-4">
+										<button type="submit" class="btn btn-primary-x float-md-right">Заказать тур</button>
+									</div>
+								</div>
+							</form>
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-md-6 p-0">
+						<div class="row no-gutters">
+							<div class="col-12 bg-orange mb-1 text-center py-1">
+								<h3 class="mb-0 text-uppercase text-white"><i class="fa fa-calendar-check-o mr-2" aria-hidden="true"></i>Программа тура</h3>
+							</div>
+							{% for date in tour.dates.all %}
+							<div class="col-12 p-1 bg-white mb-1">
+								<div class="row">
+									<div class="col-md-3 p-2 text-center">
+										<p class="descript text-uppercase mb-0">День</p>
+										<p class="day-for-list mb-0">{{ date.number }}</p>
+									</div>
+									<div class="col-md-9">
+										<div class="row">
+											<div class="col-12">
+												<p class="mb-1 text-dark">{{ date.title }}</p>
+												<hr class="hr-margin-low">
+											</div>
+											<div class="col-12">
+												<p class="mb-1">{{ date.text|linebreaks }}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-6 pl-1 pr-0">
+						<div class="row no-gutters">
+							<div class="col-12 bg-orange text-center mb-1 py-1">
+								<h3 class="mb-0 text-uppercase text-white"><i class="fa fa-shopping-bag mr-2" aria-hidden="true"></i>О турпакете</h3>
+							</div>
+							<div class="col-12 bg-white p-2 mb-1">
+								<p class="font-weight-bold font-size-1 text-uppercase mb-1 text-center text-orange">В стоимость входит:</p>
+								<hr class="hr-margin-low">
+								<div class="inside_p_in">
+									{{ tour.tour_in|linebreaks }}
+								</div>
+							</div>
+							<div class="col-12 bg-white p-2 mb-1">
+								<p class="font-weight-bold font-size-1 text-uppercase mb-1 text-center text-orange">В стоимость не входит:</p>
+								<hr class="hr-margin-low">
+								<div class="inside_p_out">
+									{{ tour.tour_out|linebreaks }}
+								</div>
+							</div>
+							<div class="col-12 bg-white p-2 mb-1">
+								<p class="font-weight-bold font-size-1 text-uppercase mb-1 text-center text-orange">Полезная информация:</p>
+								<hr class="hr-margin-low">
+								<div class="inside_p_good">
+									{{ tour.useful_info|linebreaks }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row bg-orange p-1" id="reviews">
+					<div class="col-12 p-2 text-center">
+						<h4 class="mb-0 text-white">Отзывы</h4>
+					</div>
+				</div>
+				{% if user.is_authenticated %}
+				{% for review in reviews %}
+				{% if user.is_authenticated or review.approved_review %}
+				<div class="row bg-white px-3 pt-3 pb-0">
+					<div class="col-md-2 p-3 d-flex align-items-center  flex-column">
+						<img src="{{ review.author.profile.avatar.url }}" class="img-fluid rounded-circle w-50 d-none d-md-flex ml-md-4 border-3 border-white border" alt="">
+						<p class="font-weight-bold pt-2">{{ review.author }}</p>
+					</div>
+					<div class="col-md-10">
+						<blockquote class="blockquote-edit p-4 bg-gray-light">
+							<span class="tringle-o">&#9668;</span>
+							<p>&ldquo;{{ review.text }}&rdquo;</p>
+							<span class="subtext font-italic px-3 mr-2"><i class="fa fa-calendar mr-1" aria-hidden="true"></i>{{ review.created_date }}</span>
+							{% if not review.approved_review and perms.worldtravelapp.delete_comment %}
+				                <a class="" href="{% url 'review_approve' pk=review.pk %}"><span class="text-dark fa fa-check-circle mx-2"></span></a>
+				                <a class="" href="{% url 'review_remove' pk=review.pk %}"><span class="font-weight-bold"><i class="fa fa-trash mr-1" aria-hidden="true"></i></span></a>
+				            {% endif %}
+						</blockquote>
+					</div>
+				</div>
+				{% endif %}
+				{% empty %}
+				<div class="row bg-white p-3">
+					<div class="col-12 text-center">
+						<p class="text-grey font-weight-bold font-size-1">Здесь пока нет отзывов :(</p>
+					</div> 
+				</div>
+				{% endfor %}
+				<form method="POST" action="{% url 'add_review_to_tour' pk=tour.pk%}">
+				{% csrf_token %}
+				<div class="row bg-white pt-2">
+					<div class="col-lg-8 offset-lg-2">
+						<div class="form-group mb-1">
+							{% render_field reviewform.text class="review-text w-100" placeholder="Ваш отзыв" %}
+						</div>
+					</div>
+					<div class="col-md-3 offset-md-8">
+						<div class="form-group">
+							<input type="submit" value="Отправить" class="btn btn-primary">
+						</div>
+					</div>
+			</div>
+		</form>
+		{% else %}
+			<div class="row bg-white p-3">
+				<div class="col-sm-8 offset-sm-2 text-center d-flex flex-column">
+					<span class="font-weight-bold font-size-xl text-center mb-0"><i class="fa fa-commenting" aria-hidden="true"></i></span>
+					<span class="text-dark font-weight-bold font-size-1 mb-0 p-3 text-uppercase">Войдите в систему, чтобы оставить отзыв.</span>
+					 <span><a href="{% url 'auth_login' %}" class="font-weight-bold btn btn-primary bg-dark text-white p-2 text-center">Вход</a></span>
+				</div> 
+			</div>
+		{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+

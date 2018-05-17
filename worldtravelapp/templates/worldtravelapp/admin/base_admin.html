@@ -6,6 +6,20 @@
 {% endblock %}
 
 {% block content %}
+{% url 'admin_orders' as admin_orders %}
+{% url 'admin_messages' as admin_messages %}
+{% url 'admin_news_draft' as draft %}
+{% url 'admin_news_ok' as ok %}
+{% url 'admin_workers' as admin_workers %}
+{% url 'admin_tours' as admin_tours %}
+{% url 'admin_hottours' as admin_hottours %}
+{% url 'admin_countrys' as admin_countrys %}
+{% url 'admin_citys' as admin_citys %}
+{% url 'user_desire' as user_desire %}
+{% url 'user_order' as user_order %}
+{% url 'user_history' as user_history %}
+{% url 'user_settings' as user_settings %}
+
 				<div class="container">
 				<div class="row row-bottom-padded-md mb-2">
 					<div class="col-md-3 animate-box bg-white p-3">
@@ -13,7 +27,8 @@
 							<div class="col-12 text-center">
 								<img src="{{ user.profile.photo_url }}" class="img-fluid rounded mb-1" alt="">
 								<p class="text-dark font-weight-bold mb-0">{% if user.first_name and user.last_name  %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</p>
-								<p class="mb-0"><small>{{ user.email }}</small></p>
+								<p class="mb-0"><small><i class="fa fa-envelope mr-2" aria-hidden="true"></i>{{ user.email }}</small></p>
+								<p class="mb-0"><small><i class="fa fa-phone mr-2" aria-hidden="true"></i>{{ user.profile.tel }}</small></p>
 								<p class="mb-0 info-profile"><strong class="font-weight-bold">Город:</strong> {{ user.profile.city }}</p>
 								<p class="mb-0 info-profile"><strong class="font-weight-bold">День рождения:</strong> {{ user.profile.birthday|date:"d.m.Y" }}</p>
 								<hr class="hr-margin-low">
@@ -22,52 +37,54 @@
 								<ul class="nav nav-tabs" id="myTab" role="tablist">
 								{% if perms.worldtravelapp.add_post %}
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_orders' %}"><i class="fa fa-tasks mr-2" aria-hidden="true"></i>Заказы</a>
+									<a class="nav-link d-block {% if request.path == admin_orders %}active{% endif %}" href="{% url 'admin_orders' %}"><i class="fa fa-tasks mr-2" aria-hidden="true"></i>Заказы</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_tours' %}"><i class="fa fa-plane mr-2" aria-hidden="true"></i>Туры</a>
+									<a class="nav-link d-block {% if request.path == admin_messages %}active{% endif %}" href="{% url 'admin_messages' %}"><i class="fa fa-commenting mr-2" aria-hidden="true"></i>Сообщения</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_hottours' %}"><i class="fa fa-rocket mr-2" aria-hidden="true"></i>Горящие туры</a>
+									<a class="nav-link d-block {% if request.path == ok or request.path == draft %}active{% endif %}" href="{% url 'admin_news' %}"><i class="fa fa-newspaper-o mr-2" aria-hidden="true"></i>Новости</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_countrys' %}"><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Страны</a>
+									<a class="nav-link d-block {% if request.path == admin_workers %}active{% endif %}" href="{% url 'admin_workers' %}"><i class="fa fa-users mr-2" aria-hidden="true"></i>Персонал</a>
+								  </li>
+								  <hr>
+								  <li class="nav-item">
+									<a class="nav-link d-block {% if request.path == admin_tours %}active{% endif %}" href="{% url 'admin_tours' %}"><i class="fa fa-plane mr-2" aria-hidden="true"></i>Туры</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_citys' %}"><i class="fa fa-university mr-2" aria-hidden="true"></i>Города</a>
+									<a class="nav-link d-block {% if request.path == admin_hottours %}active{% endif %}" href="{% url 'admin_hottours' %}"><i class="fa fa-rocket mr-2" aria-hidden="true"></i>Горящие туры</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_news' %}"><i class="fa fa-newspaper-o mr-2" aria-hidden="true"></i>Новости</a>
+									<a class="nav-link d-block {% if request.path == admin_countrys %}active{% endif %}" href="{% url 'admin_countrys' %}"><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Страны</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_messages' %}"><i class="fa fa-commenting mr-2" aria-hidden="true"></i>Сообщения</a>
-								  </li>
-								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'admin_workers' %}"><i class="fa fa-users mr-2" aria-hidden="true"></i>Персонал</a>
+									<a class="nav-link d-block {% if request.path == admin_citys %}active{% endif %}" href="{% url 'admin_citys' %}"><i class="fa fa-university mr-2" aria-hidden="true"></i>Города</a>
 								  </li>
 								  <hr>
 								  {% endif %}
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'user_desire' %}"><i class="fa fa-star mr-2" aria-hidden="true"></i>Мои желания</a>
+									<a class="nav-link d-block {% if request.path == user_desire %}active{% endif %}" href="{% url 'user_desire' %}"><i class="fa fa-star mr-2" aria-hidden="true"></i>Мои желания</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'user_order' %}"><i class="fa fa-bus mr-2" aria-hidden="true"></i>Мои заказы</a>
+									<a class="nav-link d-block {% if request.path == user_order %}active{% endif %}" href="{% url 'user_order' %}"><i class="fa fa-bus mr-2" aria-hidden="true"></i>Мои заказы</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'user_history' %}"><i class="fa fa-history mr-2" aria-hidden="true"></i>История</a>
+									<a class="nav-link d-block {% if request.path == user_history %}active{% endif %}" href="{% url 'user_history' %}"><i class="fa fa-history mr-2" aria-hidden="true"></i>История</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block" href="{% url 'user_settings' %}"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</a>
+									<a class="nav-link d-block {% if request.path == user_settings %}active{% endif %}" href="{% url 'user_settings' %}"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</a>
 								  </li>
+								  <hr>
 								  <li class="">
-									<a class="nav-link d-block active" href="{% url 'auth_logout' %}"><i class="fa fa-window-close mr-2" aria-hidden="true"></i>Выход</a>
+									<a class="nav-link d-block" href="{% url 'auth_logout' %}"><i class="fa fa-window-close mr-2" aria-hidden="true"></i>Выход</a>
 								  </li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-9 animate-box">
-						<div class="p-0 pl-1">
+					<div class="col-md-9 animate-box pl-1" id="menu-panel">
+						<div class="p-0 bg-white" id="work-panel">
 								{% block content_admin %}
 								{% endblock %}
 						</div>

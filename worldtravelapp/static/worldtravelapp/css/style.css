@@ -534,8 +534,26 @@ figure {
     width: 40%;
   }
 }
-.get-tour input[type="text"], .count-serv, .date-field-boot {
+.get-tour input[type="text"], 
+.get-tour input[type="number"],  
+.filter-tour input[type="text"], 
+.filter-tour input[type="number"], 
+.count-serv, 
+.date-field-boot, 
+.review-text {
   background: rgba(0, 0, 0, 0.05);
+  border: none;
+  box-shadow: none;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 5px 10px !important;
+  border-radius: 0;
+  color: #F78536 !important;
+}
+.order-tour input[type="text"], 
+.order-tour input[type="email"], 
+.order-tour input[type="tel"] {
+  background: rgba(255, 255, 255, 0.9);
   border: none;
   box-shadow: none;
   font-weight: bold;
@@ -637,6 +655,18 @@ div.cs-select span {
 .cs-skin-border.cs-active > span {
   background: rgba(0, 0, 0, 0.05) !important;
   color: #F78536;
+}
+.cs-skin-border-x span:hover {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+.cs-skin-border-x > span {
+  border: transparent;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+.cs-skin-border-x.cs-active > span {
+  background: rgba(0, 0, 0, 0.2) !important;
+  color: #fff;
 }
 
 .cs-select .cs-options {
@@ -1618,6 +1648,13 @@ div.cs-select span {
   border: none !important;
   border: 2px solid transparent !important;
 }
+.btn.btn-primary-x {
+  background: white;
+  color: #393e46;
+  border: none !important;
+  border: 2px solid transparent !important;
+  transition: all .2s linear;
+}
 .btn.btn-primary:hover, .btn.btn-primary:active, .btn.btn-primary:focus {
   box-shadow: none;
   background: #F78536;
@@ -2077,6 +2114,9 @@ div.cs-select span {
 .bg-green {
 	background-color: #00AD7C;
 }
+.bg-green-light {
+  background-color: rgba(0, 173, 124, .2);;
+}
 @media screen and (min-width: 770px) {
 		.verticle-al {
 		display: flex;
@@ -2145,6 +2185,13 @@ div.cs-select span {
 	font-size: 3em;
  	color: white;
 }
+.tringle-o {
+  position: absolute;
+  top: 15px;
+  left: -26px;
+  font-size: 3em;
+  color: rgba(0, 0, 0, 0.04);
+}
 .font-size-1 {
 	font-size: 1em!important;
 }
@@ -2195,4 +2242,29 @@ a:focus {
 }
 .text-grey {
   color: #848484;
+}
+.bg-gray {
+  background: #dee2e6;
+}
+.inside_p_in p::before {
+  content: "\2714\2002";
+  color: #F78536;
+}
+.inside_p_out p::before {
+  content: "\2718\2002";
+  color: #F78536;
+}
+.inside_p_good p::before {
+  content: "\272F\2002";
+  color: #F78536;
+}
+.bg-gray-light {
+  background: rgba(0, 0, 0, 0.04);
+}
+.lh-1 {
+  line-height: 1;
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  background-color: #F78536!important;
 }

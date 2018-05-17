@@ -1,4 +1,4 @@
-{% extends 'worldtravelapp/base-xx.html' %}
+{% extends 'worldtravelapp/base-x+.html' %}
 {% load widget_tweaks %}
 
 {% block title %}
@@ -31,17 +31,17 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							{% render_field form.name class="form-control" placeholder="Имя" %}
+							{% render_field post_form.name class="form-control" placeholder="Имя" %}
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							{% render_field form.email class="form-control" placeholder="Email" %}
+							{% render_field post_form.email class="form-control" placeholder="Email" %}
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							{% render_field form.message class="form-control" placeholder="Сообщение" cols="30" rows="7" %}
+							{% render_field post_form.message class="form-control" placeholder="Сообщение" cols="30" rows="7" %}
 						</div>
 					</div>
 					<div class="col-md-12">

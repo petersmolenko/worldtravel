@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post, UserProfile, Comment, Worker, Message, Tour, NearestDate, Day, Country, City, HotTour
+from .models import Post, UserProfile, Comment, Worker, Message, Tour, NearestDate, Day, Country, City, HotTour, Review, Order
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -11,8 +11,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('avatar', 'city', 'birthday')
-
+        fields = ('avatar', 'city', 'birthday', 'tel')
 class PostForm(forms.ModelForm):
 	class Meta:
 		model = Post
@@ -27,6 +26,11 @@ class PostForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
+        fields = ('text',)
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
         fields = ('text',)
 
 class WorkerForm(forms.ModelForm):
@@ -47,7 +51,7 @@ class ToursForm(forms.ModelForm):
 class NearestDateForm(forms.ModelForm):
     class Meta:
         model = NearestDate
-        fields = ('date', )
+        fields = ('date', 'count_place' )
 
 class DayForm(forms.ModelForm):
     class Meta:
@@ -84,5 +88,26 @@ class SortTourForm(forms.Form):
         ('WEE', 'Выходного дня'),
         ('ACT', 'Активный'),
     )
+    type_transport_choice = (
+        ('AUT', 'Атобусный'),
+        ('AVI', 'Авиа'),
+        ('CRU', 'Круизный'),
+    )
     ordering = forms.ChoiceField(choices = sort_tour_choice, required=False)
     filter_tour = forms.ChoiceField(choices = filter_tour_choice, required=False)
+    transport = forms.ChoiceField(choices = type_transport_choice, required=False)
+    country = forms.CharField(max_length=20, required=False)
+    city = forms.CharField(max_length=20, required=False)
+    price_for = forms.FloatField(required=False)
+    price_to = forms.FloatField(required=False)
+    date_for = forms.CharField(max_length=10, required=False)
+    date_to = forms.CharField(max_length=10, required=False)
+    inday = forms.IntegerField(required=False)
+    outday = forms.IntegerField(required=False)
+
+class waypointForm(forms.Form):
+    def __init__(self, coices, *args, **kwargs):
+        super(waypointForm, self).__init__(*args, **kwargs)
+        self.fields['waypoints'] = forms.ChoiceField(
+            choices=[(o.date, str(o)) for o in coices]
+            )

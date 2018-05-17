@@ -2,12 +2,12 @@
 {% load widget_tweaks %}
 
 {% block content_countrys %}
-		<tr class="bg-dark">
+		<tr class="bg-gray">
 			<form method="POST" enctype="multipart/form-data">
 			{% csrf_token %}
 			<td class="pt-3">
 				<div class="input-field">
-					<p class="text-white font-size-2 mb-0">#</p>
+					<p class="font-size-2 mb-0">#</p>
 				</div>
 			</td>
 			<td class="pt-3">
@@ -26,7 +26,7 @@
 				</div>
 			</td>
 			<td>
-				<button type="submit"  class="font-size-2 btn btn-light"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
+				<button type="submit"  class="font-size-1 btn btn-second"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
 			</td>
 			</form>
 		</tr>

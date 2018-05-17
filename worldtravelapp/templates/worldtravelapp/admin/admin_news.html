@@ -1,37 +1,56 @@
 {% extends 'worldtravelapp/admin/base_admin.html' %}
 
 {% block content_admin %}
-<div class="row">
-	<div class="col-12 bg-white">
-		<h4 class="my-2 text-dark text-uppercase text-center"><i class="fa fa-newspaper-o mr-2" aria-hidden="true"></i>Новости</h4>
+{% url 'admin_news_ok' as ok %}
+{% url 'admin_news_draft' as draft %}
+<div class="row no-gutters">
+	<div class="col-12 p-2 text-center bg-green">
+		<h4 class="mb-0 text-white text-uppercase"><i class="fa fa-newspaper-o mr-2" aria-hidden="true"></i>Новости</h4>
 	</div>
-	<div class="col-12 p-2 bg-green">
-		<div class="row text-center font-weight-bold pb-2 no-gutters">
-			<div class="col-md-1 align-items-center justify-content-center d-none d-md-flex">
-				<p class="text-white mb-0">Код поста</p>
-			</div>
-			<div class="col-md-2 align-items-center justify-content-center d-none d-md-flex">
-				<p class="text-white mb-0">{% block date_news %}{% endblock %}</p>
-			</div>
-			<div class="col-md-4 align-items-center justify-content-center d-none d-md-flex">
-				<p class="text-white mb-0">Заголовок поста</p>
-			</div>
-			<div class="col-md-3 align-items-center justify-content-center d-none d-md-flex">
-				<p class="text-white mb-0">Автор</p>
-			</div>
-			<div class="col-2">
-				<a href="{% url 'post_new' %}" class="btn btn-light bg-white font-weight-bold"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add</a>
-			</div>
-		</div>
-		<div class="col-12 text-center bg-dark circle-h d-flex justify-content-between">
-			<p class="font-weight-bold font-size-1 text-white p-2 text-uppercase mb-1 circle-h">{% block title_news_status %}{% endblock %}</p>
-			<div class="d-flex justify-content-between">
-				<a href="{% url 'admin_news_ok' %}" title="Опубликованные"><p class="font-size-2  mb-0 text-white"><i class="fa fa-bullhorn mr-3" aria-hidden="true"></i></p></a>
-				<a href="{% url 'admin_news_draft' %}" title="Черновик"><p class="font-size-2  mb-0"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></p></a>
-			</div>
-		</div>
-		{% block content_news_admin %}
-		{% endblock %}								
+	<div class="col-12 p-0">
+		<table class="table add-700-table table table-striped table-light mb-0">
+			<thead>
+				<tr>
+					<th scope="col">Код поста</th>
+					<th scope="col">
+						{% block time_content %}{% endblock %}
+					</th>
+					<th scope="col">Заголовок поста</th>
+					<th scope="col">Автор</th>
+					<th scope="col" class="p-1"><a href="{% url 'post_new' %}" class="font-size-2 font-weight-bold raport"><i class="fa fa-plus mr-1" aria-hidden="true"></i></a></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th colspan="3" class="text-center font-weight-bold text-uppercase">
+						<p class="mb-0 mt-1 font-size-1">
+						{% block type_content %}{% endblock %}
+						</p>
+					</th>
+					<th colspan="2">
+						<div class="d-flex">
+							<a href="{% url 'admin_news_ok' %}" title="Опубликованные"><p class="font-size-2  mb-0 {% if request.path == ok %}text-dark{% endif %}"><i class="fa fa-bullhorn mr-3" aria-hidden="true"></i></p></a>
+							<a href="{% url 'admin_news_draft' %}" title="Черновик"><p class="font-size-2  mb-0 {% if request.path == draft %}text-dark{% endif %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></p></a>
+						</div>
+					</th>
+				</tr>
+				{% for post in posts %}
+				<tr>
+					<th scope="row" class="sharp_id">{{ post.pk }}</th>
+					<td>
+						{% block date_content %}{% endblock %}
+					</td>
+					<td>{{ post.title }}</td>
+					<td><span class="font-weight-bold">{{post.author }}</span></td>
+					<td>
+						{% block publish_go %}{% endblock %}
+						<a href="{% url 'post_edit' pk=post.pk %}"><span class="font-size-1 mb-0 mr-2 raport d-inline"><i class="fa fa-pencil" aria-hidden="true"></i></span></a>
+						<a href="{% url 'post_remove' pk=post.pk %}"><span class="font-size-1  mb-0 raport d-inline"><i class="fa fa-times" aria-hidden="true"></i></span></a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% block news_empty %}{% endblock %}
 	</div>
-</div>
 {% endblock %}

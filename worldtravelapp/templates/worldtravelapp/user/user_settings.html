@@ -3,13 +3,13 @@
 
 
 {% block content_admin %}
-<div class="row bg-white mb-2">
-	<div class="col-12 p-2 text-center">
-		<h4 class="mb-0 text-dark text-uppercase"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</h4>
+<div class="row no-gutters">
+	<div class="col-12 p-2 text-center bg-green">
+		<h4 class="mb-0 text-white text-uppercase"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Настройки</h4>
 	</div>
-	<div class="col-md-12 p-2 bg-green">
-		<div class="row no-gutters text-white">
-			<div class="col-sm-6 offset-sm-3">
+	<div class="col-md-12 p-2">
+		<div class="row no-gutters text-orange">
+			<div class="col-sm-8 offset-sm-2">
 				{% if messages %}
 				    {% for message in messages %}
 				    <div class="alert alert-success" role="alert">
@@ -21,7 +21,7 @@
 					<div class="form-row">
 						<div class="col-md-12 mb-3">
 							<hr class="hr-margin-low border-2">
-							<p class="text-white text-center text-uppercase my-1">Изменение пароля</p>
+							<p class="text-center text-uppercase my-1">Изменение пароля</p>
 							<hr class="hr-margin-low border-2">
 						</div>
 						<div class="col-md-12 mb-3">
@@ -53,7 +53,7 @@
 						</div>
 						<div class="col-md-12 mb-3">
 							<hr class="hr-margin-low border-2">
-							<p class="text-white text-center text-uppercase my-1">Основные настройки</p>
+							<p class="text-center text-uppercase my-1">Основные настройки</p>
 							<hr class="hr-margin-low border-2">
 						</div>
 						<div class="col-md-12 mb-3">
@@ -75,11 +75,20 @@
 								{% render_field user_form.email placeholder="E-mail" class="form-control" id="email_field" %}
 							</div>
 						</div>
+						<div class="col-md-12 mb-3">
+							<label for="tel_field">Телефон</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fa fa-phone"></i></span>
+								</div>
+								{% render_field profile_form.tel placeholder="Телефон" class="form-control" id="tel_field" %}
+							</div>
+						</div>
 					</div>
 					<div class="form-row">
 						<div class="col-md-12 mb-3">
 							<hr class="hr-margin-low border-2">
-							<p class="text-white text-center text-uppercase my-1">Дополнительная информация</p>
+							<p class="text-center text-uppercase my-1">Дополнительная информация</p>
 							<hr class="hr-margin-low border-2">
 						</div>
 						<div class="col-md-12 mb-3">
@@ -109,7 +118,7 @@
 					</div>
 					<div class="row">
 						<div class="col-12 text-center">
-							<button class="btn btn-primary bg-white text-dark" type="submit">Изменить</button>
+							<button class="btn btn-primary" type="submit">Изменить</button>
 						</div>
 					</div>
 				</form>
