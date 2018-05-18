@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Count, Min, Sum, Avg
 from django.utils import timezone
 from .models import Post, UserProfile, Comment, Tour, Worker, Message, NearestDate, Day, Country, City, HotTour, Review, Order
 from .forms import PostForm, UserForm, UserProfileForm, CommentForm, WorkerForm, MessageForm, ToursForm, NearestDateForm, DayForm, CountryForm, CityForm, HotTourForm, SortTourForm, ReviewForm, waypointForm
@@ -10,7 +11,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
 
-
+#--------------------------- Authorizations Views ------------------------------------------
 def sign_up(request):
     user_form = UserForm()
     user_profile_form = UserProfileForm()
@@ -34,13 +35,17 @@ def sign_up(request):
         })
 
 def index(request):
+    hottours = HotTour.objects.order_by('-discount')[:3]
+    countrys_s = Country.objects.annotate(sort=Sum('tours__order_count')).order_by('-sort')[5:10]
     form = SortTourForm(request.GET)
     news = Post.objects.all().order_by('-published_date')[:3]
-    return render(request, 'worldtravelapp/tours/index.html', {'news': news, 'form': form })
+    return render(request, 'worldtravelapp/tours/index.html', {'news': news, 'form': form, 'countrys_s': countrys_s, 'hottours': hottours })
+#------------------------------------------------------------------------------------
 
+
+#----------------------------------- Tours Views-----------------------------------
 def tours(request):
-    tours = Tour.objects.all()
-    reviews = Review.objects.order_by('-created_date')[:3]
+    tours = Tour.objects.filter(complete=True)
     form = SortTourForm(request.GET)
     if form.is_valid():
         if form.cleaned_data["country"]:
@@ -51,9 +56,11 @@ def tours(request):
             tours = tours.filter(price__gte = form.cleaned_data["price_for"])
         if form.cleaned_data["price_to"]:
             tours = tours.filter(price__lte = form.cleaned_data["price_to"])
-        if form.cleaned_data["date_for"]:
+        if form.cleaned_data["date_for"] and form.cleaned_data["date_to"]:
+            tours = tours.filter(nearestdates__date__gte = form.cleaned_data["date_for"], nearestdates__date__lte = form.cleaned_data["date_to"]).distinct()
+        elif form.cleaned_data["date_for"]:
             tours = tours.filter(nearestdates__date__gte = form.cleaned_data["date_for"]).distinct()
-        if form.cleaned_data["date_to"]:
+        elif form.cleaned_data["date_to"]:
             tours = tours.filter(nearestdates__date__lte = form.cleaned_data["date_to"]).distinct()
         if form.cleaned_data["inday"]:
             tours = tours.filter(duration__gte = form.cleaned_data["inday"])
@@ -65,42 +72,13 @@ def tours(request):
             tours = tours.filter(type_tour=form.cleaned_data["filter_tour"])
         if form.cleaned_data["transport"]:
             tours = tours.filter(transport=form.cleaned_data["transport"])
-    return render(request, 'worldtravelapp/tours/tours.html', {'tours': tours, 'form' : form, 'reviews': reviews })
-
-
-def add_review_to_tour(request, pk):
-    tour = get_object_or_404(Tour, pk=pk)
-    if request.method == "POST":
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.tour = tour
-            review.author = request.user
-            review.save()
-            return redirect('tour_detail', pk=tour.pk)
-
-
-
-
-@login_required(login_url='/auth/sign-in/')
-@permission_required('worldtravelapp.delete_comment', login_url='/')
-def review_approve(request, pk):
-    review = get_object_or_404(Review, pk=pk)
-    review.approve()
-    return redirect('tour_detail', pk=review.tour.pk)
-
-@login_required(login_url='/auth/sign-in/')
-@permission_required('worldtravelapp.delete_comment', login_url='/')
-def review_remove(request, pk):
-    review = get_object_or_404(Review, pk=pk)
-    review.delete()
-    return redirect('tour_detail', pk=review.tour.pk)
-
+        if form.cleaned_data["hottour"]:
+            tours = tours.filter(hottour__isnull=False)
+    return render(request, 'worldtravelapp/tours/tours.html', {'tours': tours, 'form' : form })
 
 
 def tour_detail(request, pk):
     tour = get_object_or_404(Tour, pk=pk)
-    reviews = Review.objects.filter(tour=pk)
     nearestdates = NearestDate.objects.filter(tour=tour)
     reviewform = ReviewForm()
     form = SortTourForm(request.GET)
@@ -117,7 +95,7 @@ def tour_detail(request, pk):
             return redirect('user_room')
     else:
         waypointform = waypointForm(nearestdates)
-    return render(request, 'worldtravelapp/tours/tour_detail.html', {'tour': tour, 'form': form, 'reviewform':reviewform, 'reviews': reviews, 'waypointform': waypointform})
+    return render(request, 'worldtravelapp/tours/tour_detail.html', {'tour': tour, 'form': form, 'reviewform':reviewform, 'waypointform': waypointform})
 
 
 def tours_exc(request):
@@ -144,10 +122,35 @@ def tours_bea(request):
 
 
 @login_required(login_url='/auth/sign-in/')
-def order_disire(request):
+def add_review_to_tour(request, pk):
+    tour = get_object_or_404(Tour, pk=pk)
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.tour = tour
+            review.author = request.user
+            review.save()
+            return redirect('tour_detail', pk=tour.pk)
 
-    return redirect('user_room')
 
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.delete_comment', login_url='/')
+def review_approve(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    review.approve()
+    return redirect('tour_detail', pk=review.tour.pk)
+
+@login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.delete_comment', login_url='/')
+def review_remove(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    review.delete()
+    return redirect('tour_detail', pk=review.tour.pk)
+#------------------------------------------------------------------------------------
+
+
+#-------------------------------- Admin Views ---------------------------------------
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_room(request):
@@ -168,6 +171,7 @@ def admin_order_approve(request, pk):
     order.complete()
     return redirect('admin_orders')
 
+
 @permission_required('worldtravelapp.delete_comment', login_url='/')
 @login_required
 def admin_order_deny(request, pk):
@@ -177,14 +181,11 @@ def admin_order_deny(request, pk):
     return redirect('admin_orders')
 
 
-
-
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_tours(request):
     tours = Tour.objects.all().order_by('title')
     return render(request, 'worldtravelapp/admin/admin_tours.html', {'tours': tours})
-
 
 
 @login_required(login_url='/auth/sign-in/')
@@ -193,11 +194,12 @@ def admin_tours_new(request):
     if request.method == "POST":
         tours_form = ToursForm(request.POST, request.FILES)
         if tours_form.is_valid():
-            tours_form.save()
-            return redirect('admin_tours')
+            new_tour = tours_form.save()
+            return redirect('admin_tours_edit', pk=new_tour.pk)
     else:
         tours_form = ToursForm()
     return render(request, 'worldtravelapp/admin/admin_tours_new.html', {'tours_form': tours_form})
+
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -209,7 +211,12 @@ def admin_tours_edit(request, pk):
         tours_form = ToursForm(request.POST, request.FILES, instance=tour)
         if tours_form.is_valid():
             tours_form.save()
-            return redirect('admin_tours')
+            if not tour.nearestdates.exists():
+                messages.error(request, 'Тур должен иметь хотя бы одну дату!')
+            else:
+                tour.complete = True
+                tour.save()
+                return redirect('admin_tours')
     else:
         tours_form = ToursForm(instance=tour)
     return render(request, 'worldtravelapp/admin/admin_tours_edit.html', {
@@ -229,16 +236,22 @@ def admin_tours_edit_date(request, pk):
             new_date = dates_form.save(commit=False)
             new_date.tour = tour
             new_date.save()
+            tour.complete = True
+            tour.save()
             return redirect('admin_tours_edit', pk=tour.pk)
     else:
         dates_form = NearestDateForm()
-    return render(request, 'worldtravelapp/admin/admin_tours_edit_date.html', {'dates_form' : dates_form})
+    return render(request, 'worldtravelapp/admin/admin_tours_edit_date.html', {'dates_form' : dates_form, 'tour': tour })
+
 
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_tours_date_remove(request, pk):
     date = get_object_or_404(NearestDate, pk=pk)
     date.delete()
+    date.tour.complete = False
+    date.tour.save()
     return redirect(request.META.get('HTTP_REFERER'))
+
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -255,6 +268,7 @@ def admin_tours_day_new(request, pk):
         days_form = DayForm()
     return render(request, 'worldtravelapp/admin/admin_tours_edit_day.html', {'days_form' : days_form})
 
+
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_tours_day_edit(request, pk):
@@ -267,13 +281,15 @@ def admin_tours_day_edit(request, pk):
             return redirect('admin_tours_edit', pk=tour.pk)
     else:
         days_form = DayForm(instance=day)
-    return render(request, 'worldtravelapp/admin/admin_tours_edit_day.html', {'days_form' : days_form})
+    return render(request, 'worldtravelapp/admin/admin_tours_edit_day.html', {'days_form' : days_form, 'day': day})
+
 
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_tours_day_remove(request, pk):
     day = get_object_or_404(Day, pk=pk)
     day.delete()
     return redirect(request.META.get('HTTP_REFERER'))
+
 
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_tours_remove(request, pk):
@@ -282,13 +298,12 @@ def admin_tours_remove(request, pk):
     return redirect('admin_tours')
 
 
-
-
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_workers(request):
     workers = Worker.objects.all().order_by('first_name')
     return render(request, 'worldtravelapp/admin/admin_workers.html', {'workers': workers})
+
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -305,6 +320,7 @@ def admin_workers_new(request):
 
 
 @login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
 def admin_workers_edit(request, pk):
     workers = Worker.objects.exclude(pk=pk).order_by('first_name')
     worker = get_object_or_404(Worker, pk=pk)
@@ -315,9 +331,10 @@ def admin_workers_edit(request, pk):
             return redirect('admin_workers')
     else:
         form = WorkerForm(initial={'first_name': worker.first_name, 'last_name': worker.last_name, 'job': worker.job})
-    return render(request, 'worldtravelapp/admin/admin_workers_new.html', {'workers': workers, 'form': form})
+    return render(request, 'worldtravelapp/admin/admin_workers_new.html', {'workers': workers, 'form': form, 'worker': worker})
 
 
+@login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_workers_remove(request, pk):
     worker = get_object_or_404(Worker, pk=pk)
@@ -330,6 +347,7 @@ def admin_workers_remove(request, pk):
 def admin_countrys(request):
     countrys = Country.objects.all().order_by('title')
     return render(request, 'worldtravelapp/admin/admin_countrys.html', {'countrys': countrys})
+
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -372,6 +390,7 @@ def admin_citys(request):
     citys = City.objects.all().order_by('title')
     return render(request, 'worldtravelapp/admin/admin_citys.html', {'citys': citys})
 
+
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_citys_new(request):
@@ -387,6 +406,7 @@ def admin_citys_new(request):
 
 
 @login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
 def admin_citys_edit(request, pk):
     citys = City.objects.exclude(pk=pk).order_by('title')
     city = get_object_or_404(City, pk=pk)
@@ -397,7 +417,7 @@ def admin_citys_edit(request, pk):
             return redirect('admin_citys')
     else:
         form = CityForm(initial={'title': city.title, 'country': city.country, 'pk': city.pk})
-    return render(request, 'worldtravelapp/admin/admin_citys_edit.html', {'city': city, 'citys': citys, 'form': form})
+    return render(request, 'worldtravelapp/admin/admin_citys_new.html', {'city': city, 'citys': citys, 'form': form})
 
 
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -407,12 +427,12 @@ def admin_citys_remove(request, pk):
     return redirect('admin_citys')
 
 
-
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_hottours(request):
     hottours = HotTour.objects.all().order_by('tour')
     return render(request, 'worldtravelapp/admin/admin_hottours.html', {'hottours': hottours})
+
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
@@ -422,6 +442,16 @@ def admin_hottours_new(request):
         form = HotTourForm(request.POST, request.FILES)
         if form.is_valid():
             new_hottour = form.save()
+            date = NearestDate.objects.filter(tour=new_hottour.tour).annotate(Min('date'))
+            new_hottour.date_tour = date[0].date__min
+            new_hottour.save()
+            if new_hottour.advertise == True:
+                hottours_clean_ad = hottours.filter(advertise=True)
+                for i in hottours_clean_ad:
+                    i.advertise = False
+                    i.save()
+                new_hottour.advertise=True
+                new_hottour.save()
             new_hottour.tour.discounter()
             return redirect('admin_hottours')
     else:
@@ -437,12 +467,20 @@ def admin_hottours_edit(request, pk):
         form = HotTourForm(request.POST, request.FILES, instance=hottour)
         if form.is_valid():
             hottour = form.save()
+            if hottour.advertise == True:
+                hottours_clean_ad = hottours.filter(advertise=True)
+                for i in hottours_clean_ad:
+                    i.advertise = False
+                    i.save()
+                hottour.advertise=True
+                hottour.save()
             return redirect('admin_hottours')
     else:
         form = HotTourForm(instance=hottour)
     return render(request, 'worldtravelapp/admin/admin_hottours_new.html', {'hottour': hottour, 'hottours': hottours, 'form': form})
 
 
+@login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_hottours_remove(request, pk):
     hottour = get_object_or_404(HotTour, pk=pk)
@@ -451,12 +489,12 @@ def admin_hottours_remove(request, pk):
     return redirect('admin_hottours')
 
 
-
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_messages(request):
     messages = Message.objects.all().order_by('-created_date')
     return render(request, 'worldtravelapp/admin/admin_messages.html', {'messages': messages})
+
 
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_messages_remove(request, pk):
@@ -483,14 +521,10 @@ def admin_news_ok(request):
 def admin_news_draft(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
     return render(request, 'worldtravelapp/admin/admin_news_draft.html', {'posts': posts})
+#----------------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
+#-------------------------------User Views ----------------------------------------------------
 @login_required(login_url='/auth/sign-in/')
 def user_room(request):
     return redirect('user_desire')
@@ -501,11 +535,13 @@ def user_order(request):
     orders = Order.objects.filter(client=request.user, order=True).order_by('-order_date')
     return render(request, 'worldtravelapp/user/user_order.html', {'orders': orders })
 
+
 @login_required(login_url='/auth/sign-in/')
 def user_order_desire_remove(request, pk):
     order = get_object_or_404(Order, pk=pk)
     order.delete()
     return redirect('user_desire')
+
 
 @login_required(login_url='/auth/sign-in/')
 def user_order_new(request, pk):
@@ -515,7 +551,11 @@ def user_order_new(request, pk):
     order.tour.add_order()
     order_date_dec = order.tour.nearestdates.get(date=order.tour_date)
     order_date_dec.place_count()
+    if not order.tour.nearestdates.exists():
+        order.tour.complete = False
+        order.tour.save()
     return redirect('user_order')
+
 
 @login_required
 def user_order_cancel(request, pk):
@@ -524,15 +564,19 @@ def user_order_cancel(request, pk):
     order.complete()
     return redirect('user_order')
 
+
 @login_required(login_url='/auth/sign-in/')
 def user_history(request):
     orders = Order.objects.filter(client=request.user, order_complete=True).order_by('-order_date')
     return render(request, 'worldtravelapp/user/user_history.html', {'orders': orders})
 
+
 @login_required(login_url='/auth/sign-in/')
 def user_history_clean(request):
-    orders = Order.objects.filter(client=request.user, order_complete=True).order_by('-order_date')
-    return render(request, 'worldtravelapp/user/user_history.html', {'orders': orders})
+    orders = Order.objects.filter(client=request.user, order_complete=True)
+    orders.delete()
+    return redirect('user_history')
+
 
 @login_required(login_url='/auth/sign-in/')
 def user_desire(request):
@@ -574,14 +618,16 @@ def user_settings(request):
         'profile_form': profile_form,
         'password_form': password_form
         })
+#----------------------------------------------------------------------------------------------
 
 
 
-
+#----------------------------------- News Views -----------------------------------------------
 def post_list(request):
     form = SortTourForm(request.GET)
+    reviews = Review.objects.order_by('-created_date')[:3]
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render(request, 'worldtravelapp/news/news.html', {'form': form, 'posts': posts})
+    return render(request, 'worldtravelapp/news/news.html', {'form': form, 'posts': posts, 'reviews': reviews})
 
 
 def post_detail(request, pk):
@@ -625,6 +671,7 @@ def post_remove(request, pk):
 
 
 @login_required(login_url='/auth/sign-in/')
+@permission_required('worldtravelapp.add_post', login_url='/')
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -658,8 +705,6 @@ def tag_post(request, tag):
     return render(request, 'worldtravelapp/news/news.html', {'form': form, 'posts': posts})
 
 
-
-
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.delete_comment', login_url='/')
 def comment_approve(request, pk):
@@ -667,14 +712,17 @@ def comment_approve(request, pk):
     comment.approve()
     return redirect('post_detail', pk=comment.post.pk)
 
+
 @permission_required('worldtravelapp.delete_comment', login_url='/')
 @login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
+#-------------------------------------------------------------------------------------------------
 
 
+#----------------------------Other Views ---------------------------------------------------------
 def about_us(request):
     form = SortTourForm(request.GET)
     workers = Worker.objects.order_by('first_name')
@@ -691,3 +739,4 @@ def contacts(request):
     else:
         post_form = MessageForm()
     return render(request, 'worldtravelapp/other/contacts.html', {'form': form, 'post_form': post_form})
+#-------------------------------------------------------------------------------------------------

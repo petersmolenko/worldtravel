@@ -32,6 +32,12 @@
 						{% endfor %}
 					</tbody>
 				</table>
+				{% if not countrys %}
+				<div class="col-12 p-0 bg-white mb-1 text-center">
+					<p class="font-size-xl mb-0"><i class="fa fa-plane mr-2" aria-hidden="true"></i></p>
+					<p class="font-size-2 text-uppercase">Список стран пуст</p>
+				</div>
+				{% endif %}
 			</div>
 		</div>
 {% endblock %}

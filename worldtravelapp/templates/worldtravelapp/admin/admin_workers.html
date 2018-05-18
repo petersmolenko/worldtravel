@@ -1,5 +1,9 @@
 {% extends 'worldtravelapp/admin/base_admin.html' %}
 
+
+{% if form.is_valid %}
+workers_edit
+{% endif %}
 {% block content_admin %}
 		<div class="row no-gutters">
 			<div class="col-12 p-2 text-center bg-green">

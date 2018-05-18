@@ -47,10 +47,11 @@ class Tour(models.Model):
     useful_info = models.TextField(verbose_name='Полезная информация')
     tour_in = models.TextField(verbose_name='Входит в стоимость')
     tour_out = models.TextField(verbose_name='Не входит в стоимость')
-    photo = models.ImageField(upload_to='tours/', blank=True, default='', verbose_name='Фото тура')
+    photo = models.ImageField(upload_to='tours_images/', blank=True, default='', verbose_name='Фото тура')
     continent = models.CharField(max_length=20, verbose_name='Континент')
     discount_tour = models.BooleanField(default=False, verbose_name='Скидка', blank=True)
-    order_count = models.IntegerField(verbose_name='Количество заказов')
+    complete = models.BooleanField(default=False, verbose_name='Готов', blank=True)
+    order_count = models.IntegerField(verbose_name='Количество заказов', default=0)
 
     
     class Meta:
@@ -190,7 +191,7 @@ class Worker(models.Model):
     first_name = models.CharField(max_length=30, verbose_name='Имя')
     last_name = models.CharField(max_length=30, verbose_name='Фамилия')
     job = models.CharField(max_length=40, verbose_name='Должность')
-    photo = models.ImageField(upload_to='news_images/', blank=True, default='', verbose_name='Фото сотрудника')
+    photo = models.ImageField(upload_to='workers_images/', blank=True, default='', verbose_name='Фото сотрудника')
 
     class Meta:
         verbose_name='Сотрудник'
@@ -207,9 +208,18 @@ class Worker(models.Model):
 
 
 class Country(models.Model):
+    CONTINENT_CHOICES = (
+        ('Африка', 'Африка'),
+        ('Азия', 'Азия'),
+        ('Австралия', 'Австралия'),
+        ('Россия', 'Россия'),
+        ('Европа', 'Европа'),
+        ('Северная Америка', 'Северная Америка'),
+        ('Южная Америка', 'Южная Америка'),
+    )
     title = models.CharField(max_length=30, verbose_name='Название', unique=True)
-    continent = models.CharField(max_length=30, verbose_name='Континент')
-    photo = models.ImageField(upload_to='news_images/', blank=True, verbose_name='Фото страны')
+    continent = models.CharField(choices=CONTINENT_CHOICES, default='Россия', max_length=50, verbose_name='Континент')
+    photo = models.ImageField(upload_to='countrys_images/', blank=True, verbose_name='Фото страны')
 
     class Meta:
         verbose_name='Страна'
@@ -227,7 +237,7 @@ class Country(models.Model):
 class City(models.Model):
     title = models.CharField(max_length=30, verbose_name='Название', unique=True)
     country = models.ForeignKey('worldtravelapp.Country', related_name='citys', on_delete=models.CASCADE, verbose_name='Страна')
-    photo = models.ImageField(upload_to='news_images/', blank=True, verbose_name='Фото города')
+    photo = models.ImageField(upload_to='citys_images/', blank=True, verbose_name='Фото города')
 
     class Meta:
         verbose_name='Город'
@@ -244,18 +254,15 @@ class City(models.Model):
 
 class HotTour(models.Model):
     tour = models.OneToOneField('worldtravelapp.Tour', related_name='hottour', on_delete=models.CASCADE, verbose_name='Тур')
+    date_tour = models.DateField(default=timezone.now, verbose_name='Дата тура', blank=True)
     text = models.TextField(verbose_name='Описание')
-    photo = models.ImageField(upload_to='news_images/', blank=True, verbose_name='Фото тура')
+    photo = models.ImageField(upload_to='hottours_images/photos/', verbose_name='Фото тура')
+    banner = models.ImageField(upload_to='hottours_images/banners/', verbose_name='Баннер тура')
     discount = models.IntegerField(verbose_name='Скидка')
-
+    advertise = models.BooleanField(default=False, verbose_name='Реклама')
     class Meta:
         verbose_name='Горящий тур'
         verbose_name_plural='Горящие туры'
-
-    @property
-    def photo_url(self):
-        if self.photo and hasattr(self.photo, 'url'):
-            return self.photo.url
 
     def __str__(self):
         return self.tour.title

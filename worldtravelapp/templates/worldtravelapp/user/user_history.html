@@ -31,13 +31,13 @@
 		</table>
 	</div>
 	<div class="col-12 p-2 bg-white">
-		<button class="btn btn-primary float-right">Очистить историю</button>
+		<a href="{% url 'user_history_clean' %}"><button class="btn btn-primary float-right">Очистить историю</button></a>
 	</div>
 	{% endif %}
 	{% if not orders %}
 	<div class="col-12 p-0 bg-white mb-1 text-center">
-		<p class="font-size-xl mb-0"><i class="fa fa-users mr-2" aria-hidden="true"></i></p>
-		<p class="font-size-2 text-uppercase">Список сотрудников пуст</p>
+		<p class="font-size-xl mb-0"><i class="fa fa-history mr-2" aria-hidden="true"></i></p>
+		<p class="font-size-2 text-uppercase">История пуста</p>
 	</div>
 	{% endif %}
 </div>

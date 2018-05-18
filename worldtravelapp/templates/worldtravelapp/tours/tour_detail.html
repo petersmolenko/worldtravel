@@ -1,4 +1,4 @@
-{% extends 'worldtravelapp/base-xx.html' %}
+{% extends 'worldtravelapp/base-x+.html' %}
 {% load widget_tweaks %}
 {% load static %}
 
@@ -20,7 +20,12 @@
 			<div class="col-12 animate-box">
 				<div class="row mb-2">
 					<div class="col-12 bg-white p-3 pb-0 mb-1">
-						<h3 class="mb-1"><span class="font-weight-bold">{{ tour.type_tour }}{{ tour.pk }}</span> {{ tour.title }}</h3>
+						<h3 class="mb-1">
+							<span class="font-weight-bold">{{ tour.type_tour }}{{ tour.pk }}</span> {{ tour.title }} 
+							{% if tour.discount_tour %}
+							<span class="badge bg-green text-white text-uppercase p-2 hottour-label">Горящий тур<span class="hottour-discount badge bg-orange">{{ tour.hottour.discount }}</span></span>
+							{% endif %}
+						</h3>
 						<hr class="d-none d-md-flex">
 						<div class="row m-3 m-md-0 no-gutters">
 							<div class="col-md-6">

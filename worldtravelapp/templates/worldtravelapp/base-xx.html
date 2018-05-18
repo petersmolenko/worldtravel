@@ -3,7 +3,7 @@
 	{% block hero %}
 		<div class="hero">
 			<div class="overlay"></div>
-			<div class="cover" data-stellar-background-ratio="0.5" style="background-image: url('/static/worldtravelapp/images/bg-cz.jpg');">
+			<div class="cover" data-stellar-background-ratio="0.5" style="background-image: url({{ advertise.banner.url }});">
 				<div class="desc">
 					<div class="container">
 						<div class="row">
@@ -30,14 +30,14 @@
 											<div class="col-md-6 col-xl-4 mb-2 alternate">
 												<div class="input-field">
 													<label for="for-date">С:</label>
-													{% render_field form.date_for data-date-format="yyyy.mm.dd" class="form-control" id="for-date" placeholder="гггг-мм-дд" %}
+													{% render_field form.date_for data-date-format="yyyy-mm-dd" class="form-control" id="for-date" placeholder="гггг-мм-дд" %}
 												</div>
 											</div>
 											
 											<div class="col-md-6 col-xl-4 mb-2 alternate">
 												<div class="input-field">
 													<label for="to-date">По:</label>
-													{% render_field form.date_to data-date-format="yyyy.mm.dd" class="form-control" id="to-date" placeholder="гггг-мм-дд" %}
+													{% render_field form.date_to data-date-format="yyyy-mm-dd" class="form-control" id="to-date" placeholder="гггг-мм-дд" %}
 												</div>
 											</div>
 											<div class="col-sm-4"><label for="">Количество дней</label></div>
@@ -91,10 +91,10 @@
 							<div class="col-sm-6 col-lg-7">
 								<div class="desc2 animate-box">
 									<p>Автобусный тур</p>
-									<h2>R21.7  ПРАГА (3 дня) + ЗАМКИ ЧЕХИИ</h2>
-									<h3>Узнаем Чехию поближе, друг!</h3>
-									<span class="price">18157&#8381;</span>
-									 <p><a class="btn btn-primary btn-lg" href="#">Поехали!</a></p> 
+									<h2 class="text-uppercase">{{ advertise.tour.type_tour }}{{ advertise.tour.pk }} {{ advertise.tour.title }}</h2>
+									<h3>{{ advertise.text }}</h3>
+									<span class="money font-size-3 font-weight-bold mr-2 text-dark"><strike>{{ advertise.tour.price }}</strike></span><span class="price money">{{ advertise.tour.discount_get }}</span>
+									 <p><a class="btn btn-primary btn-lg" href="{% url 'tour_detail' pk=advertise.tour.pk %}">Поехали!</a></p> 
 								</div>
 							</div>
 						</div>

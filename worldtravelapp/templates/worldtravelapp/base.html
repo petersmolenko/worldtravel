@@ -1,6 +1,18 @@
 {% load static %}
 {% load widget_tweaks %}
 
+
+{% url 'index' as index %}
+{% url 'about_us' as about_us %}
+{% url 'contacts' as contacts %}
+{% url 'tours' as tours_class %}
+{% url 'post_list' as post_list %}
+{% url 'post_detail' post.pk as post_detail %}
+{% url 'tours_act' as tours_act_class %}
+{% url 'tours_bea' as tours_bea_class %}
+{% url 'tours_wee' as tours_wee_class %}
+{% url 'tours_exc' as tours_exc_class %}
+{% url 'tag_post' i as tag_post %}
 <!doctype html>
 <html>
 	<head>
@@ -11,11 +23,11 @@
 		<meta name="keywords" content="турагенство, мир, туры, европа, туристическая компания, автобусные туры" />
 		<meta name="author" content="Peter Smolenko" />
 			
-		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+		<!-- favicon.ico  -->
 		<link rel="shortcut icon" href="{% static 'worldtravelapp/images/favicon.ico' %}">
 		<!-- Animate.css -->
 		<link rel="stylesheet" href="{% static 'worldtravelapp/css/animate.css' %}">
-		<!-- Icomoon Icon Fonts-->
+		<!-- Fonts-->
 		<link rel="stylesheet" href="{% static 'worldtravelapp/css/icomoon.css' %}">
 		<link rel="stylesheet" href="{% static 'worldtravelapp/fonts/font-awesome-4.7.0/css/font-awesome.css' %}">
 		<!-- Bootstrap  -->
@@ -42,23 +54,23 @@
 			<div class="container">
 				<div class="nav-header">
 					<a href="#" class="js-nav-toggle nav-toggle dark"><i></i></a>
-					<h1 id="logo"><a href="index.html"><i class="icon-globe2"></i>Мир</a></h1>
+					<h1 id="logo"><a href="{% url 'index' %}"><i class="icon-globe2"></i>Мир</a></h1>
 					<!-- START #menu-wrap -->
 					<nav id="menu-wrap" role="navigation">
 						<ul class="sf-menu" id="primary-menu">
-							<li><a href="{% url 'index' %}">Главная</a></li>
-							<li>
+							<li class="{% if request.path == index %}active{% endif %}"><a href="{% url 'index' %}">Главная</a></li>
+							<li class="{% if request.path == tours_class or request.path == tours_act_class or request.path == tours_exc_class or request.path == tours_wee_class or request.path == tours_bea_class %}active{% endif %}">
 								<a href="{% url 'tours' %}" class="sub-ddown">Туры</a>
 								<ul class="sub-menu">
-									<li><a href="{% url 'tours_act' %}?filter_tour=EXC">Экскурсионные туры</a></li>
+									<li><a href="{% url 'tours_exc' %}?filter_tour=EXC">Экскурсионные туры</a></li>
 									<li><a href="{% url 'tours_bea' %}?filter_tour=BEA">Пляжный отдых</a></li>
 									<li><a href="{% url 'tours_act' %}?filter_tour=ACT">Активный туризм</a></li>
 									<li><a href="{% url 'tours_wee' %}?filter_tour=WEE">Туры выходного дня</a></li>
 								</ul>
 							</li>
-							<li class="active"><a href="{% url 'post_list' %}">Новости</a></li>
-							<li><a href="{% url 'contacts' %}">Контакты</a></li>
-							<li><a href="{% url 'about_us' %}">О нас</a></li>
+							<li class="{% if request.path == post_list or request.path == post_detail or request.path == tag_post %}active{% endif %}"><a href="{% url 'post_list' %}">Новости</a></li>
+							<li class="{% if request.path == contacts %}active{% endif %}"><a href="{% url 'contacts' %}">Контакты</a></li>
+							<li class="{% if request.path == about_us %}active{% endif %}"><a href="{% url 'about_us' %}">О нас</a></li>
 							{% if user.is_authenticated %}
 							    <li>
 							    	<a href="log_in.html"><i class="fa fa-user-circle ml-md-4 font-size-3" aria-hidden="true"></i></a>
@@ -119,28 +131,25 @@
 						<div class="col-sm-2 footer-link">
 							<h3>Наши туры</h3>
 							<ul>
-								<li><a href="#">Экскурсионные</a></li>
-								<li><a href="#">Пляжные</a></li>
-								<li><a href="#">Активный туризм</a></li>
-								<li><a href="#">Туры выходного дня</a></li>
+								<li><a href="{% url 'tours_exc' %}?filter_tour=EXC">Экскурсионные</a></li>
+								<li><a href="{% url 'tours_bea' %}?filter_tour=BEA">Пляжные</a></li>
+								<li><a href="{% url 'tours_act' %}?filter_tour=ACT">Активный туризм</a></li>
+								<li><a href="{% url 'tours_wee' %}?filter_tour=WEE">Туры выходного дня</a></li>
 							</ul>
 						</div>
 						<div class="col-sm-2 footer-link">
 							<h3>Популярные направления</h3>
-							<ul>
-								<li><a href="#">Франция</a></li>
-								<li><a href="#">Чехия</a></li>
-								<li><a href="#">Норвегия</a></li>
-								<li><a href="#">Россия</a></li>
-								<li><a href="#">Италия</a></li>
+							<ul>{% for country in countrys_f %}
+								<li><a href="{% url 'tours' %}?country={{ country.title }}">{{ country.title }}</a></li>
+								{% endfor %}
 							</ul>
 						</div>
 						<div class="col-sm-2 footer-link">
-							<h3>Классы туров</h3>
+							<h3>Типы туров</h3>
 							<ul>
-								<li><a href="#">Бюджет</a></li>
-								<li><a href="#">Комфорт</a></li>
-								<li><a href="#">Премиум</a></li>
+								<li><a href="{% url 'tours' %}?transport=AVI">Авиа</a></li>
+								<li><a href="{% url 'tours' %}?transport=CRU">Круизные</a></li>
+								<li><a href="{% url 'tours' %}?transport=AUT">Автобусные</a></li>
 							</ul>
 						</div>
 					</div>
@@ -159,18 +168,12 @@
 				</div>
 			</div>
 		</footer>
-
-	
-
 	</div>
 	<!-- END page -->
-
 	</div>
 	<!-- END wrapper -->
 
 	<!-- jQuery -->
-
-
 	<script src="{% static 'worldtravelapp/js/jquery.min.js' %}"></script>
 	<!-- jQuery Easing -->
 	<script src="{% static 'worldtravelapp/js/jquery.easing.1.3.js' %}"></script>
@@ -193,12 +196,11 @@
 	<!-- CS Select -->
 	<script src="{% static 'worldtravelapp/js/classie.js' %}"></script>
 	<script src="{% static 'worldtravelapp/js/selectFx.js' %}"></script>
-	
+	<!-- Google Maps -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="{% static 'worldtravelapp/js/google_map.js' %}"></script>
 	<!-- Main JS -->
 	<script src="{% static 'worldtravelapp/js/main.js' %}"></script>
 	<p id="hiddy" hidden="hidden">{% static 'worldtravelapp/images/loc.png'%}</p>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="{% static 'worldtravelapp/js/google_map.js' %}"></script>
-
 	</body>
 </html>

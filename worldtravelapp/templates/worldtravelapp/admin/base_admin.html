@@ -10,11 +10,24 @@
 {% url 'admin_messages' as admin_messages %}
 {% url 'admin_news_draft' as draft %}
 {% url 'admin_news_ok' as ok %}
+{% url 'post_new' as post_new %}
 {% url 'admin_workers' as admin_workers %}
+{% url 'admin_workers_edit' worker.pk as admin_workers_edit %}
+{% url 'admin_workers_new' as admin_workers_new %}
 {% url 'admin_tours' as admin_tours %}
+{% url 'admin_tours_day_edit' day.pk as admin_tours_day_edit %}
+{% url 'admin_tours_edit_date' tour.pk as admin_tours_edit_date %}
+{% url 'admin_tours_new' as admin_tours_new %}
+{% url 'admin_tours_edit' tour.pk as admin_tours_edit %}
 {% url 'admin_hottours' as admin_hottours %}
+{% url 'admin_hottours_new' as admin_hottours_new %}
+{% url 'admin_hottours_edit' hottour.pk as admin_hottours_edit %}
 {% url 'admin_countrys' as admin_countrys %}
+{% url 'admin_countrys_new' as admin_countrys_new %}
+{% url 'admin_countrys_edit' country.pk as admin_countrys_edit %}
 {% url 'admin_citys' as admin_citys %}
+{% url 'admin_citys_new' as admin_citys_new %}
+{% url 'admin_citys_edit' city.pk as admin_citys_edit %}
 {% url 'user_desire' as user_desire %}
 {% url 'user_order' as user_order %}
 {% url 'user_history' as user_history %}
@@ -43,23 +56,23 @@
 									<a class="nav-link d-block {% if request.path == admin_messages %}active{% endif %}" href="{% url 'admin_messages' %}"><i class="fa fa-commenting mr-2" aria-hidden="true"></i>Сообщения</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block {% if request.path == ok or request.path == draft %}active{% endif %}" href="{% url 'admin_news' %}"><i class="fa fa-newspaper-o mr-2" aria-hidden="true"></i>Новости</a>
+									<a class="nav-link d-block {% if request.path == ok or request.path == draft or request.path == post_new %}active{% endif %}" href="{% url 'admin_news' %}"><i class="fa fa-newspaper-o mr-2" aria-hidden="true"></i>Новости</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block {% if request.path == admin_workers %}active{% endif %}" href="{% url 'admin_workers' %}"><i class="fa fa-users mr-2" aria-hidden="true"></i>Персонал</a>
+									<a class="nav-link d-block {% if request.path == admin_workers or request.path == admin_workers_new or request.path == admin_workers_edit %}active{% endif %}" href="{% url 'admin_workers' %}"><i class="fa fa-users mr-2" aria-hidden="true"></i>Персонал</a>
 								  </li>
 								  <hr>
 								  <li class="nav-item">
-									<a class="nav-link d-block {% if request.path == admin_tours %}active{% endif %}" href="{% url 'admin_tours' %}"><i class="fa fa-plane mr-2" aria-hidden="true"></i>Туры</a>
+									<a class="nav-link d-block {% if request.path == admin_tours or request.path == admin_tours_edit or request.path == admin_tours_edit_date or request.path == admin_tours_day_edit or request.path == admin_tours_new %}active{% endif %}" href="{% url 'admin_tours' %}"><i class="fa fa-plane mr-2" aria-hidden="true"></i>Туры</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block {% if request.path == admin_hottours %}active{% endif %}" href="{% url 'admin_hottours' %}"><i class="fa fa-rocket mr-2" aria-hidden="true"></i>Горящие туры</a>
+									<a class="nav-link d-block {% if request.path == admin_hottours or request.path == admin_hottours_new or request.path == admin_hottours_edit %}active{% endif %}" href="{% url 'admin_hottours' %}"><i class="fa fa-rocket mr-2" aria-hidden="true"></i>Горящие туры</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block {% if request.path == admin_countrys %}active{% endif %}" href="{% url 'admin_countrys' %}"><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Страны</a>
+									<a class="nav-link d-block {% if request.path == admin_countrys or request.path == admin_countrys_new or request.path == admin_countrys_edit %}active{% endif %}" href="{% url 'admin_countrys' %}"><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Страны</a>
 								  </li>
 								  <li class="nav-item">
-									<a class="nav-link d-block {% if request.path == admin_citys %}active{% endif %}" href="{% url 'admin_citys' %}"><i class="fa fa-university mr-2" aria-hidden="true"></i>Города</a>
+									<a class="nav-link d-block {% if request.path == admin_citys or request.path == admin_citys_new or request.path == admin_citys_edit %}active{% endif %}" href="{% url 'admin_citys' %}"><i class="fa fa-university mr-2" aria-hidden="true"></i>Города</a>
 								  </li>
 								  <hr>
 								  {% endif %}

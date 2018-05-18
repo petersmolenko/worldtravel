@@ -15,41 +15,23 @@
 {% block id %}tours{% endblock %}
 {% block xxx-content %}
 				<div class="row">
+					{% for hottour in hottours %}
 					<div class="col-xl-4 col-md-6 tours animate-box" data-animate-effect="fadeIn">
-						<div href="#"><img src="{% static 'worldtravelapp/images/hot-1.jpg' %}" alt="Европейская мозаика" class="img-fluid">
+						<div href="{% url 'tour_detail' pk=hottour.tour.pk %}"><img src="{{ hottour.photo.url }}" alt="{{ hottour.tour.title }}" class="img-fluid">
 							<div class="desc">
-								<span></span>
-								<h3><strong>R2.9</strong> Европейская мозаика</h3>
-								<span>Три незабываемых дня в столице Франции – основа этого тура.</span>
-								<span class="price">25 884&#8381;</span>
-								<a class="btn btn-primary btn-outline" href="#">Заказать<i class="icon-arrow-right22"></i></a>
+								<h3><strong>{{ hottour.tour.type_tour }}{{ hottour.tour.pk }}</strong> {{ hottour.tour.title }}</h3>
+								<span>{{ hottour.text }}</span>
+								<p class="d-flex aling-items-center">
+									<span class="money pt-3 mr-4 discount-span"><strike>{{ hottour.tour.price|floatformat:2 }}</strike><span class="badge bg-white text-dark">{{ hottour.discount }}</span></span>
+									<span class="price money ml-2">{{ hottour.tour.discount_get|floatformat:2 }}</span>
+								</p>
+								<a class="btn btn-primary btn-outline" href="{% url 'tour_detail' pk=hottour.tour.pk %}">Заказать<i class="icon-arrow-right22"></i></a>
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-4 col-md-6 tours animate-box" data-animate-effect="fadeIn">
-						<div href="#"><img src="{% static 'worldtravelapp/images/hot-2.jpg' %}" alt="R5.5 Пять столиц Европы" class="img-fluid">
-							<div class="desc">
-								<span></span>
-								<h3><strong>R5.5</strong> Пять столиц Европы</h3>
-								<span>Десятидневный маршрут по Европе, с акцентами на таких городах как Париж, Берлин и Прага.</span>
-								<span class="price">32 374&#8381;</span>
-								<a class="btn btn-primary btn-outline" href="#">Заказать<i class="icon-arrow-right22"></i></a>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-4 col-md-6 tours animate-box" data-animate-effect="fadeIn">
-						<div href="#"><img src="{% static 'worldtravelapp/images/hot-3.jpg' %}" alt="Вена - Инсбрук - Мюнхен" class="img-fluid">
-							<div class="desc">
-								<span></span>
-								<h3><strong>A9.7</strong> Вена - Инсбрук - Мюнхен</h3>
-								<span>Незабываемое турне по Австрии и Баварии!</span>
-								<span class="price">34 838&#8381;</span>
-								<a class="btn btn-primary btn-outline" href="#">Заказать<i class="icon-arrow-right22"></i></a>
-							</div>
-						</div>
-					</div>
+					{% endfor %}
 					<div class="col-md-12 text-center animate-box">
-						<p><a class="btn btn-primary btn-outline btn-lg" href="#">Посмотреть больше<i class="icon-arrow-right22"></i></a></p>
+						<p><a class="btn btn-primary btn-outline btn-lg" href="{% url 'tours' %}?hottour=on">Посмотреть больше<i class="icon-arrow-right22"></i></a></p>
 					</div>
 				</div>
 {% endblock %}
@@ -66,7 +48,7 @@
 							<div class="feature-copy">
 								<h3>Пляжный отдых</h3>
 								<p>Пляжный отдых является отличной возможностью отдохнуть от мирской суеты, получить шикарный шоколадный загар и заняться водными видами спорта.</p>
-								<p><a href="#">Подробнее</a></p>
+								<p><a href="{% url 'tours_bea' %}?filter_tour=BEA">Подробнее</a></p>
 							</div>
 						</div>
 
@@ -80,7 +62,7 @@
 							<div class="feature-copy">
 								<h3>Экскурсионный туризм</h3>
 								<p>Туристам, которым надоел спокойный пляжный отдых, наверняка по душе придется экскурсионный тур, который дает огромное количество интересной информации о посещаемой стране.</p>
-								<p><a href="#">Подробнее</a></p>
+								<p><a href="{% url 'tours_exc' %}?filter_tour=EXC">Подробнее</a></p>
 							</div>
 						</div>
 					</div>
@@ -92,7 +74,7 @@
 							<div class="feature-copy">
 								<h3>Отдых в России</h3>
 								<p>России обладает широкими возможностями для туризма круглый год. В летний сезон это пляжный отдых, оздоровительный и лечебный, зимой горнолыжный, множество активных туристических маршрутов.</p>
-								<p><a href="#">Подробнее</a></p>
+								<p><a href="{% url 'tours' %}?country=Россия">Подробнее</a></p>
 							</div>
 						</div>
 					</div>
@@ -107,7 +89,7 @@
 							<div class="feature-copy">
 								<h3>Активный отдых</h3>
 								<p>Активный туризм - это отличная возможность отвлечься от будничных проблем и забот, получить заряд энергии и здоровья, катаясь на горых лыжах или сплавляясь по реке.</p>
-								<p><a href="#">Подробнее</a></p>
+								<p><a href="{% url 'tours_act' %}?filter_tour=ACT">Подробнее</a></p>
 							</div>
 						</div>
 
@@ -121,7 +103,7 @@
 							<div class="feature-copy">
 								<h3>Туры выходного дня</h3>
 								<p>Для тех, кто не может отключиться от дел на долгий срок прекрасно подойдут туры выходного дня. Даже в коротком туре можно отлично отдохнуть, познакомившись с новым городом.</p>
-								<p><a href="#">Подробнее</a></p>
+								<p><a href="{% url 'tours_wee' %}?filter_tour=WEE">Подробнее</a></p>
 							</div>
 						</div>
 
@@ -134,7 +116,7 @@
 							<div class="feature-copy">
 								<h3>Горящие туры</h3>
 								<p>Горящие туры — это лакомый кусочек для любого туриста, который любит экономить свои деньги. А еще это прекрасная возможность устроить себе спонтанный отпуск за небольшие деньги.</p>
-								<p><a href="#">Подробнее</a></p>
+								<p><a href="{% url 'tours' %}?hottour=on"">Подробнее</a></p>
 							</div>
 						</div>
 					</div>
@@ -148,85 +130,32 @@
 				<div class="row">
 					<div class="col-md-12">
 						<ul id="destination-list" class="animate-box">
-							<li class="one-forth text-center" style="background-image: url(images/pop-1.jpg); ">
-								<a href="#">
+							{% for country in countrys_f %}
+							<li class="one-forth text-center" style="background-image: url({{ country.photo_url }}); ">
+								<a href="{% url 'tours' %}?country={{ country.title }}">
 									<div class="case-studies-summary">
-										<h2>Франция</h2>
+										<h2>{{ country.title }}</h2>
 									</div>
 								</a>
 							</li>
-							<li class="one-forth text-center" style="background-image: url(images/pop-2.jpg); ">
-								<a href="#">
-									<div class="case-studies-summary">
-										<h2>Италия</h2>
-									</div>
-								</a>
-							</li>
-							<li class="one-forth text-center" style="background-image: url(images/pop-3.jpg); ">
-								<a href="#">
-									<div class="case-studies-summary">
-										<h2>Чехия</h2>
-									</div>
-								</a>
-							</li>
-							<li class="one-forth text-center" style="background-image: url(images/pop-4.jpg); ">
-								<a href="#">
-									<div class="case-studies-summary">
-										<h2>Норвегия</h2>
-									</div>
-								</a>
-							</li>
-
-							<li class="one-forth text-center" style="background-image: url(images/pop-5.jpg); ">
-								<a href="#">
-									<div class="case-studies-summary">
-										<h2>Таиланд</h2>
-									</div>
-								</a>
-							</li>
+							{% endfor %}
 							<li class="one-half text-center">
 								<div class="title-bg">
 									<div class="case-studies-summary">
 										<h2>Популярные направления</h2>
-										<span><a href="#">Посмотреть все туры</a></span>
+										<span><a href="{% url 'tours' %}">Посмотреть все туры</a></span>
 									</div>
 								</div>
 							</li>
-							<li class="one-forth text-center" style="background-image: url(images/pop-6.jpg); ">
-								<a href="#">
+							{% for country in countrys_s %}
+							<li class="one-forth text-center" style="background-image: url({{ country.photo_url }}); ">
+								<a href="{% url 'tours' %}?country={{ country.title }}">
 									<div class="case-studies-summary">
-										<h2>Турция</h2>
+										<h2>{{ country.title }}</h2>
 									</div>
 								</a>
 							</li>
-							<li class="one-forth text-center" style="background-image: url(images/pop-7.jpg); ">
-								<a href="#">
-									<div class="case-studies-summary">
-										<h2>Непал</h2>
-									</div>
-								</a>
-							</li>
-							<li class="one-forth text-center" style="background-image: url(images/pop-8.jpg); ">
-								<a href="#">
-									<div class="case-studies-summary">
-										<h2>Россия</h2>
-									</div>
-								</a>
-							</li>
-							<li class="one-forth text-center" style="background-image: url(images/pop-9.jpg); ">
-								<a href="#">
-									<div class="case-studies-summary">
-										<h2>Германия</h2>
-									</div>
-								</a>
-							</li>
-							<li class="one-forth text-center" style="background-image: url(images/pop-10.jpg); ">
-								<a href="#">
-									<div class="case-studies-summary">
-										<h2>Испания</h2>
-									</div>
-								</a>
-							</li>
+							{% endfor %}
 						</ul>		
 					</div>
 				</div>

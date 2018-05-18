@@ -33,7 +33,7 @@
 
 	//Date Picker
 
-   $('#date-start, #date-end, #birthday_field, #date-input-field').datepicker();
+   $('#date-start, #date-end, #birthday_field, #date-input-field, #to-date, #for-date').datepicker();
 
    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
       new SelectFx(el);

@@ -46,7 +46,7 @@ class MessageForm(forms.ModelForm):
 class ToursForm(forms.ModelForm):
     class Meta:
         model = Tour
-        fields = ('__all__')
+        exclude = ('complete', 'discount_tour')
 
 class NearestDateForm(forms.ModelForm):
     class Meta:
@@ -104,6 +104,7 @@ class SortTourForm(forms.Form):
     date_to = forms.CharField(max_length=10, required=False)
     inday = forms.IntegerField(required=False)
     outday = forms.IntegerField(required=False)
+    hottour = forms.BooleanField(required=False)
 
 class waypointForm(forms.Form):
     def __init__(self, coices, *args, **kwargs):

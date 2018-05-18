@@ -68,7 +68,7 @@
 										<label for="for-date">С:</label>
 									</div>
 									<div class="col-10">
-										{% render_field form.date_for data-date-format="mm.dd.yyyy" class="form-control" id="for-date" placeholder="мм/дд/гггг" %}
+										{% render_field form.date_for data-date-format="yyyy-mm-dd" class="form-control" id="for-date" placeholder="гггг-мм-дд" %}
 									</div>
 								</div>
 							</div>									
@@ -78,7 +78,7 @@
 										<label for="to-date" class="d-inline">По:</label>
 									</div>
 									<div class="col-10">
-										{% render_field form.date_to data-date-format="mm.dd.yyyy" class="form-control" id="to-date" placeholder="мм/дд/гггг" %}
+										{% render_field form.date_to data-date-format="yyyy-mm-dd" class="form-control" id="to-date" placeholder="гггг-мм-дд" %}
 									</div>
 								</div>
 							</div>
@@ -106,21 +106,35 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="type">Тип отдыха:</label>
+									</div>
+									<div class="col-md-8">
+										<section>
+											{% render_field form.filter_tour class="cs-select cs-skin-border" id="type" %}
+										</section>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-4 d-flex align-items-center">
+										<label for="sort">Сортировать:</label>
+									</div>
+									<div class="col-md-8">
+										<section>
+											{% render_field form.ordering class="cs-select cs-skin-border" id="sort" %}
+										</section>
+									</div>		
+								</div>
+							</div>
 							<div class="col-md-2 d-flex align-items-center">
-								<label for="type">Тип отдыха:</label>
-							</div>
-							<div class="col-md-3">
-								<section>
-									{% render_field form.filter_tour class="cs-select cs-skin-border" id="type" %}
-								</section>
-							</div>
-							<div class="col-md-2 d-flex align-items-center">
-								<label for="sort">Сортировать:</label>
-							</div>
-							<div class="col-md-3">
-								<section>
-									{% render_field form.ordering class="cs-select cs-skin-border" id="sort" %}
-								</section>
+								<div class="custom-control custom-checkbox">
+									{% render_field form.hottour class="custom-control-input" id="hottour-go" %}
+									<label class="custom-control-label" for="hottour-go">Горящие туры</label>
+								</div>
 							</div>
 							<div class="col-md-2">
 								<button type="submit" class="btn btn-primary float-md-right">Найти туры</button>

@@ -194,6 +194,7 @@ figure {
 }
 .cover .desc h2 {
   color: #fff;
+  line-height: 1;
   font-size: 50px;
   margin-bottom: 10px;
   font-weight: 400 !important;
@@ -784,6 +785,7 @@ div.cs-select span {
   margin: 0;
   padding: 0;
   opacity: 1;
+  line-height: 1;
   font-size: 30px;
   font-weight: 400;
   visibility: visible;
@@ -2267,4 +2269,34 @@ a:focus {
 .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
   background-color: #F78536!important;
+}
+.discount-span {
+  position: relative;
+}
+.discount-span .badge {
+  position: absolute;
+  top: 0;
+  font-size: .8em;
+  left: 60px;
+}
+.discount-span .badge::before {
+  content: '-'
+}
+.discount-span .badge::after {
+  content: '%'
+}
+.hottour-label {
+  position: relative;
+}
+.hottour-label .hottour-discount {
+  position: absolute;
+  top: -15px;
+  font-size: .8em;
+  right: -40px;
+}
+.hottour-label .hottour-discount::before {
+  content: '-'
+}
+.hottour-label .hottour-discount::after {
+  content: '%'
 }
