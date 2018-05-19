@@ -22,8 +22,6 @@ from django.contrib.auth import views as auth_views
 
 
 handler404 = views.e_handler404
-handler500 = views.e_handler500
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
