@@ -635,12 +635,11 @@ def post_list(request):
 
 
 def post_detail(request, pk):
-    dates = Tour.objects.get(pk=1)
     comments = Comment.objects.filter(post=pk)
     post = get_object_or_404(Post, pk=pk)
     post.tags = post.tags.split(',')
     form = CommentForm()
-    return render(request, 'worldtravelapp/news/news_detail.html', {'post': post, 'dates': dates, 'comments': comments, 'form': form})
+    return render(request, 'worldtravelapp/news/news_detail.html', {'post': post, 'comments': comments, 'form': form})
 
 
 @login_required(login_url='/auth/sign-in/')
