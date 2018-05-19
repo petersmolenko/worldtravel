@@ -29,7 +29,7 @@
 		<link rel="stylesheet" href="{% static 'worldtravelapp/css/animate.css' %}">
 		<!-- Fonts-->
 		<link rel="stylesheet" href="{% static 'worldtravelapp/css/icomoon.css' %}">
-		<link rel="stylesheet" href="{% static 'worldtravelapp/fonts/font-awesome-4.7.0/css/font-awesome.css' %}">
+		<link rel="stylesheet" href="{% static 'worldtravelapp/css/font-awesome.css' %}">
 		<!-- Bootstrap  -->
 		<link rel="stylesheet" href="{% static 'worldtravelapp/css/bootstrap.css' %}">
 		<!-- Superfish -->
@@ -73,7 +73,7 @@
 							<li class="{% if request.path == about_us %}active{% endif %}"><a href="{% url 'about_us' %}">О нас</a></li>
 							{% if user.is_authenticated %}
 							    <li>
-							    	<a href="log_in.html"><i class="fa fa-user-circle ml-md-4 font-size-3" aria-hidden="true"></i></a>
+							    	<a href="{% if perms.worldtravelapp.add_post %}{% url 'admin_room' %}{% else %}{% url 'user_room' %}{% endif %}"><i class="fa fa-user-circle ml-md-4 font-size-3" aria-hidden="true"></i></a>
 							    		<ul class="sub-menu">
 											<li><p class="font-weight-bold text-orange text-center">{% if user.first_name and user.last_name  %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</p></li>
 											<li><a href="{% if perms.worldtravelapp.add_post %}{% url 'admin_room' %}{% else %}{% url 'user_room' %}{% endif %}"><i class="fa fa-id-card mr-2 line-mini" aria-hidden="true"></i>Личный кабинет</a></li>
@@ -98,7 +98,7 @@
 		<!-- end:header-top -->
 		{% block hero %}
         {% endblock %}
-		<div id="{% block id %}blog-section{% endblock %}" class="section-gray">
+		<div id="{% block id %}blog-section{% endblock %}" class="{% block 404 %}section-gray{% endblock%}">
 			{% block header %}
             {% endblock %}
 			{% block content %}

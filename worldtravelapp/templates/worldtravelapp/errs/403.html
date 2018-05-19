@@ -1,0 +1,17 @@
+{% extends 'worldtravelapp/base.html' %}
+
+
+
+{% block title %}
+404
+{% endblock %}
+
+{% block 404 %}back-404{% endblock%}
+{% block content %}
+	<div class="agile-info">
+		<h2>404</h2>
+		<h3>Упссс..</h3>
+		<p>Страница, на которую вы пытаетесь попасть не существует или была удалена.</p>
+		<a href="{% url 'index' %}"><i class="fa fa-angle-double-left" aria-hidden="true"></i>на главную</a>
+	</div>
+{% endblock %}

@@ -37,43 +37,41 @@
 					</div>
 					<div class="col-md-9">
 						<div class="row no-gutters">
-							<div class="col-md-5 p-2 pl-3">
+							<div class="col-10 col-sm-5 col-md-4 col-lg-5 p-2 order-0 pl-3">
 								<p class="mb-0 big-discript"><span class="font-weight-bold">{{ order.tour.type_tour }}{{ order.tour.pk }}</span> {{ order.tour.title }}</p>
 							</div>
-							<div class="col-md-3 p-2">
-								<p class="mb-0 descript">{{ order.tour_date }}</p>
+							<div class="col-4 col-sm-3 col-md-4 col-lg-3 p-2 pl-3 pl-sm-2 order-2">
+								<p class="mb-0 descript txti-0"><i class="fa date-before mr-2 mr-md-0"></i>{{ order.tour_date|date:"d.m.Y" }}</p>
 							</div>
-							<div class="col-md-3 p-2">
-								<p class="money mb-0 descript">{{ order.price|floatformat:0 }}</p>
+							<div class="col-4 col-sm-3 p-2 pl-3 pl-sm-2 order-2">
+								<p class="money mb-0 descript txti-0"><i class="fa price-before mr-2 mr-md-0"></i>{{ order.price|floatformat:0 }}</p>
 							</div>
-							<div class="col-md-1 p-2">
+							<div class="col-2 col-sm-1 p-0 p-sm-2 order-1 order-sm-2 ">
 								<a class="text-dark font-size-2" href="{% url 'order_desire_remove' pk=order.pk %}">&#x2718;</a>
 							</div>
-						</div>
-						<div class="row no-gutters">
-							<div class="col-md-2 d-flex align-items-center p-3">
-								<span class="text-orange font-size-3">
+							<div class="col-4 col-sm-6  d-flex align-items-center pl-3 pt-lg-3 order-3">
+								<span class="text-orange font-size-3 mr-3">
 									{% if order.tour.type_tour == 'EXC' %}
 									<i class="icon-camera mr-2" title="Экскурсионный тур"></i>
 									{% elif order.tour.type_tour == 'BEA' %}
-									<i class="icon-anchor mr-2"></i>
+									<i class="icon-anchor mr-2" title="Пляжный тур"></i>
 									{% elif order.tour.type_tour == 'WEE' %}
-									<i class="icon-wine mr-2"></i>
+									<i class="icon-wine mr-2" title="Выходного дня"></i>
 									{% elif order.tour.type_tour == 'ACT' %}
-									<i class="icon-compass mr-2"></i>
+									<i class="icon-compass mr-2" title="Активный тур"></i>
 									{% endif %}
 								</span>
 								<span class="text-orange font-size-3">
 									{% if order.tour.transport == 'AUT' %}
 									<i class="fa fa-bus" title="Автобусный тур"></i>
 									{% elif order.tour.transport == 'AVI' %}
-									<i class="fa fa-plane"></i>
+									<i class="fa fa-plane" title="Авиа тур"></i>
 									{% elif order.tour.transport == 'CRU' %}
-									<i class="fa fa-ship"></i>
+									<i class="fa fa-ship" title="Круизный тур"></i>
 									{% endif %}
 								</span>
 							</div>
-							<div class="col-md-2 offset-md-6 p-3 d-flex align-items-center">
+							<div class="col-4 offset-4 offset-sm-0 mb-2 col-sm-4 d-flex align-items-center pt-lg-3 order-3">
 								<a href="{% url 'order_new' pk=order.pk %}"><button class="btn btn-primary">Заказать</button></a>
 							</div>
 						</div>

@@ -1,4 +1,4 @@
-{% extends 'worldtravelapp/base-x+.html' %}
+{% extends 'worldtravelapp/base-x.html' %}
 {% load static %}
 {% load widget_tweaks %}
 
@@ -167,9 +167,9 @@
 										<div class="col-6 col-md-8 col-lg-4 mb-0 tour-cost">
 											<p class="descript d-none d-md-flex">Стоимость тура</p>
 											{% if tour.discount_tour %}
-											<p class="mb-0 money"><strike>{{ tour.price|floatformat:2 }}</strike></p>
+											<p class="mb-0 money"><strike>{{ tour.price }}</strike></p>
 											{% endif %}
-											<p class="mb-0 tour-cost-val money font-weight-bold">{{ tour.discount_get|floatformat:2 }}</p>
+											<p class="mb-0 tour-cost-val money font-weight-bold">{{ tour.discount_get }}</p>
 										</div>
 										<div class="col-md-6 m-0 tour-path d-none d-lg-flex">
 											<p class="descript">Города</p>

@@ -1,4 +1,4 @@
-{% extends 'worldtravelapp/base-x+.html' %}
+{% extends 'worldtravelapp/base-x.html' %}
 {% load widget_tweaks %}
 {% load static %}
 
@@ -43,10 +43,10 @@
 							<div class="col-md-2 mb-0 text-center">
 								<p class="descript">Стоимость тура</p>
 								{% if tour.discount_tour %}
-								<p class="mb-0 money"><strike>{{ tour.price|floatformat:2 }}</strike></p>
-								<p class="mb-0 tour-cost-val-dub money font-weight-bold">{{ tour.discount_get|floatformat:2 }}</p>
+								<p class="mb-0 money"><strike>{{ tour.price|floatformat:0 }}</strike></p>
+								<p class="mb-0 tour-cost-val-dub money font-weight-bold">{{ tour.discount_get|floatformat:0 }}</p>
 								{% else %}
-								<p class="mb-0 tour-cost-val-dub money">{{ tour.discount_get|floatformat:2 }}</p>
+								<p class="mb-0 tour-cost-val-dub money">{{ tour.discount_get|floatformat:0 }}</p>
 								{% endif %}
 							</div>
 							<div class="col-md-2 align-items-center flex-column text-center">
@@ -117,12 +117,12 @@
 									<div class="col-md-2 offset-md-2 d-md-flex align-items-center text-white pt-1 font-weight-bold text-uppercase text-center">
 										<label for="type">Датa</label>
 									</div>
-									<div class="col-md-4 mb-3">
+									<div class="col-md-4 mb-2 mb-lg-0">
 										<section>
 											{% render_field waypointform.waypoints class="cs-select cs-skin-border cs-skin-border-x" %}
 										</section>
 									</div>
-									<div class="col-md-4 mb-2 text-center">
+									<div class="col-md-4 mb-2 mb-lg-0 text-center">
 										<button type="submit" class="btn btn-primary-x float-md-right">Заказать тур</button>
 									</div>
 								</div>

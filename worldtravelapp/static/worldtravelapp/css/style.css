@@ -5,6 +5,13 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 /* =======================================================
 *
 * 	Template Style 
@@ -571,13 +578,6 @@ figure {
   padding: .4em!important;
   border-radius: 0;
 }
-@media screen and (max-width: 768px) {
-  .nav-tabs a {
-    font-weight: normal;
-    font-size: 13px;
-    padding: 15px 10px !important;
-  }
-}
 .nav-tabs .active a {
   border: none !important;
   background: #F78536 !important;
@@ -655,7 +655,7 @@ div.cs-select span {
 .cs-select .cs-options {
   box-shadow: 0px 10px 20px -12px rgba(0, 0, 0, 0.18);
 }
-#about_us {
+#about_us, #work {
 	padding: 4em 0 0 0;
 }
 #work-section,
@@ -717,12 +717,27 @@ div.cs-select span {
 .heading-section p {
   font-size: 20px;
 }
-
+@media screen and (max-width: 770px) {
+    .heading-section {
+    padding-top: 3em;
+    padding-bottom: .5em;
+    margin-bottom: 2em;
+  }
+  .heading-section h3 {
+    font-size: 30px;
+    margin-bottom: .5em;
+  }
+  .heading-section p {
+  font-size: 15px;
+  }
+  .person-caption {
+    margin-right: 0px;
+  }
+}
 .heading-title {
   font-size: 40px;
   margin-bottom: 1.5em;
 }
-
 .tours {
   margin-bottom: 30px;
 }
@@ -2282,6 +2297,9 @@ a:focus {
   font-size: .8em;
   right: -40px;
 }
+.back-404 {
+  background: url(../images/back_default.jpg);
+}
 .hottour-label .hottour-discount::before {
   content: '-'
 }
@@ -2299,3 +2317,16 @@ a:focus {
     right: -40px;
   }
 }
+@media screen and (max-width: 770px) {
+  .price-before::before {
+    content: '\f09d'
+  }
+  .date-before::before {
+    content: '\f073'
+  }
+  .txti-0 {
+    text-align: left!important;
+    text-indent: 0;
+  }
+}
+

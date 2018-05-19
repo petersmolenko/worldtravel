@@ -89,6 +89,7 @@ class SortTourForm(forms.Form):
         ('ACT', 'Активный'),
     )
     type_transport_choice = (
+        ('', 'Все'),
         ('AUT', 'Атобусный'),
         ('AVI', 'Авиа'),
         ('CRU', 'Круизный'),
@@ -98,12 +99,12 @@ class SortTourForm(forms.Form):
     transport = forms.ChoiceField(choices = type_transport_choice, required=False)
     country = forms.CharField(max_length=20, required=False)
     city = forms.CharField(max_length=20, required=False)
-    price_for = forms.FloatField(required=False)
-    price_to = forms.FloatField(required=False)
+    price_for = forms.FloatField(required=False, min_value=0)
+    price_to = forms.FloatField(required=False, min_value=0)
     date_for = forms.CharField(max_length=10, required=False)
     date_to = forms.CharField(max_length=10, required=False)
-    inday = forms.IntegerField(required=False)
-    outday = forms.IntegerField(required=False)
+    inday = forms.IntegerField(required=False, min_value=0)
+    outday = forms.IntegerField(required=False, min_value=0)
     hottour = forms.BooleanField(required=False)
 
 class waypointForm(forms.Form):

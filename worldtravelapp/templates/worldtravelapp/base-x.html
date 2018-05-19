@@ -10,3 +10,29 @@
 		{% block xxx-content %}{% endblock %}
 	</div>
 	{% endblock %}
+	{% block testomonial %}
+    	{% if reviews %}
+		<div id="testimonial">
+			<div class="container">
+				<div class="row animate-box">
+					<div class="col-md-8 offset-md-2 text-center heading">
+						<h2>Отзывы клиентов</h2>
+					</div>
+				</div>
+				<div class="row">
+					{% for review in reviews %}
+					<div class="col-md-4">
+						<div class="box-testimony animate-box">
+							<blockquote>
+								<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
+								<p>&ldquo;{{ review.text|truncatewords:40  }}&rdquo;</p>
+							</blockquote>
+							<p class="author">{% if review.author.first_name and review.author.last_name %}{{ review.author.first_name }} {{ review.author.last_name }}{% else %}{{ review.author.username }}{% endif %}<span class="subtext">{{ review.created_date|date:"D d M Y" }}</span></p>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	{% endblock %}

@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
+from django.template import RequestContext
 from django.db.models import Count, Min, Sum, Avg
 from django.utils import timezone
 from .models import Post, UserProfile, Comment, Tour, Worker, Message, NearestDate, Day, Country, City, HotTour, Review, Order
@@ -743,3 +744,17 @@ def contacts(request):
         post_form = MessageForm()
     return render(request, 'worldtravelapp/other/contacts.html', {'form': form, 'post_form': post_form})
 #-------------------------------------------------------------------------------------------------
+
+
+def e_handler404(request):
+    context = RequestContext(request)
+    response = render_to_response('worldtravelapp/errs/404.html',{}, context)
+    response.status_code = 404
+    return response
+ 
+ 
+def e_handler500(request):
+    context = RequestContext(request)
+    response = render_to_response('worldtravelapp/errs/500.html',{}, context)
+    response.status_code = 500
+    return response
