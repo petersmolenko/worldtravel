@@ -6,14 +6,19 @@
 {% endblock %}
 
 {% block title-page %}
+{% if hottour %}
 Горящие туры
+{% endif %}
 {% endblock %}
 
 {% block description %}
+{% if hottour %}
 Горящие путевки от компании Мир - это низкие цены за самое высокое качество обслуживания!
+{% endif %}
 {% endblock %}
-{% block id %}tours{% endblock %}
+{% block id %}{% if hottour %}tours{% endif %}{% endblock %}
 {% block xxx-content %}
+				{% if hottour %}
 				<div class="row">
 					{% for hottour in hottours %}
 					<div class="col-xl-4 col-md-6 tours animate-box" data-animate-effect="fadeIn">
@@ -23,7 +28,7 @@
 								<span>{{ hottour.text }}</span>
 								<p class="d-flex aling-items-center">
 									<span class="money pt-3 mr-4 discount-span"><strike>{{ hottour.tour.price|floatformat:2 }}</strike><span class="badge bg-white text-dark">{{ hottour.discount }}</span></span>
-									<span class="price money ml-2">{{ hottour.tour.discount_get|floatformat:2 }}</span>
+									<span class="price money ml-2">{{ hottour.tour.discount_get|floatformat:0 }}</span>
 								</p>
 								<a class="btn btn-primary btn-outline" href="{% url 'tour_detail' pk=hottour.tour.pk %}">Заказать<i class="icon-arrow-right22"></i></a>
 							</div>
@@ -34,6 +39,7 @@
 						<p><a class="btn btn-primary btn-outline btn-lg" href="{% url 'tours' %}?hottour=on">Посмотреть больше<i class="icon-arrow-right22"></i></a></p>
 					</div>
 				</div>
+				{% endif %}
 {% endblock %}
 {% block content_exend %}
 		<div id="features">
@@ -124,7 +130,7 @@
 			</div>
 		</div>
 
-		
+		{% if countrys %}
 		<div id="destination">
 			<div class="tour-fluid">
 				<div class="row">
@@ -161,7 +167,7 @@
 				</div>
 			</div>
 		</div>
-
+		{% endif %}
 		<div id="blog-section" class="section-gray">
 			<div class="container">
 				<div class="row">

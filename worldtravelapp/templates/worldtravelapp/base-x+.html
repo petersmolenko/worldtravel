@@ -4,6 +4,7 @@
     	{% endblock %}
     {% endblock %}
     {% block testomonial %}
+    	{% if reviews %}
 		<div id="testimonial">
 			<div class="container">
 				<div class="row animate-box">
@@ -26,4 +27,5 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 	{% endblock %}

@@ -530,11 +530,6 @@ figure {
   color: rgba(0, 0, 0, 0.5);
   font-size: 14px;
 }
-@media screen and (max-width: 768px) {
-  .get-tour label {
-    width: 40%;
-  }
-}
 .get-tour input[type="text"], 
 .get-tour input[type="number"],  
 .filter-tour input[type="text"], 
@@ -566,19 +561,6 @@ figure {
 .count-serv {
 	background: white!important;
 }
-@media screen and (max-width: 768px) {
-  .get-tour input[type="text"] {
-    width: 55%;
-    float: right;
-  }
-}
-@media screen and (max-width: 768px) {
-  .get-tour .cs-select {
-    width: 55%;
-    float: right;
-  }
-}
-
 
 .nav-tabs {
   border: none;
@@ -1431,7 +1413,7 @@ div.cs-select span {
 .testimonial, .team {
   position: relative;
   background: #fff;
-  padding: 30px;
+  padding: 0 30px 30px 30px!important;
   border-radius: 5px;
   margin-bottom: 30px;
 }
@@ -2187,6 +2169,10 @@ div.cs-select span {
 	font-size: 3em;
  	color: white;
 }
+@media screen and (min-width: 770px) {
+  .tringle-o::after {
+  content: '\25C4'
+}
 .tringle-o {
   position: absolute;
   top: 15px;
@@ -2194,6 +2180,8 @@ div.cs-select span {
   font-size: 3em;
   color: rgba(0, 0, 0, 0.04);
 }
+}
+
 .font-size-1 {
 	font-size: 1em!important;
 }
@@ -2299,4 +2287,15 @@ a:focus {
 }
 .hottour-label .hottour-discount::after {
   content: '%'
+}
+@media screen and (max-width: 990px) {
+  .hottour-label {
+  font-size: .6em;
+}
+  .hottour-label .hottour-discount {
+    position: absolute;
+    top: 6px;
+    font-size: .8em;
+    right: -40px;
+  }
 }

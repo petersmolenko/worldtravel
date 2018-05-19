@@ -71,6 +71,12 @@ class Tour(models.Model):
             self.discount_tour = True
         self.save()
 
+    def is_discount_get(self, htour_date):
+        if self.discount_tour == True and str(self.hottour.date_tour) == htour_date:
+            return self.price - ((self.price/100)*self.hottour.discount)
+        else:
+            return self.price
+
     def discount_get(self):
         if self.discount_tour == True:
             return self.price - ((self.price/100)*self.hottour.discount)

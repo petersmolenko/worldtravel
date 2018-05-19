@@ -1,4 +1,4 @@
-from .models import Country,Review, HotTour
+from .models import Country,Review
 from django.db.models import Count, Min, Sum, Avg
 
 def countrys_f(request):
@@ -6,6 +6,3 @@ def countrys_f(request):
 
 def reviews(request):
     return {"reviews": Review.objects.order_by('-created_date')[:3]}
-
-def advertise(request):
-    return {"advertise": HotTour.objects.get(advertise=True)}

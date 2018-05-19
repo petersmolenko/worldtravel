@@ -44,7 +44,7 @@
 								<p class="mb-0 descript">{{ order.tour_date }}</p>
 							</div>
 							<div class="col-md-3 p-2">
-								<p class="money mb-0 descript">{{ order.tour.price }}</p>
+								<p class="money mb-0 descript">{{ order.price|floatformat:0 }}</p>
 							</div>
 							<div class="col-md-1 p-2">
 								<a class="text-dark font-size-2" href="{% url 'order_desire_remove' pk=order.pk %}">&#x2718;</a>

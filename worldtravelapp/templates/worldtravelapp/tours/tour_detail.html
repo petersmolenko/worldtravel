@@ -23,7 +23,7 @@
 						<h3 class="mb-1">
 							<span class="font-weight-bold">{{ tour.type_tour }}{{ tour.pk }}</span> {{ tour.title }} 
 							{% if tour.discount_tour %}
-							<span class="badge bg-green text-white text-uppercase p-2 hottour-label">Горящий тур<span class="hottour-discount badge bg-orange">{{ tour.hottour.discount }}</span></span>
+							<span class="badge bg-green text-white text-uppercase p-2 hottour-label">{{ tour.hottour.date_tour|date:"d M Y" }}<span class="hottour-discount badge bg-orange">{{ tour.hottour.discount }}</span></span>
 							{% endif %}
 						</h3>
 						<hr class="d-none d-md-flex">
@@ -102,7 +102,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 p-3 bg-green mb-1 order-tour">
+					<div class="col-12 p-3 bg-green mg-0 mb-md-1 order-tour">
 						<div class="row no-gutters d-flex align-items-center">
 							{% if not user.is_authenticated %}
 							<div class="col-12 d-flex flex-column justify-content-center align-items-center">
@@ -111,18 +111,18 @@
 							</div>
 							{% endif %}
 							{% if user.is_authenticated %}
-							<form method="POST" class="offset-md-3 col-md-6">
+							<form method="POST" class="offset-md-2 col-md-8 offset-lg-3 col-lg-6">
 								{% csrf_token %}
 								<div class="row">
-									<div class="col-md-4 d-flex align-items-center justify-content-end text-white px-2 pt-1 font-weight-bold text-uppercase">
-										<label for="type">Датa:</label>
+									<div class="col-md-2 offset-md-2 d-md-flex align-items-center text-white pt-1 font-weight-bold text-uppercase text-center">
+										<label for="type">Датa</label>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-4 mb-3">
 										<section>
 											{% render_field waypointform.waypoints class="cs-select cs-skin-border cs-skin-border-x" %}
 										</section>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-4 mb-2 text-center">
 										<button type="submit" class="btn btn-primary-x float-md-right">Заказать тур</button>
 									</div>
 								</div>
@@ -196,15 +196,15 @@
 				{% for review in reviews %}
 				{% if user.is_authenticated or review.approved_review %}
 				<div class="row bg-white px-3 pt-3 pb-0">
-					<div class="col-md-2 p-3 d-flex align-items-center  flex-column">
+					<div class="col-md-2 pt-0 d-md-flex align-items-center flex-column order-2 order-md-1">
 						<img src="{{ review.author.profile.avatar.url }}" class="img-fluid rounded-circle w-50 d-none d-md-flex ml-md-4 border-3 border-white border" alt="">
-						<p class="font-weight-bold pt-2">{{ review.author }}</p>
+						<p class="font-weight-bold pt-md-2">{{ review.author }}</p>
 					</div>
-					<div class="col-md-10">
+					<div class="col-md-10 order-1 order-md-2">
 						<blockquote class="blockquote-edit p-4 bg-gray-light">
-							<span class="tringle-o">&#9668;</span>
+							<span class="tringle-o"></span>
 							<p>&ldquo;{{ review.text }}&rdquo;</p>
-							<span class="subtext font-italic px-3 mr-2"><i class="fa fa-calendar mr-1" aria-hidden="true"></i>{{ review.created_date }}</span>
+							<span class="subtext font-italic px-3 mr-2 d-flex d-md-inline"><i class="fa fa-calendar mr-1" aria-hidden="true"></i>{{ review.created_date }}</span>
 							{% if not review.approved_review and perms.worldtravelapp.delete_comment %}
 				                <a class="" href="{% url 'review_approve' pk=review.pk %}"><span class="text-dark fa fa-check-circle mx-2"></span></a>
 				                <a class="" href="{% url 'review_remove' pk=review.pk %}"><span class="font-weight-bold"><i class="fa fa-trash mr-1" aria-hidden="true"></i></span></a>

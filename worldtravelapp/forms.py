@@ -71,7 +71,7 @@ class CityForm(forms.ModelForm):
 class HotTourForm(forms.ModelForm):
     class Meta:
         model = HotTour
-        fields = ('__all__')
+        exclude = ('date_tour',)
 
 class SortTourForm(forms.Form):
     sort_tour_choice = (

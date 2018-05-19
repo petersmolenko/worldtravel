@@ -35,11 +35,15 @@ def sign_up(request):
         })
 
 def index(request):
+    if HotTour.objects.filter(advertise=True).exists():
+        advertise = HotTour.objects.get(advertise=True)
+    else:
+        advertise = ''
     hottours = HotTour.objects.order_by('-discount')[:3]
     countrys_s = Country.objects.annotate(sort=Sum('tours__order_count')).order_by('-sort')[5:10]
     form = SortTourForm(request.GET)
     news = Post.objects.all().order_by('-published_date')[:3]
-    return render(request, 'worldtravelapp/tours/index.html', {'news': news, 'form': form, 'countrys_s': countrys_s, 'hottours': hottours })
+    return render(request, 'worldtravelapp/tours/index.html', {'news': news, 'form': form, 'countrys_s': countrys_s, 'hottours': hottours, 'advertise': advertise })
 #------------------------------------------------------------------------------------
 
 
@@ -88,7 +92,7 @@ def tour_detail(request, pk):
             new_order = Order()
             new_order.client = request.user
             new_order.tour = tour
-            new_order.price = tour.discount_get()
+            new_order.price = tour.is_discount_get(waypointform.cleaned_data["waypoints"])
             new_order.tour_date = waypointform.cleaned_data["waypoints"]
             new_order.save()
             new_order.desire()
@@ -580,7 +584,7 @@ def user_history_clean(request):
 
 @login_required(login_url='/auth/sign-in/')
 def user_desire(request):
-    orders = Order.objects.filter(client=request.user, desire_order=True)
+    orders = Order.objects.filter(client=request.user, desire_order=True).order_by('-order_date')
     return render(request, 'worldtravelapp/user/user_desire.html', {'orders': orders})
 
 

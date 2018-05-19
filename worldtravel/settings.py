@@ -68,7 +68,6 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'worldtravelapp.context_processors.countrys_f',
                 'worldtravelapp.context_processors.reviews',
-                'worldtravelapp.context_processors.advertise',
             ],
         },
     },
