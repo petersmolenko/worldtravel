@@ -1,0 +1,67 @@
+[2018-05-23 12:47:10 +0000] [1506] [INFO] Starting gunicorn 19.8.1
+[2018-05-23 12:47:10 +0000] [1506] [INFO] Listening at: unix:/home/petersmolenko/worldproject/world.sock (1506)
+[2018-05-23 12:47:10 +0000] [1506] [INFO] Using worker: sync
+[2018-05-23 12:47:10 +0000] [1528] [INFO] Booting worker with pid: 1528
+[2018-05-23 12:47:10 +0000] [1528] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/workers/base.py", line 129, in init_process
+    self.load_wsgi()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+    return self.load_wsgiapp()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/util.py", line 350, in import_app
+    __import__(module)
+ModuleNotFoundError: No module named 'worldtravelapp'
+[2018-05-23 12:47:10 +0000] [1528] [INFO] Worker exiting (pid: 1528)
+[2018-05-23 12:47:10 +0000] [1529] [INFO] Booting worker with pid: 1529
+[2018-05-23 12:47:10 +0000] [1529] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/workers/base.py", line 129, in init_process
+    self.load_wsgi()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+    return self.load_wsgiapp()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/util.py", line 350, in import_app
+    __import__(module)
+ModuleNotFoundError: No module named 'worldtravelapp'
+[2018-05-23 12:47:10 +0000] [1529] [INFO] Worker exiting (pid: 1529)
+[2018-05-23 12:47:10 +0000] [1506] [INFO] Shutting down: Master
+[2018-05-23 12:47:10 +0000] [1506] [INFO] Reason: Worker failed to boot.
+[2018-05-23 13:33:22 +0000] [2244] [INFO] Starting gunicorn 19.8.1
+[2018-05-23 13:33:22 +0000] [2244] [INFO] Listening at: unix:/home/petersmolenko/worldproject/world.sock (2244)
+[2018-05-23 13:33:22 +0000] [2244] [INFO] Using worker: sync
+[2018-05-23 13:33:22 +0000] [2262] [INFO] Booting worker with pid: 2262
+[2018-05-23 13:33:22 +0000] [2262] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/workers/base.py", line 129, in init_process
+    self.load_wsgi()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+    return self.load_wsgiapp()
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/petersmolenko/worldproject/myvenv/lib/python3.6/site-packages/gunicorn/util.py", line 350, in import_app
+    __import__(module)
+ModuleNotFoundError: No module named 'worldtravelapp'
+[2018-05-23 13:33:22 +0000] [2262] [INFO] Worker exiting (pid: 2262)
+[2018-05-23 13:33:22 +0000] [2244] [INFO] Shutting down: Master
+[2018-05-23 13:33:22 +0000] [2244] [INFO] Reason: Worker failed to boot.

@@ -752,9 +752,3 @@ def e_handler404(request):
     response.status_code = 404
     return response
  
- 
-def e_handler500(request):
-    context = RequestContext(request)
-    response = render_to_response('worldtravelapp/errs/500.html',{}, context)
-    response.status_code = 500
-    return response
