@@ -58,9 +58,9 @@ def tours(request):
         if form.cleaned_data["city"]:
             tours = tours.filter(citys__title__in = [form.cleaned_data["city"]])
         if form.cleaned_data["price_for"]:
-            tours = tours.filter(price__gte = form.cleaned_data["price_for"])
+            tours = tours.filter(price_current__gte = form.cleaned_data["price_for"])
         if form.cleaned_data["price_to"]:
-            tours = tours.filter(price__lte = form.cleaned_data["price_to"])
+            tours = tours.filter(price_current__lte = form.cleaned_data["price_to"])
         if form.cleaned_data["date_for"] and form.cleaned_data["date_to"]:
             tours = tours.filter(nearestdates__date__gte = form.cleaned_data["date_for"], nearestdates__date__lte = form.cleaned_data["date_to"]).distinct()
         elif form.cleaned_data["date_for"]:
@@ -199,7 +199,9 @@ def admin_tours_new(request):
     if request.method == "POST":
         tours_form = ToursForm(request.POST, request.FILES)
         if tours_form.is_valid():
-            new_tour = tours_form.save()
+            new_tour = tours_form.save(commit=False)
+            new_tour.price_current = new_tour.price
+            new_tour.save()
             return redirect('admin_tours_edit', pk=new_tour.pk)
     else:
         tours_form = ToursForm()
@@ -350,14 +352,14 @@ def admin_workers_remove(request, pk):
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_countrys(request):
-    countrys = Country.objects.all().order_by('title')
+    countrys = Country.objects.all()
     return render(request, 'worldtravelapp/admin/admin_countrys.html', {'countrys': countrys})
 
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_countrys_new(request):
-    countrys = Country.objects.all().order_by('title')
+    countrys = Country.objects.all()
     if request.method == "POST":
         form = CountryForm(request.POST, request.FILES)
         if form.is_valid():
@@ -370,7 +372,7 @@ def admin_countrys_new(request):
 
 @login_required(login_url='/auth/sign-in/')
 def admin_countrys_edit(request, pk):
-    countrys = Country.objects.exclude(pk=pk).order_by('title')
+    countrys = Country.objects.exclude(pk=pk)
     country = get_object_or_404(Country, pk=pk)
     if request.method == "POST":
         form = CountryForm(request.POST, request.FILES, instance=country)
@@ -392,14 +394,14 @@ def admin_countrys_remove(request, pk):
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_citys(request):
-    citys = City.objects.all().order_by('title')
+    citys = City.objects.all()
     return render(request, 'worldtravelapp/admin/admin_citys.html', {'citys': citys})
 
 
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_citys_new(request):
-    citys = City.objects.all().order_by('title')
+    citys = City.objects.all()
     if request.method == "POST":
         form = CityForm(request.POST, request.FILES)
         if form.is_valid():
@@ -413,7 +415,7 @@ def admin_citys_new(request):
 @login_required(login_url='/auth/sign-in/')
 @permission_required('worldtravelapp.add_post', login_url='/')
 def admin_citys_edit(request, pk):
-    citys = City.objects.exclude(pk=pk).order_by('title')
+    citys = City.objects.exclude(pk=pk)
     city = get_object_or_404(City, pk=pk)
     if request.method == "POST":
         form = CityForm(request.POST, request.FILES, instance=city)
@@ -458,6 +460,8 @@ def admin_hottours_new(request):
                 new_hottour.advertise=True
                 new_hottour.save()
             new_hottour.tour.discounter()
+            new_hottour.tour.price_current = new_hottour.tour.discount_get()
+            new_hottour.tour.save()
             return redirect('admin_hottours')
     else:
         form = HotTourForm()
@@ -490,6 +494,8 @@ def admin_hottours_edit(request, pk):
 def admin_hottours_remove(request, pk):
     hottour = get_object_or_404(HotTour, pk=pk)
     hottour.tour.discounter()
+    hottour.tour.price_current = hottour.tour.discount_get()
+    hottour.tour.save()
     hottour.delete()
     return redirect('admin_hottours')
 
@@ -745,10 +751,3 @@ def contacts(request):
     return render(request, 'worldtravelapp/other/contacts.html', {'form': form, 'post_form': post_form})
 #-------------------------------------------------------------------------------------------------
 
-
-def e_handler404(request):
-    context = RequestContext(request)
-    response = render_to_response('worldtravelapp/errs/404.html',{}, context)
-    response.status_code = 404
-    return response
- 

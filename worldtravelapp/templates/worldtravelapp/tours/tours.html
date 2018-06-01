@@ -169,7 +169,7 @@
 											{% if tour.discount_tour %}
 											<p class="mb-0 money"><strike>{{ tour.price }}</strike></p>
 											{% endif %}
-											<p class="mb-0 tour-cost-val money font-weight-bold">{{ tour.discount_get }}</p>
+											<p class="mb-0 tour-cost-val money font-weight-bold">{{ tour.discount_get|floatformat:0 }}</p>
 										</div>
 										<div class="col-md-6 m-0 tour-path d-none d-lg-flex">
 											<p class="descript">Города</p>

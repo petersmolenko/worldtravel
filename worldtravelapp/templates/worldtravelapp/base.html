@@ -24,7 +24,7 @@
 		<meta name="author" content="Peter Smolenko" />
 			
 		<!-- favicon.ico  -->
-		<link rel="shortcut icon" href="{% static 'worldtravelapp/images/favicon.ico' %}">
+		<link rel="shortcut icon" href="/favicon.ico">
 		<!-- Animate.css -->
 		<link rel="stylesheet" href="{% static 'worldtravelapp/css/animate.css' %}">
 		<!-- Fonts-->
@@ -159,7 +159,7 @@
 								<a href="#"><i class="icon-twitter2"></i></a>
 								<a href="#"><i class="icon-facebook2"></i></a>
 								<a href="#"><i class="icon-instagram"></i></a>
-								<a href="#"><i class="icon-dribbble2"></i></a>
+								<a href="#"><i class="icon-vk"></i></a>
 								<a href="#"><i class="icon-youtube"></i></a>
 							</p>
 							<p>Copyright 2018. Все права защищены! <br>By <a href="https://vk.com/pittsi" target="_blank">Peter Smolenko</a></p>
@@ -196,11 +196,8 @@
 	<!-- CS Select -->
 	<script src="{% static 'worldtravelapp/js/classie.js' %}"></script>
 	<script src="{% static 'worldtravelapp/js/selectFx.js' %}"></script>
-	<!-- Google Maps -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="{% static 'worldtravelapp/js/google_map.js' %}"></script>
+	{% block js_content %}{% endblock %}
 	<!-- Main JS -->
 	<script src="{% static 'worldtravelapp/js/main.js' %}"></script>
-	<p id="hiddy" hidden="hidden">{% static 'worldtravelapp/images/loc.png'%}</p>
 	</body>
 </html>

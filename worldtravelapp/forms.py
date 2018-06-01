@@ -46,7 +46,7 @@ class MessageForm(forms.ModelForm):
 class ToursForm(forms.ModelForm):
     class Meta:
         model = Tour
-        exclude = ('complete', 'discount_tour')
+        exclude = ('complete', 'discount_tour', 'price_current')
 
 class NearestDateForm(forms.ModelForm):
     class Meta:
@@ -76,8 +76,8 @@ class HotTourForm(forms.ModelForm):
 class SortTourForm(forms.Form):
     sort_tour_choice = (
         ('title', 'По алфавиту'),
-        ('price', 'По цене &#9650;'),
-        ('-price', 'По цене &#9660;'),
+        ('price_current', 'По цене &#9650;'),
+        ('-price_current', 'По цене &#9660;'),
         ('order_count', 'По популярности &#9650;'),
         ('-order_count', 'По популярности &#9660;'),
     )

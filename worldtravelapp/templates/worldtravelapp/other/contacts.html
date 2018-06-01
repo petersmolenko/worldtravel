@@ -1,5 +1,6 @@
 {% extends 'worldtravelapp/base-x.html' %}
 {% load widget_tweaks %}
+{% load static %}
 
 {% block title %}
 Контакты
@@ -56,4 +57,10 @@
 {% endblock %}
 {% block google_map %}
 	<div id="map" class="map"></div>
+{% endblock %}
+{% block js_content %}
+	<!-- Google Maps -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="{% static 'worldtravelapp/js/google_map.js' %}"></script>
+	<p id="hiddy" hidden="hidden">{% static 'worldtravelapp/images/loc.png'%}</p>
 {% endblock %}

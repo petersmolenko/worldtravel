@@ -48,25 +48,25 @@
 						<hr>
 					</div>
 				</div>
-				<div class="row bg-white" id="comments">
+				<div class="row bg-orange" id="comments">
 					<div class="col-12 p-2 text-center">
-						<h4 class="mb-0 text-dark">Комментарии</h4>
+						<h4 class="mb-0 text-white">Комментарии</h4>
 					</div>
 				</div>
 				{% if user.is_authenticated %}
 				{% for comment in comments %}
 				{% if user.is_authenticated or comment.approved_comment %}
-				<div class="row bg-orange px-3 pt-3 pb-0">
-					<div class="col-md-2 p-3 d-flex align-items-center  flex-column">
+				<div class="row bg-white px-3 pt-3 pb-0">
+					<div class="col-md-2 pt-0 d-md-flex align-items-center flex-column order-2 order-md-1">
 						<img src="{{ comment.author.profile.avatar.url }}" class="img-fluid rounded-circle w-50 d-none d-md-flex ml-md-4 border-3 border-white border" alt="">
-						<p class="text-white font-weight-bold pt-2">{{ comment.author }}</p>
+						<p class="font-weight-bold pt-md-2">{{ comment.author }}</p>
 					</div>
-					<div class="col-md-10">
-						<blockquote class="blockquote-edit p-2 bg-white">
-							<span class="tringle">&#9668;</span>
+					<div class="col-md-10 order-1 order-md-2">
+						<blockquote class="blockquote-edit p-4 bg-gray-light">
+							<span class="tringle-o"></span>
 							<p>&ldquo;{{ comment.text }}&rdquo;</p>
-							<span class="subtext font-italic px-3 mr-2"><i class="fa fa-calendar mr-1" aria-hidden="true"></i>{{ comment.created_date }}</span>
-							{% if not comment.approved_comment and perms.worldtravelapp.delete_comment %}
+							<span class="subtext font-italic px-3 mr-2 d-flex d-md-inline"><i class="fa fa-calendar mr-1" aria-hidden="true"></i>{{ comment.created_date }}</span>
+							{% if not comment.approved_review and perms.worldtravelapp.delete_comment %}
 				                <a class="" href="{% url 'comment_approve' pk=comment.pk %}"><span class="text-dark fa fa-check-circle mx-2"></span></a>
 				                <a class="" href="{% url 'comment_remove' pk=comment.pk %}"><span class="font-weight-bold"><i class="fa fa-trash mr-1" aria-hidden="true"></i></span></a>
 				            {% endif %}
@@ -75,32 +75,32 @@
 				</div>
 				{% endif %}
 				{% empty %}
-				<div class="row bg-orange p-3">
+				<div class="row bg-white p-3">
 					<div class="col-12 text-center">
-						<p class="text-white font-weight-bold font-size-1">Здесь пока нет комментариев :(</p>
+						<p class="text-grey font-weight-bold font-size-1">Здесь пока нет комментариев :(</p>
 					</div> 
 				</div>
 				{% endfor %}
 				<form method="POST" action="{% url 'add_comment_to_post' pk=post.pk%}">
 				{% csrf_token %}
-				<div class="row bg-orange pt-2">
+				<div class="row bg-white pt-2">
 					<div class="col-lg-8 offset-lg-2">
 						<div class="form-group">
-							{% render_field form.text class="form-control" cols="30" rows="7" placeholder="Ваш отзыв" %}
+							{% render_field form.text class="review-text w-100" cols="30" rows="7" placeholder="Ваш отзыв" %}
 						</div>
 					</div>
 					<div class="col-md-3 offset-md-8">
 						<div class="form-group">
-							<input type="submit" value="Отправить" class="btn btn-primary bg-white text-dark">
+							<input type="submit" value="Отправить" class="btn btn-primary">
 						</div>
 					</div>
 			</div>
 		</form>
 		{% else %}
-			<div class="row bg-orange p-3">
+			<div class="row bg-white p-3">
 				<div class="col-sm-8 offset-sm-2 text-center d-flex flex-column">
 					<span class="font-weight-bold font-size-xl text-center mb-0"><i class="fa fa-commenting" aria-hidden="true"></i></span>
-					<span class="text-white font-weight-bold font-size-1 mb-0 p-3 text-uppercase">Войдите в систему, чтобы писать комментарии.</span>
+					<span class="text-dark font-weight-bold font-size-1 mb-0 p-3 text-uppercase">Войдите в систему, чтобы писать комментарии.</span>
 					 <span><a href="{% url 'auth_login' %}" class="font-weight-bold btn btn-primary bg-dark text-white p-2 text-center">Вход</a></span>
 				</div> 
 			</div>

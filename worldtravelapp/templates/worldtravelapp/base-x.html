@@ -26,6 +26,7 @@
 							<blockquote>
 								<span class="quote"><span><i class="icon-quotes-right"></i></span></span>
 								<p>&ldquo;{{ review.text|truncatewords:40  }}&rdquo;</p>
+								{% if review.text|length > 40 %}<a class="text-secondary" href="{% url 'tour_detail' pk=review.tour.pk %}#reviews">Больше..</a>{% endif %}
 							</blockquote>
 							<p class="author">{% if review.author.first_name and review.author.last_name %}{{ review.author.first_name }} {{ review.author.last_name }}{% else %}{{ review.author.username }}{% endif %}<span class="subtext">{{ review.created_date|date:"D d M Y" }}</span></p>
 						</div>

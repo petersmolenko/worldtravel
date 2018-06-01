@@ -23,7 +23,7 @@
 							<td scope="row">{{ country.pk }}</td>
 							<td>{{ country.title }}</td>
 							<td>{{ country.continent }}</td>
-							<td><a href="{{ country.photo_url }}" target="_blank"><i class="fa fa-camera-retro font-size-2 raport" aria-hidden="true"></i></a></td>
+							<td>{% if country.photo %}<a href="{{ country.photo_url }}" target="_blank"><i class="fa fa-camera-retro font-size-2 raport" aria-hidden="true"></i></a>{% else %}<span class="font-weight-bold">нет</span>{% endif %}</td>
 							<td>
 								<a href="{% url 'admin_countrys_edit' pk=country.pk %}"><p class="font-size-1 mb-0 mr-2 raport d-inline"><i class="fa fa-pencil" aria-hidden="true"></i></p></a>
 								<a href="{% url 'admin_countrys_remove' pk=country.pk %}"><p class="font-size-1  mb-0 raport d-inline"><i class="fa fa-times" aria-hidden="true"></i></p></a>

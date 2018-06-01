@@ -45,13 +45,14 @@ class Tour(models.Model):
         ('AVI', 'Авиа'),
         ('CRU', 'Круизный'),
     )
+    title = models.CharField(max_length=200, verbose_name='Название тура')
     type_tour = models.CharField(max_length=3, choices=TYPE_TOUR_CHOICES, default='EXC', verbose_name='Тип тура')
     transport = models.CharField(max_length=3, choices=TYPE_TRANSPORT_CHOICES, default='AUT', verbose_name='Тип транспорта')
     duration = models.PositiveSmallIntegerField(verbose_name='Продолжительность')
-    price = models.PositiveSmallIntegerField(verbose_name='Цена')
+    price = models.PositiveIntegerField(verbose_name='Цена')
+    price_current = models.PositiveIntegerField(verbose_name='Цена текущая', blank=True)
     citys = models.ManyToManyField('worldtravelapp.City', verbose_name='Города', related_name='tours')
     countrys = models.ManyToManyField('worldtravelapp.Country', related_name='tours', verbose_name='Страны')
-    title = models.CharField(max_length=200, verbose_name='Название тура')
     text = models.TextField(verbose_name='Описание тура')
     useful_info = models.TextField(verbose_name='Полезная информация')
     tour_in = models.TextField(verbose_name='Входит в стоимость')
@@ -108,6 +109,7 @@ class Day(models.Model):
     tours_list = models.ForeignKey('worldtravelapp.Tour', related_name='dates', on_delete=models.CASCADE, verbose_name='Тур')
 
     class Meta:
+        ordering = ['number']
         verbose_name='День'
         verbose_name_plural='Дни'
         unique_together = ('number', 'tours_list',)
@@ -238,6 +240,7 @@ class Country(models.Model):
     photo = models.ImageField(upload_to='countrys_images/', blank=True, verbose_name='Фото страны')
 
     class Meta:
+        ordering = ['continent', 'title']
         verbose_name='Страна'
         verbose_name_plural='Страны'
 
@@ -256,6 +259,7 @@ class City(models.Model):
     photo = models.ImageField(upload_to='citys_images/', blank=True, verbose_name='Фото города')
 
     class Meta:
+        ordering = ['country', 'title']
         verbose_name='Город'
         verbose_name_plural='Города'
 
@@ -307,7 +311,7 @@ class Review(models.Model):
 class Order(models.Model):
     client = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Заказчик')
     tour = models.ForeignKey('worldtravelapp.Tour', related_name='orders', on_delete=models.CASCADE, verbose_name='Тур')
-    price = models.PositiveSmallIntegerField(verbose_name='Сумма')
+    price = models.PositiveIntegerField(verbose_name='Сумма')
     tour_date = models.DateField(default=timezone.now, verbose_name='Дата тура', blank=True)
     order_date = models.DateTimeField(default=timezone.now, verbose_name='Время заказа')
     desire_order = models.BooleanField(default=False, verbose_name='Желаемый заказ')

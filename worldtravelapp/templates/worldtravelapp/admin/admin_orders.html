@@ -7,36 +7,37 @@
 	</div>
 	{% for order in orders %}
 	<div class="col-12 p-0 bg-white mb-1">
-		<div class="row">
-			<div class="col-11">
+		<div class="row no-gutters">
+			<div class="col-md-11">
 				<div class="row no-gutters">
 				<div class="col-md-3">
 					<img src="{{ order.tour.photo_url }}" class="img-fluid" alt="">
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-9">
 					<div class="row no-gutters">
-						<div class="col-md-12 pl-3 py-1">
+						<div class="col-md-6 pl-3 py-1">
 							<p class="mb-1 text-orange font-weight-bold">{{ order.tour.type_tour }}{{ order.tour.pk }} {{ order.tour.title }}</p>
-							<p class="mb-1">
+							<p class="mb-1 d-inline-block d-md-block mr-3 mr-md-0">
 								<span class="money mb-0 mr-3"><i class="fa fa-credit-card mr-2" aria-hidden="true"></i>{{ order.tour.price }}</span>
 								<span class=" mb-0"><i class="fa fa-calendar mr-2" aria-hidden="true"></i>{{ order.tour_date }}</span>
 							</p>
-							<p class="mb-0">
+							<p class="mb-0 d-inline-block d-md-block">
 								<a href="{% url 'admin_order_approve' pk=order.pk %}"><span class="font-size-2  mb-0 raport text-orange" title="Принять"><i class="fa fa-check mr-3" aria-hidden="true"></i></span></a>
 								<a href="{% url 'admin_order_deny' pk=order.pk %}" title="Отклонить"><span class="font-size-2  mb-0 raport text-orange"><i class="fa fa-times mr-3" aria-hidden="true"></i></span></a>
 							</p>
 						</div>
+						<div class="col-md-6 p-1">
+							<p class="mb-0"><span class="text-dark font-weight-bold">{{ order.client.first_name }}</span></p>
+							<p class="mb-0 d-inline-block d-md-block mr-3 mr-md-0"><i class="fa fa-envelope mr-2" aria-hidden="true"></i><cite title="E-mail клиента">{{ order.client.email }}</cite></p>
+							<p class="mb-2 d-inline-block d-md-block"><cite title="Телефон клиента"><i class="fa fa-phone mr-2" aria-hidden="true"></i>{{ order.client.profile.tel }}</cite></p>
+					      	<p class="text-dark mb-0"><i class="fa fa-clock-o mr-2" aria-hidden="true"></i>{{ order.order_date }}</p>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-4 p-1">
-					<p class="mb-0"><span class="text-dark font-weight-bold">{{ order.client.first_name }}</span></p>
-					<p class="mb-0"><i class="fa fa-envelope mr-2" aria-hidden="true"></i><cite title="E-mail клиента">{{ order.client.email }}</cite></p>
-					<p class="mb-2"><cite title="Телефон клиента"><i class="fa fa-phone mr-2" aria-hidden="true"></i>{{ order.client.profile.tel }}</cite></p>
-			      	<p class="text-dark mb-0"><i class="fa fa-clock-o mr-2" aria-hidden="true"></i>{{ order.order_date }}</p>
-				</div>				
+								
 			</div>
 			</div>
-			<div class="col-md-1 d-flex flex-column justify-content-center">
+			<div class="col-md-1 d-md-flex flex-column justify-content-center p-2">
 				<a href="mailto:{{ order.client.email }}"><span class="font-size-2  mb-0 raport" title="Ответить"><i class="fa fa-envelope mr-3" aria-hidden="true"></i></span></a>
 				<a href="tel:{{ order.client.profile.tel }}" title="Позвонить"><span class="font-size-2  mb-0 raport"><i class="fa fa-phone mr-3" aria-hidden="true"></i></span></a>
 			</div>
